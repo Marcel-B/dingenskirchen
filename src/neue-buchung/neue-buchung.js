@@ -7,16 +7,37 @@ export const NeueBuchung = () => {
                 Neue Buchung
             </p>
             <Formik initialValues={{buchung: '', betrag: 0}}
-
+                    validate={values => {
+                        const errors = {};
+                        if (!values.buchung) {
+                            errors.buchung = 'Required';
+                        }
+                        return errors;
+                    }}
                     onSubmit={(values, {setSubmitting}) => {
                         setTimeout(() => {
-                            alert(JSON.stringify(values, null, 2));
-                            setSubmitting(false);
+                            fetch('http://localhost:5044/haushaltsbuch/posten', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify(values),
+                            }).then(res => {
+                                console.log('Res', res);
+                                setSubmitting(false);
+                            }).catch(reason => console.error(reason))
                         }, 400);
-                    }}>{({values, handleChange, handleSubmit}) => (
+                    }}>{({
+                             values,
+                             errors,
+                             touched,
+                             handleChange,
+                             handleSubmit
+                         }) => (
                 <form onSubmit={handleSubmit}>
-                    <input type="text" name="buchung"  onChange={handleChange} value={values.buchung}/>
-                    <input type="number" name="betrag"  onChange={handleChange} value={values.betrag}/>
+                    <input type="text" name="buchung" onChange={handleChange} value={values.buchung}/>
+                    {errors.buchung && touched.buchung && errors.buchung}
+                    <input type="number" name="betrag" onChange={handleChange} value={values.betrag}/>
                     <button type="submit">Submit</button>
                 </form>)}
             </Formik>
