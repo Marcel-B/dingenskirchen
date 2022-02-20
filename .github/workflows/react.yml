@@ -5,9 +5,9 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [ develop, master ]
   pull_request:
-    branches: [ master ]
+    branches: [ develop, master ]
 
 jobs:
   build:
@@ -33,4 +33,7 @@ jobs:
       run: npm install
       working-directory: ./client-app
     - run: npm test
+      working-directory: ./client-app
+    - name: Build Application
+      run: npm run build
       working-directory: ./client-app
