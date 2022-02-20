@@ -35,9 +35,13 @@ export const NeueBuchung = () => {
                              handleSubmit
                          }) => (
                 <form onSubmit={handleSubmit}>
+                    <label>Buchung</label>
                     <input type="text" name="buchung" onChange={handleChange} value={values.buchung}/>
                     {errors.buchung && touched.buchung && errors.buchung}
+                    <label>Betrag</label>
                     <input type="number" name="betrag" onChange={handleChange} value={values.betrag}/>
+                    <label>Intervall</label>
+                    <input type="text" name="intervall" onChange={handleChange} value={values.intervall}/>
                     <button type="submit">Submit</button>
                 </form>)}
             </Formik>
