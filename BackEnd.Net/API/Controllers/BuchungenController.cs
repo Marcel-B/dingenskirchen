@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Net.Mime;
 using System.Threading.Tasks;
 using Application.Buchungen;
 using Domain;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -10,6 +12,8 @@ namespace API.Controllers
     public class BuchungenController : BaseApiController
     {
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<Buchung>))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<List<Buchung>>> GetBuchungen()
         {
             return await Mediator.Send(new List.Query());
@@ -22,9 +26,17 @@ namespace API.Controllers
         }
 
         [HttpPost]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CreateBuchung(Buchung buchung)
         {
-            return Ok(await Mediator.Send(new Create.Command {Buchung = buchung}));
+            if(buchung == null)
+            {
+                return BadRequest();
+            }
+
+            return Created(nameof(GetBuchung), await Mediator.Send(new Create.Command {Buchung = buchung}));
         }
 
         [HttpPut("{id}")]
