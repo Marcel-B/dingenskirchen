@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
-import { Button, Card, Image } from "semantic-ui-react";
-import { useStore } from "../../../app/stores/store";
-import { LoadingComponent } from "../../../app/layout/LoadingComponent";
-import { Link, useParams } from "react-router-dom";
-import { observer } from "mobx-react-lite";
+import React, { useEffect } from 'react';
+import { Button, Card, Image } from 'semantic-ui-react';
+import { useStore } from '../../../app/stores/store';
+import { LoadingComponent } from '../../../app/layout/LoadingComponent';
+import { Link, useParams } from 'react-router-dom';
+import { observer } from 'mobx-react-lite';
 
 const ActivityDetails = () => {
   const { activityStore } = useStore();

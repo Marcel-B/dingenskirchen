@@ -20,6 +20,8 @@ namespace API.Controllers
         }
 
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Buchung))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<Buchung>> GetBuchung(Guid id)
         {
             return await Mediator.Send(new Details.Query{Id = id});
@@ -40,6 +42,9 @@ namespace API.Controllers
         }
 
         [HttpPut("{id}")]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> EditBuchung(Guid id, Buchung buchung)
         {
             // buchung.Id = id;

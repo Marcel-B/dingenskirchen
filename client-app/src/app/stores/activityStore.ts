@@ -1,6 +1,6 @@
-import { makeAutoObservable, runInAction } from "mobx";
-import { Activity } from "../models/activity";
-import agent from "../api/agent";
+import { makeAutoObservable, runInAction } from 'mobx';
+import { Activity } from '../models/activity';
+import agent from '../api/agent';
 
 export default class ActivityStore {
   // activities: Activity[] = [];
@@ -61,7 +61,7 @@ export default class ActivityStore {
   };
 
   private setActivity = (activity: Activity) => {
-    activity.date = activity.date.split("T")[0];
+    activity.date = activity.date.split('T')[0];
     this.activityRegistry.set(activity.id, activity);
   };
 

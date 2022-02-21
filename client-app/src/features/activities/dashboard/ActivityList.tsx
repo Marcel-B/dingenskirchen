@@ -1,14 +1,14 @@
-import { Button, Item, Label, Segment } from "semantic-ui-react";
-import { SyntheticEvent, useState } from "react";
-import { useStore } from "../../../app/stores/store";
-import { observer } from "mobx-react-lite";
-import { Link } from "react-router-dom";
+import { Button, Item, Label, Segment } from 'semantic-ui-react';
+import { SyntheticEvent, useState } from 'react';
+import { useStore } from '../../../app/stores/store';
+import { observer } from 'mobx-react-lite';
+import { Link } from 'react-router-dom';
 
 export default observer(function ActivityList() {
   const { activityStore } = useStore();
   const { deleteActivity, loading, activitiesByDate } = activityStore;
 
-  const [target, setTarget] = useState("");
+  const [target, setTarget] = useState('');
 
   const handleActivityDelete = (
     e: SyntheticEvent<HTMLButtonElement>,
@@ -24,7 +24,7 @@ export default observer(function ActivityList() {
         {activitiesByDate.map((activity) => (
           <Item key={activity.id}>
             <Item.Content>
-              <Item.Header as="a">{activity.title}</Item.Header>
+              <Item.Header as='a'>{activity.title}</Item.Header>
               <Item.Meta>{activity.date}</Item.Meta>
               <Item.Description>
                 <div>{activity.description}</div>
@@ -36,17 +36,17 @@ export default observer(function ActivityList() {
                 <Button
                   as={Link}
                   to={`/activities/${activity.id}`}
-                  floated="right"
-                  content="Anzeigen"
-                  color="blue"
+                  floated='right'
+                  content='Anzeigen'
+                  color='blue'
                 />
                 <Button
                   loading={loading && target === activity.id}
                   name={activity.id}
                   onClick={(e) => handleActivityDelete(e, activity.id)}
-                  floated="right"
-                  content="Löschen"
-                  color="red"
+                  floated='right'
+                  content='Löschen'
+                  color='red'
                 />
                 <Label basic content={activity.category} />
               </Item.Extra>
