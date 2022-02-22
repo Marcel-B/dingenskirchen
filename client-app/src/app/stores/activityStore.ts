@@ -3,7 +3,6 @@ import { Activity } from '../models/activity';
 import agent from '../api/agent';
 
 export default class ActivityStore {
-  // activities: Activity[] = [];
   activityRegistry = new Map<string, Activity>();
   selectedActivity: Activity | undefined = undefined;
   editMode = false;
