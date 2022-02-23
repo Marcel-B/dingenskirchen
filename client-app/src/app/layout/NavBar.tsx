@@ -15,6 +15,7 @@ export const NavBar = () => {
           Haushaltsbuch
         </Menu.Item>
         <Menu.Item as={NavLink} to={`/activities`} name='Buchungen' />
+        <Menu.Item as={NavLink} to={`/errors`} name='Fehler' />
         <Menu.Item>
           <Button
             as={NavLink}
