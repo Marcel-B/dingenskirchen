@@ -1,13 +1,13 @@
-import React from "react";
-import { render, screen } from "@testing-library/react";
-import App from "./App";
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import App from './App';
 
-jest.mock("react-router-dom", () => {
+jest.mock('react-router-dom', () => {
   return {
-    useLocation: jest.fn()
-  }
+    useLocation: jest.fn(),
+  };
 });
 
-test("renders learn react link", () => {
+test('renders learn react link', () => {
   expect(true).toBeTruthy();
 });
