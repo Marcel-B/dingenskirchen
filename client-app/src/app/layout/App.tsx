@@ -1,6 +1,6 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { Container } from 'semantic-ui-react';
-import { NavBar } from './NavBar';
+import NavBar from './NavBar';
 import { observer } from 'mobx-react-lite';
 import ActivityDashboard from '../../features/activities/dashboard/ActivityDashboard';
 import HomePage from '../../features/home/HomePage';
@@ -11,9 +11,23 @@ import TestErrors from '../../features/activities/errors/TestError';
 import { ToastContainer } from 'react-toastify';
 import NotFound from '../../features/activities/errors/NotFound';
 import ServerError from '../../features/activities/errors/ServerError';
+import LoginForm from '../../features/users/LoginForm';
+import { useStore } from '../stores/store';
+import { LoadingComponent } from './LoadingComponent';
 
 const App = () => {
   const location = useLocation();
+  const { commonStore, userStore } = useStore();
+
+  useEffect(() => {
+    if (commonStore.token) {
+      userStore.getUser().finally(() => commonStore.setAppLoaded());
+    } else {
+      commonStore.setAppLoaded();
+    }
+  }, [commonStore, userStore]);
+
+  if (!commonStore.appLoaded) return <LoadingComponent content={'Lade Haushaltsbuch ...'} />;
 
   return (
     <>
@@ -35,6 +49,7 @@ const App = () => {
                 />
                 <Route path={`/errors`} component={TestErrors} />
                 <Route path={`/server-error`} component={ServerError} />
+                <Route path={'/login'} component={LoginForm} />
                 <Route component={NotFound} />
               </Switch>
             </Container>
