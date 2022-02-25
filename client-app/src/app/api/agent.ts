@@ -1,9 +1,9 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { toast } from 'react-toastify';
-import { history } from '../../index';
 import { store } from '../stores/store';
 import { User, UserFormValues } from '../models/user';
 import { Buchung } from '../models/buchung';
+import { useNavigate } from 'react-router-dom';
 
 const sleep = (delay: number) => {
   return new Promise((resolve) => setTimeout(resolve, delay));
@@ -30,7 +30,7 @@ axios.interceptors.response.use(async (response) => {
         toast.error(data);
       }
       if (config.method === 'get' && data.errors.hasOwnProperty('id')) {
-        history.push('/not-found');
+        // history.push('/not-found');
       }
       if (data.errors) {
         const modalStateErrors = [];
@@ -46,11 +46,11 @@ axios.interceptors.response.use(async (response) => {
       toast.error('unauthorized');
       break;
     case 404:
-      history.push('/not-found');
+      // history.push('/not-found');
       break;
     case 500:
       store.commonStore.setServerError(data);
-      history.push('/server-error');
+      // history.push('/server-error');
       break;
   }
   return Promise.reject(error);

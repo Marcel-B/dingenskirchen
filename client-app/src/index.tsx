@@ -6,19 +6,10 @@ import 'react-toastify/dist/ReactToastify.min.css';
 import 'react-datepicker/dist/react-datepicker.min.css';
 import reportWebVitals from './reportWebVitals';
 import App from './app/layout/App';
-import { store, StoreContext } from './app/stores/store';
-import { Router } from 'react-router-dom';
-import { createBrowserHistory } from 'history';
-
-export const history = createBrowserHistory();
 
 ReactDOM.render(
   <React.StrictMode>
-    <StoreContext.Provider value={store}>
-      <Router history={history}>
-        <App />
-      </Router>
-    </StoreContext.Provider>
+    <App />
   </React.StrictMode>,
   document.getElementById('root'),
 );

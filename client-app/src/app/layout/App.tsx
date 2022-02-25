@@ -3,7 +3,7 @@ import { Container } from 'semantic-ui-react';
 import NavBar from './NavBar';
 import { observer } from 'mobx-react-lite';
 import HomePage from '../../features/home/HomePage';
-import { Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import TestErrors from '../../features/activities/errors/TestError';
 import { ToastContainer } from 'react-toastify';
 import NotFound from '../../features/activities/errors/NotFound';
@@ -13,6 +13,7 @@ import { useStore } from '../stores/store';
 import { LoadingComponent } from './LoadingComponent';
 import ModalContainer from '../common/modals/ModalContainer';
 import BuchungDashboard from '../../features/activities/dashboard/BuchungDashboard';
+import MainContent from './MainContent';
 
 const App = () => {
   const { commonStore, userStore } = useStore();
@@ -29,26 +30,12 @@ const App = () => {
 
   return (
     <>
-      <ToastContainer position={`bottom-right`} hideProgressBar />
-      <ModalContainer />
-      <Route exact path={`/`} component={HomePage} />
-      <Route
-        path={`/(.+)`}
-        render={() => (
-          <Fragment>
-            <NavBar />
-            <Container style={{ marginTop: '7em' }}>
-              <Switch>
-                <Route exact path={`/buchungen`} component={BuchungDashboard} />
-                <Route path={`/errors`} component={TestErrors} />
-                <Route path={`/server-error`} component={ServerError} />
-                <Route path={'/login'} component={LoginForm} />
-                <Route component={NotFound} />
-              </Switch>
-            </Container>
-          </Fragment>
-        )}
-      />
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={<HomePage />} />
+          <Route path='app/*' element={<MainContent />} />
+        </Routes>
+      </BrowserRouter>
     </>
   );
 };
