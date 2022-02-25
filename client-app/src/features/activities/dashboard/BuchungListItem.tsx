@@ -1,14 +1,14 @@
-import React from "react";
-import { Button, Icon, Item, Segment } from "semantic-ui-react";
-import { Link } from "react-router-dom";
-import { Activity } from "../../../app/models/activity";
+import React from 'react';
+import { Button, Icon, Item, Segment } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 import { format } from 'date-fns';
+import { Buchung } from '../../../app/models/buchung';
 
 interface Props {
-  activity: Activity;
+  buchung: Buchung;
 }
 
-const ActivityListItem = ({ activity }: Props) => {
+const BuchungListItem = ({ buchung }: Props) => {
   // const { activityStore } = useStore();
   // const { deleteActivity, loading } = activityStore;
   //
@@ -29,8 +29,8 @@ const ActivityListItem = ({ activity }: Props) => {
           <Item>
             <Item.Image size={`tiny`} circular src={`/assets/user.png`} />
             <Item.Content>
-              <Item.Header as={Link} to={`/activities/${activity.id}`}>
-                {activity.title}
+              <Item.Header as={Link} to={`/buchungen/${buchung.id}`}>
+                {buchung.name}
               </Item.Header>
               <Item.Description>Hosted by Bop</Item.Description>
             </Item.Content>
@@ -39,8 +39,8 @@ const ActivityListItem = ({ activity }: Props) => {
       </Segment>
       <Segment>
         <span>
-          <Icon name={`clock`} /> {format(activity.date!, 'dd.MM.yyyy HH:mm')}
-          <Icon name={`marker`} /> {activity.venue}
+          <Icon name={`clock`} /> {format(buchung.zeitpunkt!, 'dd.MM.yyyy HH:mm')}
+          <Icon name={`marker`} /> {buchung.kategorie}
         </span>
       </Segment>
       <Segment secondary>
@@ -48,17 +48,17 @@ const ActivityListItem = ({ activity }: Props) => {
       </Segment>
       <Segment clearing>
         <span>
-          {activity.description}
+          {buchung.beschreibung}
         </span>
         <Button
           as={Link}
-          to={`/activities/${activity.id}`}
+          to={`/buchungen/${buchung.id}`}
           color={`teal`}
           floated={`right`}
-          content={`Anzeigen`}/>
+          content={`Anzeigen`} />
       </Segment>
     </Segment.Group>
   );
 };
 
-export default ActivityListItem;
+export default BuchungListItem;

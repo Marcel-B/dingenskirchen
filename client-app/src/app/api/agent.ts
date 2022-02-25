@@ -1,9 +1,9 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
-import { Activity } from '../models/activity';
 import { toast } from 'react-toastify';
 import { history } from '../../index';
 import { store } from '../stores/store';
 import { User, UserFormValues } from '../models/user';
+import { Buchung } from '../models/buchung';
 
 const sleep = (delay: number) => {
   return new Promise((resolve) => setTimeout(resolve, delay));
@@ -66,13 +66,13 @@ const requests = {
   del: <T>(url: string) => axios.delete<T>(url).then(responseBody),
 };
 
-const Activities = {
-  list: () => requests.get<Activity[]>('/activities'),
-  details: (id: string) => requests.get<Activity>(`/activities/${id}`),
-  create: (activity: Activity) => requests.post<void>(`/activities`, activity),
-  update: (activity: Activity) =>
-    requests.put<void>(`/activities/${activity.id}`, activity),
-  delete: (id: string) => requests.del<void>(`/activities/${id}`),
+const Buchungen = {
+  list: () => requests.get<Buchung[]>('/buchungen'),
+  details: (id: string) => requests.get<Buchung>(`/buchungen/${id}`),
+  create: (activity: Buchung) => requests.post<void>(`/buchungen`, activity),
+  update: (activity: Buchung) =>
+    requests.put<void>(`/buchungen/${activity.id}`, activity),
+  delete: (id: string) => requests.del<void>(`/buchungen/${id}`),
 };
 
 const Account = {
@@ -82,7 +82,7 @@ const Account = {
 };
 
 const agent = {
-  Activities,
+  Buchungen,
   Account,
 };
 

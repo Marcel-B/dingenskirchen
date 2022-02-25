@@ -19,7 +19,7 @@ const HomePage = () => {
         {userStore.isLoggedIn ? (
           <>
             <Header as={'h2'} inverted content={'Willkommen im Haushaltsbuch'} />
-            <Button as={Link} to={`/activities`} size={`huge`} inverted>
+            <Button as={Link} to={`/buchungen`} size={`huge`} inverted>
               Zu den Buchungen
             </Button>
           </>
