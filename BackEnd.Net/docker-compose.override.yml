@@ -4,9 +4,9 @@ services:
   api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_URLS=https://+:443;http://+:5000
     ports:
-      - "80"
+      - "5000:5000"
       - "443"
     volumes:
       - ~/.aspnet/https:/root/.aspnet/https:ro

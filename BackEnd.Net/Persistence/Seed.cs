@@ -46,9 +46,21 @@ namespace Persistence
                     new Buchung
                     {
                         Id = Guid.NewGuid(),
-                        Name = "Past Activity 1",
+                        Name = "Autoversicherung",
                         Zeitpunkt = DateTime.Now.AddMonths(-2),
-                        Beschreibung = "Activity 2 months ago",
+                        Beschreibung = "Erste allgemeine Versicherung",
+                        Created = DateTime.Now,
+                        Betrag = 222.22M,
+                        Kategorie = Kategorie.Ausgabe,
+                        Intervall = Intervall.Jahr,
+                        Updated = DateTime.Now
+                    },
+                       new Buchung
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "Rentenversicherung",
+                        Zeitpunkt = DateTime.Now.AddMonths(-1),
+                        Beschreibung = "Erste allgemeine Verunsericherung",
                         Created = DateTime.Now,
                         Betrag = 22.22M,
                         Kategorie = Kategorie.Ausgabe,

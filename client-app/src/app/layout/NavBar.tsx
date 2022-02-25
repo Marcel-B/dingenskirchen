@@ -1,8 +1,8 @@
-import React from 'react';
-import { Button, Container, Dropdown, Image, Menu } from 'semantic-ui-react';
-import { Link, NavLink } from 'react-router-dom';
-import { useStore } from '../stores/store';
+import { Button, Container, Image, Menu } from 'semantic-ui-react';
+
+import { NavLink } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
+import { useStore } from '../stores/store';
 
 const NavBar = () => {
   const { userStore: { user} } = useStore();
@@ -12,7 +12,7 @@ const NavBar = () => {
       <Container>
         <Menu.Item as={NavLink} to={`/`} exact header>
           <img
-            src='/assets/logo.png'
+            src='/assets/offenes-buch.png'
             alt='logo'
             style={{ marginRight: '10px' }}
           />
@@ -23,7 +23,7 @@ const NavBar = () => {
         <Menu.Item>
           <Button
             as={NavLink}
-            to={`/createBuchung`}
+            to={`/app/createBuchung`}
             positive
             content='Buchung anlegen'
           />

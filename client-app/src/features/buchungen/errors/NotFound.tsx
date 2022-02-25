@@ -1,5 +1,5 @@
-import React from "react";
 import {Button, Header, Icon, Segment} from "semantic-ui-react";
+
 import {Link} from "react-router-dom";
 
 const NotFound = () => {
@@ -10,7 +10,7 @@ const NotFound = () => {
                     Oops - we've looked everywhere and could not find this.
             </Header>
             <Segment.Inline>
-                <Button as={Link} to={`/buchungen`} primary>
+                <Button as={Link} to={`/app/buchungen`} primary>
                     Zur Buchungen Seite
                 </Button>
             </Segment.Inline>

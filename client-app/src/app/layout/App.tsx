@@ -1,19 +1,16 @@
-import React, { Fragment, useEffect } from 'react';
-import { Container } from 'semantic-ui-react';
-import NavBar from './NavBar';
-import { observer } from 'mobx-react-lite';
-import HomePage from '../../features/home/HomePage';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import TestErrors from '../../features/activities/errors/TestError';
-import { ToastContainer } from 'react-toastify';
-import NotFound from '../../features/activities/errors/NotFound';
-import ServerError from '../../features/activities/errors/ServerError';
-import LoginForm from '../../features/users/LoginForm';
-import { useStore } from '../stores/store';
+
+import HomePage from '../../features/home/HomePage';
 import { LoadingComponent } from './LoadingComponent';
-import ModalContainer from '../common/modals/ModalContainer';
-import BuchungDashboard from '../../features/activities/dashboard/BuchungDashboard';
+import LoginForm from '../../features/users/LoginForm';
 import MainContent from './MainContent';
+import ModalContainer from '../common/modals/ModalContainer';
+import NotFound from '../../features/buchungen/errors/NotFound';
+import RegisterForm from '../../features/users/RegisterForm';
+import { ToastContainer } from 'react-toastify';
+import { observer } from 'mobx-react-lite';
+import { useEffect } from 'react';
+import { useStore } from '../stores/store';
 
 const App = () => {
   const { commonStore, userStore } = useStore();
@@ -26,14 +23,21 @@ const App = () => {
     }
   }, [commonStore, userStore]);
 
-  if (!commonStore.appLoaded) return <LoadingComponent content={'Lade Haushaltsbuch ...'} />;
+  if (!commonStore.appLoaded)
+    return <LoadingComponent content={'Lade Haushaltsbuch ...'} />;
 
   return (
     <>
+      <ToastContainer />
+      <ModalContainer />
       <BrowserRouter>
+        <ModalContainer />
         <Routes>
           <Route path='/' element={<HomePage />} />
+          <Route path='/login' element={<LoginForm />} />
+          <Route path='/register' element={<RegisterForm />} />
           <Route path='app/*' element={<MainContent />} />
+          <Route path='*' element={<NotFound />} />
         </Routes>
       </BrowserRouter>
     </>

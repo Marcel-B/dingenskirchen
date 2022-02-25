@@ -1,17 +1,23 @@
-import React from 'react';
 import { Route, Routes } from 'react-router-dom';
+
+import BuchungDashboard from '../../features/buchungen/dashboard/BuchungDashboard';
+import BuchungForm from "../../features/buchungen/form/BuchungForm";
+import { Container } from "semantic-ui-react";
 import NavBar from './NavBar';
-import BuchungDashboard from '../../features/activities/dashboard/BuchungDashboard';
+import TestErrors from "../../features/buchungen/errors/TestError";
 
 const MainContent = () => {
   return (
     <>
       <NavBar />
-      <Routes>
-        <Route path='buchungen' element={<BuchungDashboard />} />
-      </Routes>
+      <Container>
+        <Routes>
+          <Route path='buchungen' element={<BuchungDashboard />} />
+          <Route path='createBuchung' element={<BuchungForm />} />
+          <Route path='errors' element={<TestErrors />} />
+        </Routes>
+      </Container>
     </>
-
   );
 };
 

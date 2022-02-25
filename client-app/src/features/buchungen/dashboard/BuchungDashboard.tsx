@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react';
-import { Grid } from 'semantic-ui-react';
-import { observer } from 'mobx-react-lite';
+
+import ActivityFilters from "./ActivityFilters";
 import BuchungList from './BuchungList';
+import { Grid } from 'semantic-ui-react';
 import { LoadingComponent } from '../../../app/layout/LoadingComponent';
+import { observer } from "mobx-react-lite";
 import { useStore } from '../../../app/stores/store';
 
-export default observer(function BuchungDashboard() {
+const BuchungDashboard = () => {
   const { buchungStore } = useStore();
   const { loadBuchungen, buchungRegistry } = buchungStore;
 
@@ -19,12 +21,15 @@ export default observer(function BuchungDashboard() {
     return <LoadingComponent content={`Bitte warten...`} />;
 
   return (
-    <Grid>
+    <Grid style={{marginTop: '80px'}}>
       <Grid.Column width='10'>
         <BuchungList />
       </Grid.Column>
       <Grid.Column width='6'>
+          <ActivityFilters />
       </Grid.Column>
     </Grid>
   );
-});
+};
+
+export default observer(BuchungDashboard);
