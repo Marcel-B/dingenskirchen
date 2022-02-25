@@ -21,9 +21,9 @@ jobs:
       run: dotnet restore ./Dingenskirchen.sln
       working-directory: ./BackEnd.Net
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build --no-restore ./Dingenskirchen.sln
       working-directory: ./BackEnd.Net
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test --no-build --verbosity normal ./Dingenskirchen.sln
       working-directory: ./BackEnd.Net
 
