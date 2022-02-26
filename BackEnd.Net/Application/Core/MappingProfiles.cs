@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Application.Activities;
 using AutoMapper;
@@ -9,8 +10,9 @@ namespace Application.Core
     {
         public MappingProfiles()
         {
-            CreateMap<Buchung, Buchung>();
-            CreateMap<Buchung, BuchungDto>();
+            CreateMap<Buchung, Buchung>()
+                .ForMember(d => d.Updated, opt => opt.MapFrom(a => DateTime.Now));
+            CreateMap<BuchungDto, Buchung>().ReverseMap();
         }
     }
 }

@@ -8,21 +8,26 @@ namespace Domain
         /// <summary>
         /// Es handelt sich um einen einmalige Ein- bzw. Abgang
         /// </summary>
-        Einmalig,
+        Einmalig = 1,
         
         /// <summary>
         /// Die Buchung taucht monatlich auf
         /// </summary>
-        Monat,
+        Monat = 2,
         
         /// <summary>
         /// Die Buchung wird alle drei Monate ausgeführt
         /// </summary>
-        Quartal,
+        Quartal = 3,
+
+        /// <summary>
+        /// Die Buchung wird alle sechs Monate ausgeführ
+        /// </summary>
+        Halbjahr = 4,
         
         /// <summary>
         /// Die Buchung wird ein mal im Jahr ausgeführt
         /// </summary>
-        Jahr
+        Jahr = 5
     }
 }

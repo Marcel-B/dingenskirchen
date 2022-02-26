@@ -1,6 +1,6 @@
 import { Button, Container, Header, Image, Segment } from 'semantic-ui-react';
+import { Link, Outlet } from 'react-router-dom';
 
-import { Link } from 'react-router-dom';
 import LoginForm from '../users/LoginForm';
 import React from 'react';
 import RegisterForm from '../users/RegisterForm';
@@ -11,6 +11,7 @@ const HomePage = () => {
   const { userStore, modalStore } = useStore();
 
   return (
+      <>
     <Segment inverted textAlign={'center'} vertical className={`masthead`}>
       <Container>
         <Header as={`h1`} inverted>
@@ -47,6 +48,8 @@ const HomePage = () => {
         )}
       </Container>
     </Segment>
+    <Outlet/>
+    </>
   );
 };
 

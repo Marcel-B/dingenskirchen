@@ -3,9 +3,9 @@ export interface Buchung {
   name: string;
   beschreibung: string;
   zeitpunkt: Date | null;
-  betrag: number;
-  kategorie: string;
-  intervall: string;
+  betrag: number | null;
+  kategorie: number;
+  intervall: number;
   created?: Date | null;
   updated?: Date | null;
 }

@@ -26,9 +26,8 @@ namespace Application.Buchungen
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
-                var activity = await _context.Buchungen.FindAsync(request.Buchung.Id);
-
-                _mapper.Map(request.Buchung, activity);
+                var buchung = await _context.Buchungen.FindAsync(request.Buchung.Id);
+                _mapper.Map(request.Buchung, buchung);
 
                 await _context.SaveChangesAsync(cancellationToken);
 

@@ -30,8 +30,6 @@ namespace Application.Activities
 
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
-
-
                 return  Result<Unit>.Success(Unit.Value) ;
             }
         }

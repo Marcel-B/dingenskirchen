@@ -1,11 +1,19 @@
-import { Button, Container, Image, Menu } from 'semantic-ui-react';
+import { Button, Container, Dropdown, Image, Menu } from 'semantic-ui-react';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 
-import { NavLink } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../stores/store';
 
 const NavBar = () => {
-  const { userStore: { user} } = useStore();
+  const navigate = useNavigate();
+  const {
+    userStore: { user, logout },
+  } = useStore();
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+  };
 
   return (
     <Menu inverted fixed='top'>
@@ -14,12 +22,11 @@ const NavBar = () => {
           <img
             src='/assets/offenes-buch.png'
             alt='logo'
-            style={{ marginRight: '10px' }}
+            style={{ marginRight: 10 }}
           />
           Haushaltsbuch
         </Menu.Item>
         <Menu.Item as={NavLink} to={`/app/buchungen`} name='Buchungen' />
-        <Menu.Item as={NavLink} to={`/app/errors`} name='Fehler' />
         <Menu.Item>
           <Button
             as={NavLink}
@@ -29,7 +36,26 @@ const NavBar = () => {
           />
         </Menu.Item>
         <Menu.Item position={'right'}>
-          <Image src={user?.image || '/assets/user.png'} avatar spaced={'right'} />
+          <Image
+            src={user?.image || '/assets/user.png'}
+            avatar
+            spaced='right'
+          />
+          <Dropdown pointing='top left' text={user?.displayName}>
+            <Dropdown.Menu>
+              <Dropdown.Item
+                as={Link}
+                to={`/profile/${user?.username}`}
+                text='Profil'
+                icon='user'
+              />
+              <Dropdown.Item
+                onClick={handleLogout}
+                text='Logout'
+                icon='power'
+              />
+            </Dropdown.Menu>
+          </Dropdown>
         </Menu.Item>
       </Container>
     </Menu>

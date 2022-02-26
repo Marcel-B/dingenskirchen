@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 
-import ActivityFilters from "./ActivityFilters";
+import ActivityFilters from './ActivityFilters';
 import BuchungList from './BuchungList';
 import { Grid } from 'semantic-ui-react';
 import { LoadingComponent } from '../../../app/layout/LoadingComponent';
-import { observer } from "mobx-react-lite";
+import { observer } from 'mobx-react-lite';
 import { useStore } from '../../../app/stores/store';
 
 const BuchungDashboard = () => {
@@ -21,12 +21,12 @@ const BuchungDashboard = () => {
     return <LoadingComponent content={`Bitte warten...`} />;
 
   return (
-    <Grid style={{marginTop: '80px'}}>
+    <Grid style={{ marginTop: '7em' }}>
       <Grid.Column width='10'>
         <BuchungList />
       </Grid.Column>
       <Grid.Column width='6'>
-          <ActivityFilters />
+        <ActivityFilters />
       </Grid.Column>
     </Grid>
   );

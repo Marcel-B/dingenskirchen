@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Net.Mime;
 using System.Threading.Tasks;
+using Application.Activities;
 using Application.Buchungen;
 using Domain;
 using Microsoft.AspNetCore.Http;
@@ -31,7 +32,7 @@ namespace API.Controllers
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> CreateBuchung(Buchung buchung)
+        public async Task<IActionResult> CreateBuchung(BuchungDto buchung)
         {
             if(buchung == null)
             {

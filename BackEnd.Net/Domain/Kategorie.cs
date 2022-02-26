@@ -8,11 +8,11 @@ namespace Domain
         /// <summary>
         /// Es kommt Geld
         /// </summary>
-        Einnahme,
+        Einnahme = 1,
         
         /// <summary>
         /// Es geht Geld
         /// </summary>
-        Ausgabe
+        Ausgabe = 2
     }
 }

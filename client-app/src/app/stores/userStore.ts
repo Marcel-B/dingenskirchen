@@ -1,11 +1,10 @@
 import { User, UserFormValues } from '../models/user';
 import { makeAutoObservable, runInAction } from 'mobx';
+
 import agent from '../api/agent';
 import { store } from './store';
-// import { useNavigate } from 'react-router-dom';
 
 export default class UserStore {
-  // navigate = useNavigate();
   user: User | null = null;
 
   constructor() {
@@ -20,8 +19,7 @@ export default class UserStore {
     try {
       const user = await agent.Account.login(creds);
       store.commonStore.setToken(user.token);
-      runInAction(() => this.user = user);
-      // this.navigate('/buchungen');
+      runInAction(() => (this.user = user));
       store.modalStore.closeModal();
     } catch (error) {
       throw error;
@@ -32,13 +30,12 @@ export default class UserStore {
     store.commonStore.setToken(null);
     window.localStorage.removeItem('jwt');
     this.user = null;
-    // this.navigate('/');
   };
 
   getUser = async () => {
     try {
       const user = await agent.Account.current();
-      runInAction(() => this.user = user);
+      runInAction(() => (this.user = user));
     } catch (error) {
       console.log(error);
     }
@@ -48,8 +45,8 @@ export default class UserStore {
     try {
       const user = await agent.Account.register(creds);
       store.commonStore.setToken(user.token);
-      runInAction(() => this.user = user);
-      // this.navigate('/buchungen');
+      runInAction(() => (this.user = user));
+      //   this.navigate('/app/buchungen');
       store.modalStore.closeModal();
     } catch (error) {
       throw error;

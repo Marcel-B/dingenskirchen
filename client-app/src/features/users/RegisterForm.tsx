@@ -4,12 +4,14 @@ import { Button, Header } from 'semantic-ui-react';
 import { ErrorMessage, Form, Formik } from 'formik';
 
 import MyTextInput from '../../app/common/form/MyTextInput';
-import ValidationErrors from '../buchungen/errors/ValidationErrors';
+import ValidationErrors from '../activities/errors/ValidationErrors';
 import { observer } from 'mobx-react-lite';
+import { useNavigate } from "react-router-dom";
 import { useStore } from '../../app/stores/store';
 
 const RegisterForm = () => {
   const { userStore } = useStore();
+  const navigate = useNavigate();
   return (
     <Formik
       initialValues={{
@@ -19,8 +21,12 @@ const RegisterForm = () => {
         password: '',
         error: null,
       }}
+      
       onSubmit={(values, { setErrors }) =>
-        userStore.register(values).catch((error) => setErrors({ error }))
+        userStore
+          .register(values)
+          .then(() => navigate('/app/buchungen'))
+          .catch((error) => setErrors({ error }))
       }
       validationSchema={Yup.object({
         displayName: Yup.string().required(),

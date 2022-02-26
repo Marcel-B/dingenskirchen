@@ -1,11 +1,12 @@
+import { Form, Label, Select } from 'semantic-ui-react';
+
 import React from 'react';
 import { useField } from 'formik';
-import { Form, Label, Select } from 'semantic-ui-react';
 
 interface Props {
   placeholder: string;
   name: string;
-  options: { text: string, value: string }[];
+  options: { text: string, value: number | undefined }[];
   label?: string;
 }
 

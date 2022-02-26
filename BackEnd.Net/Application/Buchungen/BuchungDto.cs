@@ -1,22 +1,18 @@
 using System;
 using System.Collections.Generic;
-using Application.Profiles;
+using Domain;
 
 namespace Application.Activities
 {
-    public class BuchungDto
+
+    public record BuchungDto
     {
-        public Guid Id { get; set; }
-        public string Name { get; set; }
-
-        public DateTime Zeitpunkt { get; set; }
-
-        // public string Description { get; set; }
-        public string Kategorie { get; set; }
-        // public string City { get; set; }
-        // public string Venue { get; set; }
-        // public string HostUsername { get; set; }
-        // public bool IsCancelled { get; set; }
-        // public ICollection<Profile> Attendees { get; set; }
+        public Guid Id { get; init; }
+        public string Name { get; init; }
+        public DateTime Zeitpunkt { get; init; }
+        public string Beschreibung { get; init; }
+        public Kategorie Kategorie { get; init; }
+        public Intervall Intervall { get; init; }
+        public decimal Betrag { get; init; }
     }
 }
