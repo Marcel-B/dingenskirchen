@@ -1,7 +1,8 @@
+import DatePicker, { ReactDatePickerProps } from 'react-datepicker';
+import { Form, Label } from 'semantic-ui-react';
+
 import React from 'react';
 import { useField } from 'formik';
-import { Form, Label } from 'semantic-ui-react';
-import DatePicker, { ReactDatePickerProps } from 'react-datepicker';
 
 const MyDateInput = (props: Partial<ReactDatePickerProps>) => {
   const [field, meta, helpers] = useField(props.name!);
@@ -11,6 +12,7 @@ const MyDateInput = (props: Partial<ReactDatePickerProps>) => {
       <DatePicker
         {...field}
         {...props}
+        autoComplete="off"
         selected={(field.value && new Date(field.value)) || null}
         onChange={value => helpers.setValue(value)} />
       {meta.touched && meta.error ? (

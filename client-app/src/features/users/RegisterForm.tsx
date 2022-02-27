@@ -4,7 +4,7 @@ import { Button, Header } from 'semantic-ui-react';
 import { ErrorMessage, Form, Formik } from 'formik';
 
 import MyTextInput from '../../app/common/form/MyTextInput';
-import ValidationErrors from '../activities/errors/ValidationErrors';
+import ValidationErrors from '../buchungen/errors/ValidationErrors';
 import { observer } from 'mobx-react-lite';
 import { useNavigate } from "react-router-dom";
 import { useStore } from '../../app/stores/store';

@@ -1,4 +1,5 @@
 import { makeAutoObservable, runInAction } from 'mobx';
+
 import { Buchung } from '../models/buchung';
 import agent from '../api/agent';
 import { format } from 'date-fns';
@@ -16,7 +17,7 @@ export default class BuchungStore {
 
   get buchungenByDate() {
     return Array.from(this.buchungRegistry.values()).sort(
-      (a, b) => a.zeitpunkt!.getTime() - b.zeitpunkt!.getTime(),
+      (a, b) => a.zeitpunkt!.getTime() - b.zeitpunkt!.getTime()
     );
   }
 
@@ -24,10 +25,53 @@ export default class BuchungStore {
     return Object.entries(
       this.buchungenByDate.reduce((buchungen, buchung) => {
         const zeitpunkt = format(buchung.zeitpunkt!, 'dd.MM.yyyy');
-        buchungen[zeitpunkt] = buchungen[zeitpunkt] ? [...buchungen[zeitpunkt], buchung] : [buchung];
+        buchungen[zeitpunkt] = buchungen[zeitpunkt]
+          ? [...buchungen[zeitpunkt], buchung]
+          : [buchung];
         return buchungen;
-      }, {} as { [key: string]: Buchung[] }),
+      }, {} as { [key: string]: Buchung[] })
     );
+  }
+
+  get einnahmenGesamt() {
+    return Array.from(this.buchungRegistry.values())
+      .filter((buchung) => buchung.kategorie === 1)
+      .map((buchung) => buchung.betrag)
+      .reduce((prev, curr) => {
+        if (prev && curr) return prev + curr;
+        if (!prev) return curr;
+        return prev;
+      }, 0);
+  }
+
+  get ausgabenGesamt() {
+    return Array.from(this.buchungRegistry.values())
+      .filter((buchung) => buchung.kategorie === 2)
+      .map((buchung) => buchung.betrag)
+      .reduce((prev, curr) => {
+        if (prev && curr) return prev + curr;
+        if (!prev) return curr;
+        return prev;
+      }, 0);
+  }
+
+  get ausgabenNurMonatlich() {
+    return Array.from(this.buchungRegistry.values())
+      .filter((buchung) => buchung.kategorie === 2 && buchung.intervall < 3)
+      .map((buchung) => buchung.betrag)
+      .reduce((prev, curr) => {
+        if (prev && curr) return prev + curr;
+        if (!prev) return curr;
+        return prev;
+      }, 0);
+  }
+
+  get restMonatlich() {
+    return this.einnahmenGesamt! - this.ausgabenNurMonatlich!;
+  }
+
+  get restMonatlichVerrechnet() {
+    return this.einnahmenGesamt! - this.ausgabenGesamt!;
   }
 
   loadBuchungen = async () => {

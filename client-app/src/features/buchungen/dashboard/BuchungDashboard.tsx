@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import ActivityFilters from './ActivityFilters';
+import ActivityFilters from './BuchungAside';
 import BuchungList from './BuchungList';
 import { Grid } from 'semantic-ui-react';
 import { LoadingComponent } from '../../../app/layout/LoadingComponent';
@@ -21,7 +21,7 @@ const BuchungDashboard = () => {
     return <LoadingComponent content={`Bitte warten...`} />;
 
   return (
-    <Grid style={{ marginTop: '7em' }}>
+    <Grid >
       <Grid.Column width='10'>
         <BuchungList />
       </Grid.Column>
