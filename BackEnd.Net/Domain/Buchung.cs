@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Domain
 {
@@ -58,5 +59,10 @@ namespace Domain
         /// Zeigt an, ob die Buchung gelöscht ist
         /// </summary>
         public bool IsDeleted { get; init; }
+
+        /// <summary>
+        /// Gesetzte Tags
+        /// </summary>
+        public ICollection<Tag> Tags { get; init; } = new List<Tag>();
     }
 }
