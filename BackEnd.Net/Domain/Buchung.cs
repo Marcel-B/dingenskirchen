@@ -53,5 +53,10 @@ namespace Domain
         /// Die letzte Aktualisierung der Buchung
         /// </summary>
         public DateTime? Updated { get; init; }
+
+        /// <summary>
+        /// Zeigt an, ob die Buchung gelöscht ist
+        /// </summary>
+        public bool IsDeleted { get; init; }
     }
 }

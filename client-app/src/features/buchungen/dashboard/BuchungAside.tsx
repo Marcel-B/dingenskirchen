@@ -21,7 +21,7 @@ const ActivityFilters = () => {
         <Header
           icon={`euro sign`}
           attached
-          color={`teal`}
+          color={`orange`}
           content={`Übersicht`}
         />
         <Menu.Item>
@@ -65,8 +65,29 @@ const ActivityFilters = () => {
           </Grid>
         </Menu.Item>
       </Menu>
+      <Header as={'h2'} content='Filter'/>
+      <Grid>
+        <Grid.Row>
+          <Grid.Column>Jan</Grid.Column>
+          <Grid.Column>Feb</Grid.Column>
+          <Grid.Column>Mrz</Grid.Column>
+          <Grid.Column>Aprl</Grid.Column>
+          <Grid.Column>Mai</Grid.Column>
+          <Grid.Column>Jun</Grid.Column>
+        </Grid.Row>
+        <Grid.Row>
+          <Grid.Column>Jul</Grid.Column>
+          <Grid.Column>Aug</Grid.Column>
+          <Grid.Column>Sep</Grid.Column>
+          <Grid.Column>Oktl</Grid.Column>
+          <Grid.Column>Nov</Grid.Column>
+          <Grid.Column>Dez</Grid.Column>
+        </Grid.Row>
+      </Grid>
       <Header />
+
       <Calendar />
+
     </div>
   );
 };
