@@ -14,5 +14,6 @@ namespace Application.Activities
         public Kategorie Kategorie { get; init; }
         public Intervall Intervall { get; init; }
         public decimal Betrag { get; init; }
+        public string[] Tags { get; init; }
     }
 }

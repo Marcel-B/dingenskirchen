@@ -4,6 +4,7 @@ using System.Net.Mime;
 using System.Threading.Tasks;
 using Application.Activities;
 using Application.Buchungen;
+using AutoMapper;
 using Domain;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,10 +13,11 @@ namespace API.Controllers
 {
     public class BuchungenController : BaseApiController
     {
+
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<Buchung>))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<List<Buchung>>> GetBuchungen()
+        public async Task<ActionResult<List<BuchungDto>>> GetBuchungen()
         {
             return await Mediator.Send(new List.Query());
         }

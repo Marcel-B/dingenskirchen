@@ -1,4 +1,4 @@
-import { Grid, Header, Menu } from 'semantic-ui-react';
+import { Button, Grid, Header, Menu } from 'semantic-ui-react';
 
 import Calendar from 'react-calendar';
 import { useStore } from '../../../app/stores/store';
@@ -65,23 +65,31 @@ const ActivityFilters = () => {
           </Grid>
         </Menu.Item>
       </Menu>
-      <Header as={'h2'} content='Filter'/>
+      <Header as={'h2'} content='Filter (besser über den Kalender - selektierter Monat - hier Labels?)'/>
       <Grid>
         <Grid.Row>
-          <Grid.Column>Jan</Grid.Column>
-          <Grid.Column>Feb</Grid.Column>
-          <Grid.Column>Mrz</Grid.Column>
-          <Grid.Column>Aprl</Grid.Column>
-          <Grid.Column>Mai</Grid.Column>
-          <Grid.Column>Jun</Grid.Column>
+          <Grid.Column>
+            <Button.Group>
+            <Button content="Januar"/>
+            <Button content="Februar"/>
+            <Button content="März"/>
+            <Button content="April"/>
+            <Button content="Mai"/>
+            <Button content="Juni"/>
+            <Button content="Juli"/>
+            </Button.Group>
+          </Grid.Column>
         </Grid.Row>
         <Grid.Row>
-          <Grid.Column>Jul</Grid.Column>
-          <Grid.Column>Aug</Grid.Column>
-          <Grid.Column>Sep</Grid.Column>
-          <Grid.Column>Oktl</Grid.Column>
-          <Grid.Column>Nov</Grid.Column>
-          <Grid.Column>Dez</Grid.Column>
+        <Grid.Column>
+            <Button.Group>
+            <Button content="August"/>
+            <Button content="September"/>
+            <Button content="Oktober"/>
+            <Button content="November"/>
+            <Button content="Dezember"/>
+            </Button.Group>
+          </Grid.Column>
         </Grid.Row>
       </Grid>
       <Header />

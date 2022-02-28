@@ -8,4 +8,5 @@ export interface Buchung {
   intervall: number;
   created?: Date | null;
   updated?: Date | null;
+  tags?: string[];
 }

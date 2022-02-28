@@ -12,7 +12,12 @@ namespace Application.Core
         {
             CreateMap<Buchung, Buchung>()
                 .ForMember(d => d.Updated, opt => opt.MapFrom(a => DateTime.Now));
-            CreateMap<BuchungDto, Buchung>().ReverseMap();
+
+            CreateMap<BuchungDto, Buchung>()
+                .ForMember(d => d.Tags, opt => opt.MapFrom(b => b.Tags.Select(t => new Tag { Name = t})));
+
+            CreateMap<Buchung, BuchungDto>()
+                .ForMember(dest => dest.Tags, src => src.MapFrom(buchung => buchung.Tags.Select(tag => tag.Name)));
         }
     }
 }

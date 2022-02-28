@@ -1,4 +1,4 @@
-import { Button, Grid, Icon, List, Segment } from 'semantic-ui-react';
+import { Button, Grid, Icon, Label, List, Segment } from 'semantic-ui-react';
 
 import { Buchung } from '../../../app/models/buchung';
 import { Link } from 'react-router-dom';
@@ -55,13 +55,18 @@ const BuchungListItem = ({ buchung }: Props) => {
             </List.Item>
           </List>
         </Grid.Column>
-        <Grid.Column width='8'>
+        <Grid.Column width='7'>
           <List>
             <List.Item as={'h2'}> {buchung.name}</List.Item>
             <List.Item> {buchung.beschreibung}</List.Item>
           </List>
         </Grid.Column>
-        <Grid.Column width='4' floated='right'>
+        <Grid.Column width='2'>
+          <List>
+            {buchung.tags?.map(tag => (<Label content={tag}/>))}
+          </List>
+        </Grid.Column>
+        <Grid.Column width='3' floated='right'>
           <Button
             as={Link}
             to={`/app/buchungen/${buchung.id}`}
