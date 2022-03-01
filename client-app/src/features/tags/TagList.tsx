@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../app/stores/store';
-import { List } from 'semantic-ui-react';
+import {Button, Grid, Icon, List} from 'semantic-ui-react';
 import { useEffect } from 'react';
 
 const TagList = () => {
@@ -12,7 +12,19 @@ const TagList = () => {
 
   return (
     <List>
-      {tags.map(tag => (<List.Item content={tag.name} />))}
+      {tags.map(tag => (<>
+        <List.Item key={tag.id}>
+          <Grid columns={2}>
+            <Grid.Column>
+              {tag.name}
+            </Grid.Column>
+            <Grid.Column>
+              <Button icon color='red'>
+               <Icon name='times'/>
+              </Button>
+            </Grid.Column>
+          </Grid>
+        </List.Item></>))}
     </List>
   );
 };
