@@ -10,10 +10,9 @@ namespace Application.Buchungen
         {
             RuleFor(x => x.Name).NotEmpty();
             RuleFor(x => x.Betrag).NotEmpty().GreaterThan(0);
-            // RuleFor(x => x.Date).NotEmpty();
-            // RuleFor(x => x.Category).NotEmpty();
-            // RuleFor(x => x.City).NotEmpty();
-            // RuleFor(x => x.Venue).NotEmpty();
+            RuleFor(x => x.Zeitpunkt).NotEmpty();
+            RuleFor(x => x.Kategorie).NotEmpty();
+            RuleFor(x => x.Intervall).NotEmpty();
         }
     }
 }

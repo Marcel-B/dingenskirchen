@@ -8,7 +8,6 @@ const TagList = () => {
 
   useEffect(() => {
     loadTags().catch((error) => console.log(error));
-
   }, [tags, loadTags]);
 
   return (

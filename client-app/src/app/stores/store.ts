@@ -1,7 +1,7 @@
 import { createContext, useContext } from 'react';
 import CommonStore from './commonStore';
 import UserStore from './userStore';
-import { ModalStore } from '../models/modalStore';
+import { ModalStore } from './modalStore';
 import BuchungStore from './buchungStore';
 import TagStore from './tagStore';
 
