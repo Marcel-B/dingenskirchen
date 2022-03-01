@@ -3,12 +3,14 @@ import CommonStore from './commonStore';
 import UserStore from './userStore';
 import { ModalStore } from '../models/modalStore';
 import BuchungStore from './buchungStore';
+import TagStore from './tagStore';
 
 interface Store {
   buchungStore: BuchungStore;
   commonStore: CommonStore;
   userStore: UserStore;
   modalStore: ModalStore;
+  tagStore: TagStore;
 }
 
 export const store: Store = {
@@ -16,6 +18,7 @@ export const store: Store = {
   commonStore: new CommonStore(),
   userStore: new UserStore(),
   modalStore: new ModalStore(),
+  tagStore: new TagStore(),
 };
 
 export const StoreContext = createContext(store);

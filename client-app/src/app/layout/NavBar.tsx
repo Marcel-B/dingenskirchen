@@ -3,12 +3,13 @@ import { Link, NavLink, useNavigate } from 'react-router-dom';
 
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../stores/store';
+import LoginForm from '../../features/users/LoginForm';
+import React from 'react';
+import TagForm from '../../features/tags/TagForm';
 
 const NavBar = () => {
   const navigate = useNavigate();
-  const {
-    userStore: { user, logout },
-  } = useStore();
+  const { userStore: { user, logout }, modalStore: { openModal } } = useStore();
 
   const handleLogout = () => {
     logout();
@@ -18,7 +19,7 @@ const NavBar = () => {
   return (
     <Menu inverted fixed='top'>
       <Container>
-        <Menu.Item as={NavLink} to={`/`} exact header>
+        <Menu.Item as={NavLink} to={`/`} header>
           <img
             src='/assets/offenes-buch.png'
             alt='logo'
@@ -27,6 +28,7 @@ const NavBar = () => {
           Haushaltsbuch
         </Menu.Item>
         <Menu.Item as={NavLink} to={`/app/buchungen`} name='Buchungen' />
+        <Menu.Item onClick={() => openModal(<TagForm />)} name='Tags' />
         <Menu.Item>
           <Button
             as={NavLink}
@@ -59,7 +61,8 @@ const NavBar = () => {
         </Menu.Item>
       </Container>
     </Menu>
-  );
+  )
+    ;
 };
 
 export default observer(NavBar);

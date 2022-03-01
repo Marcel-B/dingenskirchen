@@ -42,9 +42,9 @@ public class Create
                 {
                     Intervall.Einmalig => request.Buchung.Betrag,
                     Intervall.Monat => request.Buchung.Betrag,
-                    Intervall.Quartal => request.Buchung.Betrag / 3,
-                    Intervall.Halbjahr => request.Buchung.Betrag / 6,
-                    Intervall.Jahr => request.Buchung.Betrag / 12
+                    Intervall.Quartal => request.Buchung.Betrag / 3M,
+                    Intervall.Halbjahr => request.Buchung.Betrag / 6M,
+                    Intervall.Jahr => request.Buchung.Betrag / 12M
                 }
             };
 

@@ -4,6 +4,7 @@ import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Buchung } from '../models/buchung';
 import { store } from '../stores/store';
 import { toast } from 'react-toastify';
+import { Tag } from '../models/tag';
 
 const sleep = (delay: number) => {
   return new Promise((resolve) => setTimeout(resolve, delay));
@@ -56,7 +57,7 @@ axios.interceptors.response.use(
         break;
     }
     return Promise.reject(error);
-  }
+  },
 );
 
 const responseBody = <T>(response: AxiosResponse<T>) => response.data;
@@ -78,6 +79,10 @@ const Buchungen = {
   delete: (id: string) => requests.del<void>(`/buchungen/${id}`),
 };
 
+const Tags = {
+  list: () => requests.get<Tag[]>('/tag'),
+};
+
 const Account = {
   current: () => requests.get<User>('/account'),
   login: (user: UserFormValues) => requests.post<User>('/account/login', user),
@@ -87,6 +92,7 @@ const Account = {
 
 const agent = {
   Buchungen,
+  Tags,
   Account,
 };
 
