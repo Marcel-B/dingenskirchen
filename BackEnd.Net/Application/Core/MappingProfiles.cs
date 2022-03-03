@@ -13,11 +13,11 @@ namespace Application.Core
             CreateMap<Buchung, Buchung>()
                 .ForMember(d => d.Updated, opt => opt.MapFrom(a => DateTime.Now));
 
-            CreateMap<BuchungDto, Buchung>()
-                .ForMember(d => d.Tags, opt => opt.MapFrom(b => b.Tags.Select(t => new Tag { Name = t})));
+            CreateMap<BuchungDto, Buchung>();
+            // .ForMember(d => d.Tags, opt => opt.MapFrom(b => b.Tags.Select(tag => tag)));
 
-            CreateMap<Buchung, BuchungDto>()
-                .ForMember(dest => dest.Tags, src => src.MapFrom(buchung => buchung.Tags.Select(tag => tag.Name)));
+            CreateMap<Buchung, BuchungDto>();
+                // .ForMember(dest => dest.Tags, src => src.MapFrom(buchung => buchung.Tags.Select(tag => tag)));
         }
     }
 }

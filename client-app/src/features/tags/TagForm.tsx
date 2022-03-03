@@ -8,7 +8,7 @@ import { v4 as uuid } from 'uuid';
 
 const TagForm = () => {
   const navigate = useNavigate();
-  const { tagStore: { createTag, deleteTag }, modalStore: {closeModal} } = useStore();
+  const { tagStore: { createTag }, modalStore: {closeModal} } = useStore();
 
   const submitTag = (name: string) => {
     createTag({ name, id: uuid() }).then(() => navigate('/app/buchungen')).catch((error) => console.log(error));

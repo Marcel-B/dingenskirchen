@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.Mime;
+using System.Threading;
 using System.Threading.Tasks;
 using Application.Tags.Commands;
 using Application.Tags.Queries;
@@ -25,7 +26,13 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<Tag>> GetTag(Guid id)
         {
-            return await Mediator.Send(new GetTagQuery { Id = id });
+            return await Mediator.Send(new GetTagQuery {Id = id});
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> GetTag(Guid id, CancellationToken cancellationToken)
+        {
+            return Ok(await Mediator.Send(new DeleteTagCommand {Id = id}, cancellationToken));
         }
 
         [HttpPost]
@@ -39,7 +46,7 @@ namespace API.Controllers
                 return BadRequest();
             }
 
-            return Created(nameof(GetTag), await Mediator.Send(new CreateTagCommand { Tag = tag }));
+            return Created(nameof(GetTag), await Mediator.Send(new CreateTagCommand {Tag = tag}));
         }
     }
 }

@@ -9,30 +9,23 @@ interface Props {
 }
 
 const BuchungListItem = ({ buchung }: Props) => {
-  const formatBetrag = (value: number) => {
-    return new Intl.NumberFormat('de-DE', {
-      style: 'currency',
-      currency: 'EUR',
-    }).format(value);
-  };
-
   return (
     <Segment>
       <Grid>
         <Grid.Column width='4'>
           <List>
-            <List.Item as={'h3'}>
+            <List.Item key={'ddds'} as={'h3'}>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 {buchung.kategorie === 2 ? (
                   <Icon name={`arrow alternate circle up`} color='red' />
                 ) : (
                   <Icon name={`arrow alternate circle down`} color='green' />
                 )}
-               <BuchungBetragItem betrag={buchung.betrag!}
-               intervall={buchung.intervall}/>
+                <BuchungBetragItem betrag={buchung.betrag!}
+                                   intervall={buchung.intervall} />
               </div>
             </List.Item>
-            <List.Item>
+            <List.Item key={'ddda'}>
               {buchung.intervall === 1 ? (
                 <Icon name='calendar check outline' />
               ) : buchung.intervall === 2 ? (
@@ -57,13 +50,13 @@ const BuchungListItem = ({ buchung }: Props) => {
         </Grid.Column>
         <Grid.Column width='7'>
           <List>
-            <List.Item as={'h2'}> {buchung.name}</List.Item>
-            <List.Item> {buchung.beschreibung}</List.Item>
+            <List.Item key={buchung.name} as={'h2'}> {buchung.name}</List.Item>
+            <List.Item key={buchung.id}> {buchung.beschreibung}</List.Item>
           </List>
         </Grid.Column>
         <Grid.Column width='2'>
           <List>
-            {buchung.tags?.map(tag => (<Label content={tag}/>))}
+            {buchung.tags.map(tag => (<Label key={tag.id} content={tag.name} />))}
           </List>
         </Grid.Column>
         <Grid.Column width='3' floated='right'>

@@ -15,6 +15,8 @@ Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-co
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{96ADA2F8-8B14-4866-BF6E-EDC8123699B2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API.Integration.Tests", "API.Integration.Tests\API.Integration.Tests.csproj", "{EE06A1C0-9E2F-4AFE-91A3-4BC0E429E803}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -100,6 +102,18 @@ Global
 		{96ADA2F8-8B14-4866-BF6E-EDC8123699B2}.Release|x64.Build.0 = Release|Any CPU
 		{96ADA2F8-8B14-4866-BF6E-EDC8123699B2}.Release|x86.ActiveCfg = Release|Any CPU
 		{96ADA2F8-8B14-4866-BF6E-EDC8123699B2}.Release|x86.Build.0 = Release|Any CPU
+		{EE06A1C0-9E2F-4AFE-91A3-4BC0E429E803}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE06A1C0-9E2F-4AFE-91A3-4BC0E429E803}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE06A1C0-9E2F-4AFE-91A3-4BC0E429E803}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{EE06A1C0-9E2F-4AFE-91A3-4BC0E429E803}.Debug|x64.Build.0 = Debug|Any CPU
+		{EE06A1C0-9E2F-4AFE-91A3-4BC0E429E803}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{EE06A1C0-9E2F-4AFE-91A3-4BC0E429E803}.Debug|x86.Build.0 = Debug|Any CPU
+		{EE06A1C0-9E2F-4AFE-91A3-4BC0E429E803}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE06A1C0-9E2F-4AFE-91A3-4BC0E429E803}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE06A1C0-9E2F-4AFE-91A3-4BC0E429E803}.Release|x64.ActiveCfg = Release|Any CPU
+		{EE06A1C0-9E2F-4AFE-91A3-4BC0E429E803}.Release|x64.Build.0 = Release|Any CPU
+		{EE06A1C0-9E2F-4AFE-91A3-4BC0E429E803}.Release|x86.ActiveCfg = Release|Any CPU
+		{EE06A1C0-9E2F-4AFE-91A3-4BC0E429E803}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		Policies = $0

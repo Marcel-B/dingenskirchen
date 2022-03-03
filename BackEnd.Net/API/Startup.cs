@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using API.Extensions;
 using API.Middleware;
 using Application.Buchungen;
@@ -29,7 +30,9 @@ public class Startup
                 var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
                 opt.Filters.Add(new AuthorizeFilter(policy));
             })
-            .AddFluentValidation(config => { config.RegisterValidatorsFromAssemblyContaining<Create>(); });
+            .AddFluentValidation(config => { config.RegisterValidatorsFromAssemblyContaining<Create>(); })
+            .AddJsonOptions(o => o.JsonSerializerOptions
+                            .ReferenceHandler = ReferenceHandler.IgnoreCycles);
         services.AddApplicationServices(_config);
         services.AddIdentityServices(_config);
     }

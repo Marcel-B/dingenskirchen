@@ -1,14 +1,14 @@
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../app/stores/store';
-import {Button, Grid, Icon, List} from 'semantic-ui-react';
+import { Button, Grid, Icon, List } from 'semantic-ui-react';
 import { useEffect } from 'react';
 
 const TagList = () => {
-  const { tagStore: { tags, loadTags } } = useStore();
+  const { tagStore: { tags, loadTags, deleteTag } } = useStore();
 
   useEffect(() => {
     loadTags().catch((error) => console.log(error));
-  }, [tags, loadTags]);
+  }, [loadTags]);
 
   return (
     <List>
@@ -19,8 +19,8 @@ const TagList = () => {
               {tag.name}
             </Grid.Column>
             <Grid.Column>
-              <Button icon color='red'>
-               <Icon name='times'/>
+              <Button icon color='red' onClick={() => deleteTag(tag.id)}>
+                <Icon name='times' />
               </Button>
             </Grid.Column>
           </Grid>

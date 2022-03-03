@@ -3,6 +3,7 @@ import { makeAutoObservable, runInAction } from 'mobx';
 import { Buchung } from '../models/buchung';
 import agent from '../api/agent';
 import { format } from 'date-fns';
+import { Tag } from '../models/tag';
 
 export default class BuchungStore {
   buchungRegistry = new Map<string, Buchung>();
@@ -15,10 +16,26 @@ export default class BuchungStore {
     makeAutoObservable(this);
   }
 
+  addTag = (buchung: Buchung, tag: Tag) => {
+    runInAction(() => {
+      buchung.tags =  [...buchung.tags, tag];
+    });
+  };
+
+  removeTag = (buchung: Buchung, tag: Tag) => {
+    runInAction(() => {
+      buchung.tags = [...buchung.tags.filter(t => t.id !== tag.id)];
+    })
+  }
+
   get buchungenByDate() {
     return Array.from(this.buchungRegistry.values()).sort(
-      (a, b) => a.zeitpunkt!.getTime() - b.zeitpunkt!.getTime()
+      (a, b) => a.zeitpunkt!.getTime() - b.zeitpunkt!.getTime(),
     );
+  }
+
+  get getTags(){
+    return this.selectedBuchung?.tags;
   }
 
   get groupedBuchungen() {
@@ -29,7 +46,7 @@ export default class BuchungStore {
           ? [...buchungen[zeitpunkt], buchung]
           : [buchung];
         return buchungen;
-      }, {} as { [key: string]: Buchung[] })
+      }, {} as { [key: string]: Buchung[] }),
     );
   }
 
@@ -160,6 +177,7 @@ export default class BuchungStore {
       });
     }
   };
+
 
   deleteBuchung = async (id: string) => {
     this.loading = true;

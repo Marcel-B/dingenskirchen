@@ -4,22 +4,21 @@ using Persistence;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Application.Tags
+namespace Application.Tags;
+
+public class CreateTagCommandHandler : IRequestHandler<CreateTagCommand>
 {
-    public class CreateTagCommandHandler : IRequestHandler<CreateTagCommand>
+    private readonly DataContext context;
+
+    public CreateTagCommandHandler(DataContext context)
     {
-        private readonly DataContext context;
+        this.context = context;
+    }
 
-        public CreateTagCommandHandler(DataContext context)
-        {
-            this.context = context;
-        }
-
-        public async Task<Unit> Handle(CreateTagCommand request, CancellationToken cancellationToken)
-        {
-            context.Tags.Add(request.Tag);
-            await context.SaveChangesAsync(cancellationToken);
-            return Unit.Value;
-        }
+    public async Task<Unit> Handle(CreateTagCommand request, CancellationToken cancellationToken)
+    {
+        context.Tags.Add(request.Tag);
+        await context.SaveChangesAsync(cancellationToken);
+        return Unit.Value;
     }
 }

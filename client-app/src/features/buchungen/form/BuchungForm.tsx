@@ -17,9 +17,10 @@ import MyTextInput from '../../../app/common/form/MyTextInput';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../../app/stores/store';
 import { v4 as uuid } from 'uuid';
+import TagForm from './TagForm';
 
 const BuchungForm = () => {
-  const { buchungStore } = useStore();
+  const { buchungStore, tagStore: { tags, loadTags } } = useStore();
   const { createBuchung, updateBuchung, loading, loadBuchung, deleteBuchung } =
     buchungStore;
   const { id } = useParams<{ id: string }>();
@@ -28,15 +29,17 @@ const BuchungForm = () => {
   const [buchung, setBuchung] = useState<Buchung>({
     name: '',
     beschreibung: '',
-    betrag: null,
+    betrag: 0,
     zeitpunkt: null,
     kategorie: 0,
     intervall: 0,
+    tags: [],
     id: '',
   });
 
   const validationSchema = Yup.object({
     name: Yup.string().required(),
+    betrag: Yup.number().required(),
   });
 
   const handleFormSubmit = (buchung: Buchung) => {
@@ -58,17 +61,26 @@ const BuchungForm = () => {
       .catch((error) => console.log(error));
   };
 
+  // const handleAddTag = (tag: Tag) => {
+  //   addTag(buchung, tag);
+  // };
+  //
+  // const handleRemoveTag = (tag: Tag) => {
+  //   removeTag(buchung, tag);
+  // };
+
   useEffect(() => {
+    loadTags().catch(error => console.log(error));
     if (id) {
       loadBuchung(id)
         .then((buchung) => setBuchung(buchung!))
         .catch((error) => console.log(error));
     }
-  }, [id, loadBuchung]);
+  }, [id, loadBuchung, loadTags]);
 
   return (
-    <Segment clearing style={{ marginTop: 80 }}>
-      <Header content='Neue Buchung' sub color='teal' />
+    <Segment clearing style={{ marginTop: '7rem' }}>
+      <Header content='Neue Buchung' color='orange' />
       <Formik
         validationSchema={validationSchema}
         initialValues={buchung}
@@ -76,14 +88,15 @@ const BuchungForm = () => {
         onSubmit={(values) => handleFormSubmit(values)}>
         {({ handleSubmit, isSubmitting }) => (
           <Form className='ui form' onSubmit={handleSubmit}>
-            <MyTextInput placeholder='Name' name='name' />
+            {/*<Grid>*/}
+            {/*  <Grid.Column width={10}>*/}
+            <MyTextInput placeholder='Name' type='text' name='name' />
             <MyTextInput placeholder='Betrag' type='number' name='betrag' />
             <MyTextArea
               rows={3}
               placeholder='Beschreibung'
               name='beschreibung'
             />
-
             <MyDateInput
               placeholderText='Zeitpunkt'
               name='zeitpunkt'
@@ -100,10 +113,12 @@ const BuchungForm = () => {
               placeholder='Intervall'
               name='intervall'
             />
+            <TagForm buchung={buchung} id={buchung.id} />
             <Button
               disabled={isSubmitting}
               loading={loading}
               floated='right'
+              type='button'
               color='red'
               content='Löschen'
               onClick={() => handleDelete(buchung.id)}

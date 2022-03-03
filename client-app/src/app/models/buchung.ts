@@ -1,3 +1,5 @@
+import { Tag } from './tag';
+
 export interface Buchung {
   id: string;
   name: string;
@@ -8,5 +10,5 @@ export interface Buchung {
   intervall: number;
   created?: Date | null;
   updated?: Date | null;
-  tags?: string[];
+  tags: Tag[];
 }

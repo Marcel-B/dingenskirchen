@@ -82,7 +82,8 @@ const Buchungen = {
 const Tags = {
   list: () => requests.get<Tag[]>('/tag'),
   details: (id: string) => requests.get<Tag>(`/tag/${id}`),
-  create: (tag: Tag) => requests.post<void>(`/tag`, tag)
+  create: (tag: Tag) => requests.post<void>(`/tag`, tag),
+  delete: (id: string) => requests.del<void>(`/tag/${id}`),
 };
 
 const Account = {

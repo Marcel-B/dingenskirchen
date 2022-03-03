@@ -16,6 +16,7 @@ namespace Application.Buchungen
         public class Handler : IRequestHandler<Command>
         {
             private readonly DataContext _context;
+
             public Handler(DataContext context)
             {
                 _context = context;
@@ -23,11 +24,11 @@ namespace Application.Buchungen
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
-                var activity = await _context.Buchungen.FindAsync(request.Id);
+                var buchung = await _context.Buchungen.FindAsync(request.Id);
 
-                _context.Remove(activity);
+                _context.Remove(buchung);
 
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync(cancellationToken);
 
                 return Unit.Value;
             }
