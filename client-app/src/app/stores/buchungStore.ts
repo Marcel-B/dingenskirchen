@@ -1,6 +1,6 @@
 import { makeAutoObservable, runInAction } from 'mobx';
 
-import { Buchung } from '../models/buchung';
+import { Buchung, BuchungFormValues } from '../models/buchung';
 import agent from '../api/agent';
 import { format } from 'date-fns';
 import { Tag } from '../models/tag';
@@ -16,17 +16,17 @@ export default class BuchungStore {
     makeAutoObservable(this);
   }
 
-  addTag = (buchung: Buchung, tag: Tag) => {
+  addTag = (buchung: BuchungFormValues, tag: Tag) => {
     runInAction(() => {
-      buchung.tags =  [...buchung.tags, tag];
+      buchung.tags = [...buchung.tags, tag];
     });
   };
 
-  removeTag = (buchung: Buchung, tag: Tag) => {
+  removeTag = (buchung: BuchungFormValues, tag: Tag) => {
     runInAction(() => {
       buchung.tags = [...buchung.tags.filter(t => t.id !== tag.id)];
-    })
-  }
+    });
+  };
 
   get buchungenByDate() {
     return Array.from(this.buchungRegistry.values()).sort(
@@ -34,7 +34,7 @@ export default class BuchungStore {
     );
   }
 
-  get getTags(){
+  get getTags() {
     return this.selectedBuchung?.tags;
   }
 
@@ -140,14 +140,15 @@ export default class BuchungStore {
     this.loadingInitial = state;
   };
 
-  createBuchung = async (buchung: Buchung) => {
+  createBuchung = async (buchung: BuchungFormValues) => {
     this.loading = true;
     try {
       await agent.Buchungen.create(buchung);
+      const newBuchung = new Buchung(buchung);
+      this.setBuchung(newBuchung);
       runInAction(() => {
         // this.buchungen.push(buchung);
-        this.buchungRegistry.set(buchung.id, buchung);
-        this.selectedBuchung = buchung;
+        this.selectedBuchung = newBuchung;
         this.editMode = false;
         this.loading = false;
       });
@@ -159,14 +160,16 @@ export default class BuchungStore {
     }
   };
 
-  updateBuchung = async (buchung: Buchung) => {
+  updateBuchung = async (buchung: BuchungFormValues) => {
     this.loading = true;
     try {
       await agent.Buchungen.update(buchung);
       runInAction(() => {
-        // this.buchungen = [...this.buchungen.filter(a => a.id !== buchung.id), buchung];
-        this.buchungRegistry.set(buchung.id, buchung);
-        this.selectedBuchung = buchung;
+        if (buchung.id) {
+          let updatedBuchung = { ...this.getBuchung(buchung.id), ...buchung };
+          this.buchungRegistry.set(buchung.id, updatedBuchung as Buchung);
+          this.selectedBuchung = updatedBuchung as Buchung;
+        }
         this.editMode = false;
         this.loading = false;
       });

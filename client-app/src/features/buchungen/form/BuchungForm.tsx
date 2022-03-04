@@ -6,10 +6,10 @@ import {
   intervallOptions,
   kategorieOptions,
 } from '../../../app/common/options/categoryOptions';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { Buchung } from '../../../app/models/buchung';
+import { Buchung, BuchungFormValues } from '../../../app/models/buchung';
 import MyDateInput from '../../../app/common/form/MyDateInput';
 import MySelectInput from '../../../app/common/form/MySelectInput';
 import MyTextArea from '../../../app/common/form/MyTextArea';
@@ -18,65 +18,72 @@ import { observer } from 'mobx-react-lite';
 import { useStore } from '../../../app/stores/store';
 import { v4 as uuid } from 'uuid';
 import TagForm from './TagForm';
+import { Tag } from '../../../app/models/tag';
 
 const BuchungForm = () => {
   const { buchungStore, tagStore: { tags, loadTags } } = useStore();
-  const { createBuchung, updateBuchung, loading, loadBuchung, deleteBuchung } =
+  const { createBuchung, updateBuchung, loading, loadBuchung, deleteBuchung, addTag, removeTag } =
     buchungStore;
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
 
-  const [buchung, setBuchung] = useState<Buchung>({
-    name: '',
-    beschreibung: '',
-    betrag: 0,
-    zeitpunkt: null,
-    kategorie: 0,
-    intervall: 0,
-    tags: [],
-    id: '',
-  });
+  const [buchung, setBuchung] = useState<BuchungFormValues>(new BuchungFormValues());
 
   const validationSchema = Yup.object({
     name: Yup.string().required(),
     betrag: Yup.number().required(),
   });
 
-  const handleFormSubmit = (buchung: Buchung) => {
-    if (buchung.id.length > 0) {
-      updateBuchung(buchung)
-        .then(() => navigate('/app/buchungen'))
-        .catch((error) => console.log(error));
-    } else {
-      buchung.id = uuid();
-      createBuchung(buchung)
+  const handleFormSubmit = (buchung: BuchungFormValues) => {
+    console.log('buchung form', buchung.tags);
+    // if (buchung.id) {
+    //   updateBuchung(buchung)
+    //     .then(() => navigate('/app/buchungen'))
+    //     .catch((error) => console.log(error));
+    // } else {
+    //   let newBuchung = {
+    //     ...buchung,
+    //     id: uuid(),
+    //   };
+    //   createBuchung(newBuchung)
+    //     .then(() => navigate('/app/buchungen'))
+    //     .catch((error) => console.log(error));
+    // }
+  };
+
+  const handleDelete = (id: string | undefined) => {
+    if (id) {
+      deleteBuchung(id)
         .then(() => navigate('/app/buchungen'))
         .catch((error) => console.log(error));
     }
   };
 
-  const handleDelete = (id: string) => {
-    deleteBuchung(id)
-      .then(() => navigate('/app/buchungen'))
-      .catch((error) => console.log(error));
+  const handleAddTag = (tag: Tag) => {
+    console.log('++++++ Add Tag');
+    console.log('Add Tag Clicked', tag);
+    console.log('Tags', buchung.tags.length);
+    buchung.tags.forEach(tag => console.log('Tag:', tag.name));
+    console.log('++++++++++++++++++++++++');
   };
 
-  // const handleAddTag = (tag: Tag) => {
-  //   addTag(buchung, tag);
-  // };
-  //
-  // const handleRemoveTag = (tag: Tag) => {
-  //   removeTag(buchung, tag);
-  // };
+  const handleRemoveTag = (tag: Tag) => {
+    console.log('------ Remove Tag');
+    removeTag(buchung, tag);
+    console.log('Remove Tag Clicked', tag);
+    console.log('Tags', buchung.tags.length);
+    buchung.tags.forEach(tag => console.log('Tag:', tag.name));
+    console.log('-------------------------');
+  };
 
   useEffect(() => {
     loadTags().catch(error => console.log(error));
     if (id) {
       loadBuchung(id)
-        .then((buchung) => setBuchung(buchung!))
+        .then((buchung) => setBuchung(new BuchungFormValues(buchung)))
         .catch((error) => console.log(error));
     }
-  }, [id, loadBuchung, loadTags]);
+  }, [id, loadBuchung, loadTags, addTag, removeTag]);
 
   return (
     <Segment clearing style={{ marginTop: '7rem' }}>
@@ -113,7 +120,7 @@ const BuchungForm = () => {
               placeholder='Intervall'
               name='intervall'
             />
-            <TagForm buchung={buchung} id={buchung.id} />
+            <TagForm buchung={buchung} addTag={handleAddTag} removeTag={handleRemoveTag} />
             <Button
               disabled={isSubmitting}
               loading={loading}

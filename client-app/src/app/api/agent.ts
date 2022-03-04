@@ -1,7 +1,7 @@
 import { User, UserFormValues } from '../models/user';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 
-import { Buchung } from '../models/buchung';
+import { Buchung, BuchungFormValues } from '../models/buchung';
 import { store } from '../stores/store';
 import { toast } from 'react-toastify';
 import { Tag } from '../models/tag';
@@ -73,8 +73,8 @@ const requests = {
 const Buchungen = {
   list: () => requests.get<Buchung[]>('/buchungen'),
   details: (id: string) => requests.get<Buchung>(`/buchungen/${id}`),
-  create: (activity: Buchung) => requests.post<void>(`/buchungen`, activity),
-  update: (activity: Buchung) =>
+  create: (activity: BuchungFormValues) => requests.post<void>(`/buchungen`, activity),
+  update: (activity: BuchungFormValues) =>
     requests.put<void>(`/buchungen/${activity.id}`, activity),
   delete: (id: string) => requests.del<void>(`/buchungen/${id}`),
 };
