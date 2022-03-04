@@ -5,6 +5,7 @@ import BuchungForm from "../../features/buchungen/form/BuchungForm";
 import { Container } from "semantic-ui-react";
 import NavBar from './NavBar';
 import TestErrors from "../../features/buchungen/errors/TestError";
+import TagForm from "../../features/tags/TagForm";
 
 const MainContent = () => {
   return (
@@ -15,6 +16,7 @@ const MainContent = () => {
           <Route path='buchungen' element={<BuchungDashboard />} />
           <Route path='buchungen/:id' element={<BuchungForm />} />
           <Route path='createBuchung' element={<BuchungForm />} />
+          <Route path='createTag' element={<TagForm />} />
           <Route path='errors' element={<TestErrors />} />
         </Routes>
       </Container>

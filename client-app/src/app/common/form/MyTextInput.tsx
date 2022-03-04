@@ -1,7 +1,7 @@
-import { Form, Label } from 'semantic-ui-react';
 
 import React from 'react';
 import { useField } from 'formik';
+import {TextField} from "@mui/material";
 
 interface Props {
   placeholder: string;
@@ -12,17 +12,8 @@ interface Props {
 
 const MyTextInput = (props: Props) => {
   const [field, meta] = useField(props.name);
-
   return (
-    <Form.Field error={meta.touched && !!meta.error}>
-      <label>{props.label}</label>
-      <input {...field} {...props} />
-      {meta.touched && meta.error ? (
-        <Label basic color={`red`}>
-          {meta.error}
-        </Label>
-      ) : null}
-    </Form.Field>
+    <TextField  variant='standard' {...field} {...props} label={props.label} helperText={meta.error} error={meta.touched && !!meta.error}/>
   );
 };
 

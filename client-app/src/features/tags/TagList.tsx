@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../app/stores/store';
-import { Button, Grid, Icon, List } from 'semantic-ui-react';
 import { useEffect } from 'react';
+import {Chip, Grid} from "@mui/material";
 
 const TagList = () => {
   const { tagStore: { tags, loadTags, deleteTag } } = useStore();
@@ -11,21 +11,13 @@ const TagList = () => {
   }, [loadTags]);
 
   return (
-    <List>
-      {tags.map(tag => (<>
-        <List.Item key={tag.id}>
-          <Grid columns={2}>
-            <Grid.Column>
-              {tag.name}
-            </Grid.Column>
-            <Grid.Column>
-              <Button icon color='red' onClick={() => deleteTag(tag.id)}>
-                <Icon name='times' />
-              </Button>
-            </Grid.Column>
-          </Grid>
-        </List.Item></>))}
-    </List>
+    <Grid container spacing={2}>
+      {tags.map(tag => (
+        <Grid key={tag.id} item>
+          <Chip label={tag.name} variant="outlined" onDelete={() => deleteTag(tag.id)}/>
+        </Grid>
+      ))}
+    </Grid>
   );
 };
 

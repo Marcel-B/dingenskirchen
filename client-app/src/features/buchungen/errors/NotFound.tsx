@@ -1,21 +1,24 @@
-import {Button, Header, Icon, Segment} from "semantic-ui-react";
-
-import {Link} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
+import {Button, Card, CardActions, CardContent, Container, Typography} from "@mui/material";
+import {Search} from "@mui/icons-material";
 
 const NotFound = () => {
-    return (
-        <Segment placeholder>
-            <Header icon>
-                <Icon name={`search`}/>
-                    Oops - we've looked everywhere and could not find this.
-            </Header>
-            <Segment.Inline>
-                <Button as={Link} to={`/app/buchungen`} primary>
-                    Zur Buchungen Seite
-                </Button>
-            </Segment.Inline>
-        </Segment>
-    )
-}
+  const navigate = useNavigate();
+  return (
+    <Container>
+      <Card>
+        <CardContent>
+          <Search fontSize='large'/>
+          <Typography variant='h3'>Oops - we've looked everywhere and could not find this.</Typography>
+        </CardContent>
+        <CardActions>
+          <Button size='small' onClick={() => navigate(`/app/buchungen`)}>
+            Zur Buchungen Seite
+          </Button>
+        </CardActions>
+      </Card>
+    </Container>
+  );
+};
 
 export default NotFound;

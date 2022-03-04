@@ -1,52 +1,53 @@
-import { Form, Formik } from 'formik';
-import MyTextInput from '../../app/common/form/MyTextInput';
-import {Button, Icon} from 'semantic-ui-react';
 import TagList from './TagList';
 import { useStore } from '../../app/stores/store';
-import { useNavigate } from 'react-router-dom';
 import { v4 as uuid } from 'uuid';
+import {Card, CardActions, CardContent, Container, Stack, TextField, Typography} from "@mui/material";
+import SaveIcon from '@mui/icons-material/Save';
+import {Tag} from "../../app/models/tag";
+import {useForm, SubmitHandler} from 'react-hook-form';
+import {useEffect} from "react";
+import {LoadingButton} from "@mui/lab";
 
 const TagForm = () => {
-  const navigate = useNavigate();
-  const { tagStore: { createTag }, modalStore: {closeModal} } = useStore();
+  const {tagStore: {createTag}} = useStore();
+  const {register, handleSubmit, reset, formState: {isSubmitting, isSubmitSuccessful}} = useForm<Tag>();
 
-  const submitTag = (name: string) => {
-    createTag({ name, id: uuid() }).then(() => navigate('/app/buchungen')).catch((error) => console.log(error));
+  const onSubmit: SubmitHandler<Tag> = data => {
+    createTag({name: data.name, id: uuid()})
+      .catch((error) => console.log(error));
   };
+
+  useEffect(() => {
+    if (isSubmitSuccessful) {
+      reset({ name: '' });
+    }
+  }, [isSubmitSuccessful]);
 
   return (
     <>
-      <TagList />
-      <Formik
-        initialValues={{
-          name: '',
-        }}
-        onSubmit={(value) => submitTag(value.name)}>
-        {({ handleSubmit }) => (
-          <Form
-            className='ui form'
-            onSubmit={handleSubmit}>
-            <MyTextInput placeholder='Name' name='name' />
-            <Button
-              icon
-              labelPosition='right'
-              color='blue'
-              type='submit'>
-              <Icon name='save'/>
-              Speichern
-            </Button>
-            <Button
-              icon
-              color='orange'
-              onClick={closeModal}
-              labelPosition='right'>
-              <Icon name='times'/>
-              Schließen
-            </Button>
-          </Form>
-        )}
-
-      </Formik>
+      <Typography variant='h2'>Tags hinzufügen</Typography>
+      <Card>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <CardContent>
+            <TextField autoComplete='off' label='Name' {...register("name")}/>
+          </CardContent>
+          <CardActions>
+            <LoadingButton
+              sx={{mt: 2}}
+              color="secondary"
+              type='submit'
+              loading={isSubmitting}
+              loadingPosition="start"
+              startIcon={<SaveIcon/>}
+              variant="contained"
+            >
+              Save
+            </LoadingButton>
+          </CardActions>
+        </form>
+      </Card>
+      <br/>
+      <TagList/>
     </>
   );
 };

@@ -1,4 +1,4 @@
-import { List } from 'semantic-ui-react';
+import {Stack, Typography} from "@mui/material";
 
 interface Props {
   betrag: number;
@@ -28,14 +28,16 @@ const BuchungBetragItem = ({ betrag, intervall }: Props) => {
 
   return (
     <>
-      <List>
-        <List.Item>
+      <Stack direction='column'>
+        <Typography variant='h6'>
           {formatCurrency(conv(betrag, intervall))}
-        </List.Item>
-        {intervall > 2 ? <List.Item as={'small'}>
-          ({formatCurrency(betrag)})
-        </List.Item> : <></>}
-      </List>
+        </Typography>
+        {intervall > 2 ? (<Typography variant='caption'>
+              ({formatCurrency(betrag)})
+            </Typography>
+          )
+          : (<></>)}
+      </Stack>
     </>
   );
 };
