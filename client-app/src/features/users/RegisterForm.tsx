@@ -1,13 +1,13 @@
 import * as Yup from 'yup';
 
-import { Button, Header } from 'semantic-ui-react';
+// import { Button, Header } from 'semantic-ui-react';
 import { ErrorMessage, Form, Formik } from 'formik';
-
 import MyTextInput from '../../app/common/form/MyTextInput';
 import ValidationErrors from '../buchungen/errors/ValidationErrors';
 import { observer } from 'mobx-react-lite';
 import { useNavigate } from "react-router-dom";
 import { useStore } from '../../app/stores/store';
+import { Button, CardHeader } from '@mui/material';
 
 const RegisterForm = () => {
   const { userStore } = useStore();
@@ -39,9 +39,8 @@ const RegisterForm = () => {
           className={'ui form error'}
           onSubmit={handleSubmit}
           autoComplete={'off'}>
-          <Header
-            as={'h2'}
-            content={'Registrieren Haushaltsbuch'}
+          <CardHeader
+            title={'Registrieren Haushaltsbuch'}
             color={'teal'}
             textAlign={'center'}
           />
@@ -57,14 +56,7 @@ const RegisterForm = () => {
             name={'error'}
             render={() => <ValidationErrors errors={errors.error} />}
           />
-          <Button
-            disabled={!isValid || !dirty || isSubmitting}
-            loading={isSubmitting}
-            positive
-            content={'Registrieren'}
-            type={'submit'}
-            fluid
-          />
+          <Button>Registrieren!</Button>
         </Form>
       )}
     </Formik>

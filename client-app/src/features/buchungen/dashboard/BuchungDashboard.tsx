@@ -2,10 +2,10 @@ import React, { useEffect } from 'react';
 
 import ActivityFilters from './BuchungAside';
 import BuchungList from './BuchungList';
-import { Grid } from 'semantic-ui-react';
 import { LoadingComponent } from '../../../app/layout/LoadingComponent';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../../app/stores/store';
+import Grid from '@mui/material/Grid/Grid';
 
 const BuchungDashboard = () => {
   const { buchungStore } = useStore();
@@ -21,13 +21,13 @@ const BuchungDashboard = () => {
     return <LoadingComponent content={`Bitte warten...`} />;
 
   return (
-    <Grid >
-      <Grid.Column width='10'>
+    <Grid container spacing={2}>
+      <Grid item xs={8}>
         <BuchungList />
-      </Grid.Column>
-      <Grid.Column width='6'>
+      </Grid>
+      <Grid item xs={4}>
         <ActivityFilters />
-      </Grid.Column>
+      </Grid>
     </Grid>
   );
 };
