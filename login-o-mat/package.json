@@ -1,10 +1,10 @@
 {
-  "name": "book-o-mat",
+  "name": "login-o-mat",
   "version": "1.0.0",
   "scripts": {
     "build": "webpack --mode production",
     "build:dev": "webpack --mode development",
-    "build:start": "cd dist && PORT=3000 npx serve",
+    "build:start": "cd dist && PORT=3060 npx serve",
     "start": "webpack serve --open --mode development",
     "start:live": "webpack serve --open --mode development --live-reload --hot"
   },
@@ -36,14 +36,9 @@
   },
   "dependencies": {
     "axios": "^0.26.0",
-    "date-fns": "^2.28.0",
     "mobx": "^6.4.2",
     "mobx-react-lite": "^3.3.0",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-hook-form": "^7.27.1",
-    "react-router-dom": "^6.2.2",
-    "uuid": "^8.3.2",
-    "yup": "^0.32.11"
+    "react-dom": "^17.0.2"
   }
 }

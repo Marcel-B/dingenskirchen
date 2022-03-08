@@ -52,7 +52,7 @@ public class Startup
 
         app.UseRouting();
 
-        app.UseCors("CorsPolicy");
+        app.UseCors(opt => opt.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 
         app.UseAuthentication();
         app.UseAuthorization();

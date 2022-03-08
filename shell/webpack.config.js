@@ -1,10 +1,11 @@
 const HtmlWebPackPlugin = require("html-webpack-plugin");
-const { ModuleFederationPlugin } = require("webpack").container;
+const webpack = require("webpack"); // only add this if you don't have yet
+const { ModuleFederationPlugin } = webpack.container;
 
 const deps = require("./package.json").dependencies;
 module.exports = {
     output: {
-        publicPath: "http://localhost:3000/",
+        publicPath: "http://localhost:3030/",
     },
 
     resolve: {
@@ -12,7 +13,7 @@ module.exports = {
     },
 
     devServer: {
-        port: 3000,
+        port: 3030,
         historyApiFallback: true,
     },
 
@@ -38,12 +39,12 @@ module.exports = {
 
     plugins: [
         new ModuleFederationPlugin({
-            name: "bookomat",
+            name: "shell",
             filename: "remoteEntry.js",
-            remotes: {},
-            exposes: {
-                "./store": "./src/app/stores/store"
+            remotes: {
+                bookomat: "bookomat@http://localhost:3000/remoteEntry.js"
             },
+            exposes: {},
             shared: {
                 ...deps,
                 react: {

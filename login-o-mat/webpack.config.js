@@ -4,7 +4,7 @@ const { ModuleFederationPlugin } = require("webpack").container;
 const deps = require("./package.json").dependencies;
 module.exports = {
     output: {
-        publicPath: "http://localhost:3000/",
+        publicPath: "http://localhost:3060/",
     },
 
     resolve: {
@@ -12,7 +12,7 @@ module.exports = {
     },
 
     devServer: {
-        port: 3000,
+        port: 3060,
         historyApiFallback: true,
     },
 
@@ -38,12 +38,12 @@ module.exports = {
 
     plugins: [
         new ModuleFederationPlugin({
-            name: "bookomat",
+            name: "loginomat",
             filename: "remoteEntry.js",
-            remotes: {},
-            exposes: {
-                "./store": "./src/app/stores/store"
+            remotes: {
+                bookomat: "bookomat@http://localhost:3000/remoteEntry.js"
             },
+            exposes: {},
             shared: {
                 ...deps,
                 react: {

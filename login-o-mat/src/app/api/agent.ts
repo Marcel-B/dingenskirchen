@@ -1,9 +1,7 @@
 import { User, UserFormValues } from '../models/user';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 
-import { Buchung, BuchungFormValues } from '../models/buchung';
-import { store } from '../stores/store';
-import { Tag } from '../models/tag';
+import { store } from 'bookomat/store';
 
 const sleep = (delay: number) => {
   return new Promise((resolve) => setTimeout(resolve, delay));
@@ -69,22 +67,6 @@ const requests = {
   del: <T>(url: string) => axios.delete<T>(url).then(responseBody),
 };
 
-const Buchungen = {
-  list: () => requests.get<Buchung[]>('/buchungen'),
-  details: (id: string) => requests.get<Buchung>(`/buchungen/${id}`),
-  create: (activity: BuchungFormValues) => requests.post<void>(`/buchungen`, activity),
-  update: (activity: BuchungFormValues) =>
-    requests.put<void>(`/buchungen/${activity.id}`, activity),
-  delete: (id: string) => requests.del<void>(`/buchungen/${id}`),
-};
-
-const Tags = {
-  list: () => requests.get<Tag[]>('/tag'),
-  details: (id: string) => requests.get<Tag>(`/tag/${id}`),
-  create: (tag: Tag) => requests.post<void>(`/tag`, tag),
-  delete: (id: string) => requests.del<void>(`/tag/${id}`),
-};
-
 const Account = {
   current: () => requests.get<User>('/account'),
   login: (user: UserFormValues) => requests.post<User>('/account/login', user),
@@ -93,8 +75,6 @@ const Account = {
 };
 
 const agent = {
-  Buchungen,
-  Tags,
   Account,
 };
 
