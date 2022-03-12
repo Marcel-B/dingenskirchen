@@ -5,7 +5,7 @@ import { ErrorMessage, Form, Formik } from 'formik';
 import MyTextInput from '../../app/common/form/MyTextInput';
 import ValidationErrors from '../buchungen/errors/ValidationErrors';
 import { observer } from 'mobx-react-lite';
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 import { useStore } from '../../app/stores/store';
 import { Button, CardHeader } from '@mui/material';
 
@@ -21,7 +21,7 @@ const RegisterForm = () => {
         password: '',
         error: null,
       }}
-      
+
       onSubmit={(values, { setErrors }) =>
         userStore
           .register(values)
@@ -54,7 +54,9 @@ const RegisterForm = () => {
           />
           <ErrorMessage
             name={'error'}
-            render={() => <ValidationErrors errors={errors.error} />}
+            render={() =>
+              <ValidationErrors
+                errors={errors.error} />}
           />
           <Button>Registrieren!</Button>
         </Form>

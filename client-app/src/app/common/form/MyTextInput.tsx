@@ -1,7 +1,6 @@
-
 import React from 'react';
 import { useField } from 'formik';
-import {TextField} from "@mui/material";
+import { TextField } from '@mui/material';
 
 interface Props {
   placeholder: string;
@@ -13,7 +12,13 @@ interface Props {
 const MyTextInput = (props: Props) => {
   const [field, meta] = useField(props.name);
   return (
-    <TextField  variant='standard' {...field} {...props} label={props.label} helperText={meta.error} error={meta.touched && !!meta.error}/>
+    <TextField
+      variant='outlined'
+      {...field}
+      {...props}
+      label={props.placeholder}
+      helperText={meta.error}
+      error={meta.touched && !!meta.error} />
   );
 };
 

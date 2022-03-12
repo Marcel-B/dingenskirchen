@@ -1,63 +1,69 @@
-import {Button, Header, Label} from 'semantic-ui-react';
-import {ErrorMessage, Form, Formik} from 'formik';
+import { observer } from 'mobx-react-lite';
+import { useNavigate } from 'react-router-dom';
+import { useStore } from '../../app/stores/store';
+import { Button, TextField } from '@mui/material';
+import { useForm } from 'react-hook-form';
+import { UserFormValues } from '../../app/models/user';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 
-import MyTextInput from '../../app/common/form/MyTextInput';
-import {observer} from 'mobx-react-lite';
-import {useNavigate} from 'react-router-dom';
-import {useStore} from '../../app/stores/store';
+const schema = yup.object({
+  email: yup.string().email().required(),
+  password: yup.string().required(),
+}).required();
 
 const LoginForm = () => {
-    const {userStore} = useStore();
-    const navigate = useNavigate();
+  const { register, handleSubmit, formState: { errors } } = useForm<UserFormValues>({
+    resolver: yupResolver(schema),
+  });
+  const { userStore } = useStore();
+  const navigate = useNavigate();
 
-    return (
-        <Formik
-            initialValues={{email: '', password: '', error: null}}
-            onSubmit={(values, {setErrors}) =>
-                userStore
-                    .login(values)
-                    .then(() => navigate('/app/buchungen'))
-                    .catch((error) => setErrors({error: 'Invalid email or password'}))
-            }>
-            {({handleSubmit, isSubmitting, errors}) => (
-                <Form
-                    className={'ui form'}
-                    onSubmit={handleSubmit}
-                    autoComplete={'off'}>
-                    <Header
-                        as={'h2'}
-                        content={'Einloggen Haushaltsbuch'}
-                        color={'teal'}
-                        textAlign={'center'}
-                    />
-                    <MyTextInput placeholder={'Email'} name={'email'}/>
-                    <MyTextInput
-                        placeholder={'Password'}
-                        name={'password'}
-                        type={'password'}
-                    />
-                    <ErrorMessage
-                        name={'error'}
-                        render={() => (
-                            <Label
-                                style={{marginBottom: 10}}
-                                basic
-                                color={'red'}
-                                content={errors.error}
-                            />
-                        )}
-                    />
-                    <Button
-                        loading={isSubmitting}
-                        positive
-                        content={'Login'}
-                        type={'submit'}
-                        fluid
-                    />
-                </Form>
-            )}
-        </Formik>
-    );
+  const onSubmit = (data: UserFormValues) => {
+
+    userStore
+      .login(data)
+      .then(() => navigate('/app/buchungen'));
+    //.catch((error) => setErrors({ error: 'Invalid email or password' }))
+  };
+
+  return (
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      autoComplete={'off'}>
+      <h2>Einloggen Haushaltsbuch</h2>
+      <TextField
+        label='Email'
+        fullWidth
+        {...register('email')}
+        variant='outlined'
+        type={'text'}
+        margin={'dense'}
+        error={!!errors.email}
+        helperText={errors.email?.message}
+        style={{ marginRight: '1rem' }}
+        name={'email'} />
+      <TextField
+        fullWidth
+        {...register('password')}
+        label='Passwort'
+        error={!!errors.password}
+        variant='outlined'
+        helperText={errors.password?.message}
+        margin={'dense'}
+        name={'password'}
+        type={'password'}
+      />
+      <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+        <Button
+          style={{ marginTop: '1rem' }}
+          type='submit'
+          variant={'contained'}
+        >Einloggen</Button>
+      </div>
+    </form>
+  );
 };
 
 export default observer(LoginForm);
+
