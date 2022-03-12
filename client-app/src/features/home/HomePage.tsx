@@ -1,54 +1,67 @@
-import { Button, Container, Header, Image, Segment } from 'semantic-ui-react';
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
 
 import LoginForm from '../users/LoginForm';
 import React from 'react';
 import RegisterForm from '../users/RegisterForm';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../app/stores/store';
+import { Button } from '@mui/material';
 
 const HomePage = () => {
   const { userStore, modalStore } = useStore();
-
+  const navigate = useNavigate();
   return (
-      <>
-    <Segment inverted textAlign={'center'} vertical className={`masthead`}>
-      <Container>
-        <Header as={`h1`} inverted>
-          <Image
-            size={`massive`}
-            src={`/assets/offenes-buch.png`}
+    <>
+      <div className={`masthead`}>
+        <h1 style={{ textAlign: 'center', paddingTop: '3rem', marginBottom: '3rem', fontSize: '6rem' }}>Haushaltsbuch</h1>
+        <hr />
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+
+          <img
+            width='120rem'
+            src='/assets/offenes-buch.png'
             alt={`logo`}
-            style={{ marginBottom: 12 }}
+            style={{ marginBottom: '2rem', marginTop: '2rem' }}
           />
-          Haushaltsbuch
-        </Header>
-        {userStore.isLoggedIn ? (
-          <>
-            <Header as='h2' inverted content={'Willkommen im Haushaltsbuch'} />
-            <Button as={Link} to={`/app/buchungen`} size={`huge`} inverted>
-              Zu den Buchungen
-            </Button>
-          </>
-        ) : (
-          <>
-            <Button
-              onClick={() => modalStore.openModal(<LoginForm />)}
-              size={`huge`}
-              inverted>
-              Einloggen!
-            </Button>
-            <Button
-              onClick={() => modalStore.openModal(<RegisterForm />)}
-              size={`huge`}
-              inverted>
-              Registrieren!
-            </Button>
-          </>
-        )}
-      </Container>
-    </Segment>
-    <Outlet/>
+        </div>
+
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          {userStore.isLoggedIn ? (
+            <div>
+
+              <h2 style={{marginBottom: '2rem'}}>Willkommen im Haushaltsbuch</h2>
+              <div style={{ display:'flex', justifyContent: 'center' }}>
+                <Button
+                  variant={'contained'}
+                  onClick={() => navigate(`/app/buchungen`)}>
+                  Zu den Buchungen
+                </Button>
+              </div>
+            </div>
+          ) : (
+            <>
+              <div>
+                <Button
+                  variant={'contained'}
+                  style={{ margin: '1rem' }}
+                  onClick={() => modalStore.openModal(<LoginForm />)}>
+                  Einloggen!
+                </Button>
+              </div>
+              <div>
+                <Button
+                  variant={'contained'}
+                  style={{ margin: '1rem' }}
+                  onClick={() => modalStore.openModal(<RegisterForm />)}
+                >
+                  Registrieren!
+                </Button>
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+      <Outlet />
     </>
   );
 };

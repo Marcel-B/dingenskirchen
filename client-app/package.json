@@ -66,6 +66,7 @@
     "@types/react-router-dom": "5.3.3",
     "@types/uuid": "^8.3.4",
     "@types/yup": "^0.29.13",
+    "postcss-flexbugs-fixes": "^5.0.2",
     "prettier": "2.5.1"
   }
 }
