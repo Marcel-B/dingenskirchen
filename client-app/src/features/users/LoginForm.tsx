@@ -41,7 +41,6 @@ const LoginForm = () => {
         margin={'dense'}
         error={!!errors.email}
         helperText={errors.email?.message}
-        style={{ marginRight: '1rem' }}
         name={'email'} />
       <TextField
         fullWidth
