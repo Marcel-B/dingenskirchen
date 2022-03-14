@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react-lite';
 import { useNavigate } from 'react-router-dom';
 import { useStore } from '../../app/stores/store';
-import { Button, TextField } from '@mui/material';
+import { Button, TextField, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { UserFormValues } from '../../app/models/user';
 import * as yup from 'yup';
@@ -31,7 +31,7 @@ const LoginForm = () => {
     <form
       onSubmit={handleSubmit(onSubmit)}
       autoComplete={'off'}>
-      <h2>Einloggen Haushaltsbuch</h2>
+      <Typography variant={'h5'} component={'h2'}>Einloggen Haushaltsbuch</Typography>
       <TextField
         label='Email'
         fullWidth

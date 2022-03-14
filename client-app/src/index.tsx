@@ -2,17 +2,20 @@ import './app/layout/styles.css';
 import 'react-calendar/dist/Calendar.css';
 import 'react-toastify/dist/ReactToastify.min.css';
 import 'react-datepicker/dist/react-datepicker.min.css';
-
 import App from './app/layout/App';
 import { BrowserRouter } from 'react-router-dom';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import reportWebVitals from './reportWebVitals';
+import { LocalizationProvider } from '@mui/lab';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
+      <LocalizationProvider dateAdapter={AdapterDateFns}>
       <App />
+      </LocalizationProvider>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')

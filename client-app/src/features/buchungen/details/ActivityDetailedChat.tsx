@@ -1,10 +1,10 @@
 import { observer } from "mobx-react-lite";
 import React from "react";
-import { Segment, Header, Comment, Form, Button } from "semantic-ui-react";
 
 const ActivityDetailedChat = () => {
   return (
     <>
+{/*
       <Segment
         textAlign="center"
         attached="top"
@@ -55,6 +55,7 @@ const ActivityDetailedChat = () => {
           </Form>
         </Comment.Group>
       </Segment>
+*/}
     </>
   );
 };

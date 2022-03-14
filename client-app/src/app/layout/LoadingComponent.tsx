@@ -1,17 +1,9 @@
-import { Dimmer, Loader } from 'semantic-ui-react';
+import { Box, CircularProgress } from '@mui/material';
 
-interface Props {
-  inverted?: boolean;
-  content?: string;
-}
-
-export const LoadingComponent = ({
-  inverted = true,
-  content = 'Haushaltsbuch lädt...',
-}: Props) => {
+export const LoadingComponent = () => {
   return (
-    <Dimmer active={true} inverted={inverted}>
-      <Loader content={content} />
-    </Dimmer>
+    <Box sx={{display: 'flex'}}>
+      <CircularProgress />
+    </Box>
   );
 };

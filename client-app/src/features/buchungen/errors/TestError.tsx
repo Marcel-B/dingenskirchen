@@ -1,8 +1,8 @@
-import { Button, Header, Segment } from 'semantic-ui-react';
 import React, { useState } from 'react';
 
 import ValidationErrors from './ValidationErrors';
 import axios from 'axios';
+import { Box, Button, ButtonGroup } from '@mui/material';
 
 export default function TestErrors() {
   const baseUrl = 'http://localhost:5000/api/';
@@ -44,38 +44,26 @@ export default function TestErrors() {
 
   return (
     <>
-      <Header as='h1' content='Test Error component' />
-      <Segment>
-        <Button.Group widths='7'>
-          <Button onClick={handleNotFound} content='Not Found' basic primary />
+      <h1>Test Error component</h1>
+      <Box>
+        <ButtonGroup variant={'contained'}>
+          <Button onClick={handleNotFound}>Not Fount</Button>
           <Button
             onClick={handleBadRequest}
-            content='Bad Request'
-            basic
-            primary
-          />
+          >Bad Request</Button>
           <Button
             onClick={handleValidationError}
-            content='Validation Error'
-            basic
-            primary
-          />
+          >Validation Error</Button>
           <Button
             onClick={handleServerError}
-            content='Server Error'
-            basic
-            primary
-          />
+          >Server Error</Button>
           <Button
             onClick={handleUnauthorised}
-            content='Unauthorised'
-            basic
-            primary
-          />
-          <Button onClick={handleBadGuid} content='Bad Guid' basic primary />
-        </Button.Group>
+          >Unauthorized</Button>
+          <Button onClick={handleBadGuid}>Bad Guid</Button>
+        </ButtonGroup>
         {errors && <ValidationErrors errors={errors} />}
-      </Segment>
+      </Box>
     </>
   );
 }

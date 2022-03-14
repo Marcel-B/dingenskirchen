@@ -1,5 +1,4 @@
 import DatePicker, { ReactDatePickerProps } from 'react-datepicker';
-import { Form, Label } from 'semantic-ui-react';
 
 import React from 'react';
 import { useField } from 'formik';
@@ -8,6 +7,8 @@ const MyDateInput = (props: Partial<ReactDatePickerProps>) => {
   const [field, meta, helpers] = useField(props.name!);
 
   return (
+    <></>
+/*
     <Form.Field error={meta.touched && !!meta.error}>
       <DatePicker
         {...field}
@@ -18,7 +19,8 @@ const MyDateInput = (props: Partial<ReactDatePickerProps>) => {
       {meta.touched && meta.error ? (
         <Label basic color={`red`}>{meta.error}</Label>
       ) : null}
-    </Form.Field>
+    <Form.Field>
+*/
   );
 };
 

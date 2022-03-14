@@ -18,7 +18,7 @@ const BuchungDashboard = () => {
   }, [buchungRegistry.size, loadBuchungen]);
 
   if (buchungStore.loadingInitial)
-    return <LoadingComponent content={`Bitte warten...`} />;
+    return <LoadingComponent/>;
 
   return (
     <Grid container spacing={2}>

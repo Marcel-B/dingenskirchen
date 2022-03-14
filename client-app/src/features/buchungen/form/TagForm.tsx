@@ -1,9 +1,9 @@
 import { observer } from 'mobx-react-lite';
-import { Button, Divider, Header, List, Segment } from 'semantic-ui-react';
 import { Tag } from '../../../app/models/tag';
 import { useEffect, useState } from 'react';
 import { useStore } from '../../../app/stores/store';
 import { BuchungFormValues } from '../../../app/models/buchung';
+import { Box, Button } from '@mui/material';
 
 interface Props {
   buchung: BuchungFormValues;
@@ -21,16 +21,15 @@ const TagForm = ({ buchung, addTag, removeTag }: Props) => {
 
   return (
     <>
-      <Header content='Tags Aussuchen' color='orange' />
+      <h2>Tags Aussuchen</h2>
       <p>Gewählte Tags sollten markiert sein. Man kann diese dann abwählen oder wählen</p>
-      <Segment>
+      <Box>
         {tags.map(tag => (
-          <Button content={tag.name}
-                  type='button'
-                  key={tag.name}
-                  onClick={() => addTag(tag)} />
+          <Button
+            key={tag.name}
+            onClick={() => addTag(tag)}>{tag.name}</Button>
         ))}
-      </Segment>
+      </Box>
     </>
 
   )

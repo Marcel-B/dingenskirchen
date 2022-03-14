@@ -1,5 +1,5 @@
 import React from 'react';
-import { Message } from 'semantic-ui-react';
+import { Box, List, ListItem } from '@mui/material';
 
 interface Props {
   errors: any;
@@ -7,16 +7,16 @@ interface Props {
 
 const ValidationErrors = ({ errors }: Props) => {
   return (
-    <Message error>
+    <Box >
       {errors && (
-        <Message.List>
+        <List>
           {errors.map((err: any, i: any) => (
-            <Message.Item key={i}>{err}</Message.Item>
+            <ListItem key={i}>{err}</ListItem>
           ))}
-        </Message.List>
+        </List>
       )}
 
-    </Message>
+    </Box>
   );
 
 };

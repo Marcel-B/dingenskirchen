@@ -74,9 +74,8 @@ const RegisterForm = () => {
         error={!!errors.password}
         helperText={errors?.password}
         name={'password'} />
-      <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+      <div style={{ display: 'flex', justifyContent: 'flex-end' , marginTop: '1rem'}}>
         <Button
-          style={{ marginTop: '1rem' }}
           type='submit'
           variant={'contained'}
         >Registrieren</Button>
