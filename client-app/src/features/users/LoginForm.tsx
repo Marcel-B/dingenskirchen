@@ -31,7 +31,7 @@ const LoginForm = () => {
     <form
       onSubmit={handleSubmit(onSubmit)}
       autoComplete={'off'}>
-      <Typography variant={'h5'} component={'h2'}>Einloggen Haushaltsbuch</Typography>
+      <Typography variant={'h5'} component={'h2'} sx={{color: 'text.primary'}}>Einloggen Haushaltsbuch</Typography>
       <TextField
         label='Email'
         fullWidth

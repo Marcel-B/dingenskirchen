@@ -8,20 +8,28 @@ import { v4 as uuid } from 'uuid';
 import * as yup from 'yup';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Button, TextField } from '@mui/material';
-import { DatePicker } from '@mui/lab';
-import { parse } from 'date-fns';
-
-const schema = yup.object({
-  name: yup.string().required(),
-  betrag: yup.number().required(),
-  beschreibung: yup.string(),
-  zeitpunkt: yup.date().required(),
-}).required();
+import {
+  Box,
+  Button,
+  Container,
+  FormControl,
+  FormControlLabel,
+  FormLabel, InputLabel, MenuItem, Paper, Radio,
+  RadioGroup, Select, SelectChangeEvent,
+  TextField,
+  Typography,
+} from '@mui/material';
+import { DatePicker, LoadingButton } from '@mui/lab';
+import { intervallOptions, SelectOption } from '../../../app/common/options/categoryOptions';
 
 const BuchungForm = () => {
-  const { register, setValue, handleSubmit, formState: { errors } } = useForm<BuchungFormValues>({
-    resolver: yupResolver(schema),
+  const {
+    register,
+    setValue,
+    handleSubmit,
+    formState: { errors, isSubmitting, isValid },
+  } = useForm<BuchungFormValues>({
+    mode: 'all',
   });
 
   const { buchungStore, tagStore: { loadTags } } = useStore();
@@ -50,36 +58,41 @@ const BuchungForm = () => {
   }, [id, loadBuchung, loadTags, addTag, removeTag]);
 
   const onSubmit = (data: BuchungFormValues) => {
-    console.log('buchung form', buchung.tags);
-    if (buchung.id) {
-      updateBuchung(buchung)
-        .then(() => navigate('/app/buchungen'))
-        .catch((error) => console.log(error));
-    } else {
-      let newBuchung = {
-        ...buchung,
-        id: uuid(),
-      };
-      createBuchung(newBuchung)
-        .then(() => navigate('/app/buchungen'))
-        .catch((error) => console.log(error));
-    }
+    console.log('buchung form', data);
+    /*
+        if (buchung.id) {
+          updateBuchung(buchung)
+            .then(() => navigate('/app/buchungen'))
+            .catch((error) => console.log(error));
+        } else {
+          let newBuchung = {
+            ...buchung,
+            id: uuid(),
+          };
+          createBuchung(newBuchung)
+            .then(() => navigate('/app/buchungen'))
+            .catch((error) => console.log(error));
+        }
+    */
   };
 
   return (
-    <>
-      <h2>Neue Buchung</h2>
-      <form
+    <Container component={Paper} maxWidth='sm' sx={{ p: 4 }}>
+      <Typography variant={'h3'} component={'h1'}>Neue Buchung</Typography>
+      <Box
+        component='form'
         onSubmit={handleSubmit(onSubmit)}>
         <TextField
           label='Name'
-          {...register('name')}
+          {...register('name', {
+            required: 'Name ist ein Pflichtfeld',
+          })}
           type='text'
           fullWidth
           variant={'outlined'}
           margin={'dense'}
           error={!!errors.name}
-          helperText={errors?.name}
+          helperText={errors?.name?.message}
           name='name' />
         <TextField
           label='Betrag'
@@ -87,8 +100,10 @@ const BuchungForm = () => {
           variant={'outlined'}
           margin={'dense'}
           error={!!errors.betrag}
-          helperText={errors?.betrag}
-          {...register('betrag')}
+          helperText={errors?.betrag?.message}
+          {...register('betrag', {
+            required: 'Betrag ist ein Pflichtfeld',
+          })}
           type='number'
           name='betrag' />
         <TextField
@@ -97,7 +112,7 @@ const BuchungForm = () => {
           rows={3}
           margin={'dense'}
           error={!!errors.beschreibung}
-          helperText={errors?.beschreibung}
+          helperText={errors?.beschreibung?.message}
           {...register('beschreibung')}
           variant={'outlined'}
           label={'Beschreibung'}
@@ -108,45 +123,62 @@ const BuchungForm = () => {
           label={'Zeitpunkt'}
           {...register('zeitpunkt')}
           onChange={(newValue) => {
-            console.log(newValue);
-            if (newValue){
+            if (newValue) {
               const d = new Date(newValue);
               console.log(d);
               setValue('zeitpunkt', d);
             }
           }}
-          renderInput={(params) => <TextField {...params} fullWidth margin={'dense'}
-                                              helperText={errors.zeitpunkt?.message} error={!!errors?.zeitpunkt} />}
+          renderInput={(params) =>
+            <TextField {...params} fullWidth margin={'dense'}
+                       helperText={errors.zeitpunkt?.message} error={!!errors?.zeitpunkt} />}
         />
-        {/*<MyDateInput*/}
-        {/*  placeholderText='Zeitpunkt'*/}
-        {/*  name='zeitpunkt'*/}
-        {/*  timeCaption='time'*/}
-        {/*  dateFormat='d. MMM yyyy'*/}
-        {/*/>*/}
-        {/*<MySelectInput*/}
-        {/*  options={kategorieOptions}*/}
-        {/*  placeholder='Kategorie'*/}
-        {/*  name='kategorie'*/}
-        {/*/>*/}
-        {/*<MySelectInput*/}
-        {/*  options={intervallOptions}*/}
-        {/*  placeholder='Intervall'*/}
-        {/*  name='intervall'*/}
-        {/*/>*/}
-        <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '1rem' }}>
-          <Button
+        <FormControl fullWidth margin={'dense'}>
+          <FormLabel>Richtung</FormLabel>
+          <RadioGroup
+            row
+            name='row-radio-buttons-group'>
+            <FormControlLabel control={<Radio />} label='Eingang' value={1} {...register('kategorie')} />
+            <FormControlLabel control={<Radio />} label='Ausgang' value={2} {...register('kategorie')} />
+          </RadioGroup>
+        </FormControl>
+
+        <FormControl fullWidth margin={'dense'}>
+          <InputLabel>Intervall</InputLabel>
+          <Select
+            {...register('intervall', {
+              required: "Fehler"
+            })}
+            label='Intervall'
+            onChange={(e: SelectChangeEvent) => {
+              const v = e.target.value as string;
+              setValue('intervall', parseInt(v));
+            }
+            }>
+            {intervallOptions.map(option =>
+              <MenuItem key={option.value}
+                        value={option.value}>{option.text}
+              </MenuItem>)}
+          </Select>
+        </FormControl>
+        <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginTop: '1rem' }}>
+          <LoadingButton
+            loading={isSubmitting}
+            disabled={!isValid}
             variant={'contained'}
             onClick={() => handleDelete(buchung.id)}
-          >Löschen</Button>
-          <Button
+          >Löschen</LoadingButton>
+          <LoadingButton
+            loading={isSubmitting}
+            disabled={!isValid}
             type='submit'
             style={{ marginLeft: '1rem' }}
             variant={'contained'}
-          >Speichern</Button>
-        </div>
-      </form>
-    </>
-  );
+          >Speichern</LoadingButton>
+        </Box>
+      </Box>
+    </Container>
+  )
+    ;
 };
 export default observer(BuchungForm);
