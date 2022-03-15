@@ -6,29 +6,19 @@ import { observer } from 'mobx-react-lite';
 import { useStore } from '../../../app/stores/store';
 import { v4 as uuid } from 'uuid';
 import { useForm } from 'react-hook-form';
-import {
-  Box,
-  Button,
-  Container,
-  FormControl,
-  FormControlLabel,
-  FormLabel, InputLabel, MenuItem, Paper, Radio,
-  RadioGroup, Select, SelectChangeEvent,
-  TextField,
-  Typography,
-} from '@mui/material';
+import { Box, Container, Paper, Typography } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import AppDatePicker from '../../../app/common/form/AppDatePicker';
 import AppTextInput from '../../../app/common/form/AppTextInput';
-import AppCheckbox from '../../../app/common/form/AppCheckbox';
 import { AppRadioButton } from '../../../app/common/form/AppRadioButton';
 import AppSelect from '../../../app/common/form/AppSelect';
-import { intervallOptions } from '../../../app/common/options/categoryOptions';
+import { intervallOptions, kategorieOptions } from '../../../app/common/options/categoryOptions';
 
 const BuchungForm = () => {
   const {
     control,
     handleSubmit,
+    formState: { isSubmitting, isValid },
   } = useForm();
 
   const { buchungStore, tagStore: { loadTags } } = useStore();
@@ -97,52 +87,26 @@ const BuchungForm = () => {
           label={'Beschreibung'}
           name='beschreibung'
         />
-        <AppDatePicker label={'Zeitpunkt'}
-                       control={control}
-                       name={'zeitpunkt'} />
-        <AppCheckbox control={control} label={'foo'} name={'bar'} />
-        {/*<FormControl fullWidth margin={'dense'}>*/}
-        {/*  <FormLabel>Richtung</FormLabel>*/}
-        <RadioGroup
-          row
-          name='row-radio-buttons-group'>
-          <AppRadioButton control={control} label={'Eingang'} value={1} name={'kategorie'} />
-          <AppRadioButton control={control} label={'Ausgang'} value={2} name={'kategorie'} />
-          {/*
-            <FormControlLabel control={<Radio />} label='Eingang' value={1} {...register('kategorie')} />
-            <FormControlLabel control={<Radio />} label='Ausgang' value={2} {...register('kategorie')} />
-*/}
-        </RadioGroup>
-        {/*</FormControl>*/}
+        <AppDatePicker
+          label={'Zeitpunkt'}
+          control={control}
+          name={'zeitpunkt'} />
         <AppSelect control={control} label={'Intervall'} values={intervallOptions} name={'intervall'} />
-        {/*<FormControl fullWidth margin={'dense'}>*/}
-        {/*  <InputLabel>Intervall</InputLabel>*/}
-        {/*  <Select*/}
-        {/*    value=''*/}
-        {/*    {...register('intervall')}*/}
-        {/*    label='Intervall'*/}
-        {/*    onChange={(e: SelectChangeEvent) => {*/}
-        {/*      const v = e.target.value as string;*/}
-        {/*      const value = parseInt(v) ?? null;*/}
-        {/*      console.log('Value', value);*/}
-        {/*      setValue('intervall', value);*/}
-        {/*    }}>*/}
-        {/*    {intervallOptions.map(option =>*/}
-        {/*      <MenuItem key={option.value}*/}
-        {/*                value={option.value}>{option.text}*/}
-        {/*      </MenuItem>)}*/}
-        {/*  </Select>*/}
-        {/*</FormControl>*/}
+        <AppRadioButton
+          values={kategorieOptions}
+          label={'Kategorie'}
+          control={control}
+          name={'kategorie'} />
         <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginTop: '1rem' }}>
           <LoadingButton
-            // loading={isSubmitting}
-            // disabled={!isValid}
+            loading={isSubmitting}
             variant={'contained'}
+            sx={{bgcolor: 'warning.main'}}
             onClick={() => handleDelete(buchung.id)}
           >Löschen</LoadingButton>
           <LoadingButton
-            // loading={isSubmitting}
-            // disabled={!isValid}
+            loading={isSubmitting}
+            disabled={!isValid}
             type='submit'
             style={{ marginLeft: '1rem' }}
             variant={'contained'}

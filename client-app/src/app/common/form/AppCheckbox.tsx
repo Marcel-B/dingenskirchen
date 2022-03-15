@@ -15,8 +15,8 @@ export const AppCheckbox = (props: Props) => {
         checked={field.value}
         color={'secondary'}
       />
-    } label={props.label}/>
-  )
+    } label={props.label} />
+  );
 };
 
 export default AppCheckbox;
