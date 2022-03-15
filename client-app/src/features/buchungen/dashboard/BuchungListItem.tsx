@@ -1,77 +1,78 @@
-import {Buchung} from '../../../app/models/buchung';
+import { Buchung } from '../../../app/models/buchung';
 import { useNavigate } from 'react-router-dom';
 import BuchungBetragItem from './BuchungBetragItem';
-import {Chip, Divider, Grid, IconButton, Stack, Typography} from '@mui/material';
-import {Edit, Autorenew, ArrowCircleUp, ArrowCircleDown, EventAvailable} from '@mui/icons-material';
+import { Chip, Divider, Grid, IconButton, Stack, Typography } from '@mui/material';
+import { Edit, Autorenew, ArrowCircleUp, ArrowCircleDown, EventAvailable } from '@mui/icons-material';
 
 interface Props {
   buchung: Buchung;
 }
-const ItemInfo = ({buchung}: Props) => {
+
+const ItemInfo = ({ buchung }: Props) => {
   return (
     <Grid container>
       <Grid item xs={4}>
         {buchung.kategorie === 2 ? (
-            <ArrowCircleUp fontSize='large' sx={{color: 'red'}}/>)
+            <ArrowCircleUp fontSize='large' sx={{ color: 'red' }} />)
           : (
-            <ArrowCircleDown fontSize='large'  sx={{color: 'green'}}/>)
+            <ArrowCircleDown fontSize='large' sx={{ color: 'green' }} />)
         }
       </Grid>
       <Grid item xs={8}>
         <Stack direction='column'>
           {buchung.intervall === 1 ? (
-            <EventAvailable/>
+            <EventAvailable />
           ) : buchung.intervall === 2 ? (
             <>
               <Stack direction='row'>
-                <Autorenew/> Monat
+                <Autorenew /> Monat
               </Stack>
             </>
           ) : buchung.intervall === 3 ? (
             <>
               <Stack direction='row'>
-                <Autorenew/> Quartal
+                <Autorenew /> Quartal
               </Stack>
             </>
           ) : buchung.intervall === 4 ? (
             <>
               <Stack direction='row'>
-                <Autorenew/> Halbjahr
+                <Autorenew /> Halbjahr
               </Stack>
             </>
           ) : (
             <>
               <Stack direction='row'>
-                <Autorenew/> Jahr
+                <Autorenew /> Jahr
               </Stack>
             </>
           )}
           <BuchungBetragItem betrag={buchung.betrag!}
-                             intervall={buchung.intervall}/>
+                             intervall={buchung.intervall!} />
         </Stack>
       </Grid>
     </Grid>
   );
-}
+};
 
 const BuchungListItem = ({ buchung }: Props) => {
   const navigate = useNavigate();
   return (
     <>
-      <Divider sx={{mt: 1}}/>
-      <Grid container spacing={2} sx={{width: '100%', bgColor: 'background.paper', mt: 1, mb: 1}}>
+      <Divider sx={{ mt: 1 }} />
+      <Grid container spacing={2} sx={{ width: '100%', bgColor: 'background.paper', mt: 1, mb: 1 }}>
         <Grid item xs={2}>
-          <ItemInfo buchung={buchung}/>
+          <ItemInfo buchung={buchung} />
         </Grid>
         < Grid item xs={6}>
-          <Typography variant="h6">{buchung.name}</Typography>
-          <Typography variant="body1">{buchung.beschreibung}</Typography>
+          <Typography variant='h6'>{buchung.name}</Typography>
+          <Typography variant='body1'>{buchung.beschreibung}</Typography>
         </Grid>
         <Grid item xs={3}>
-          {buchung.tags.map(tag => (<Chip label={tag.name} key={tag.id}/>))}
+          {buchung.tags.map(tag => (<Chip label={tag.name} key={tag.id} />))}
         </Grid>
         <Grid item xs={1}>
-          <IconButton onClick={() => navigate(`/app/buchungen/${buchung.id}`)}><Edit/></IconButton>
+          <IconButton onClick={() => navigate(`/app/buchungen/${buchung.id}`)}><Edit /></IconButton>
         </Grid>
       </Grid>
     </>

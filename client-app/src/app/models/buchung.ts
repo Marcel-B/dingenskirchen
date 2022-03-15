@@ -6,8 +6,8 @@ export interface Buchung {
   beschreibung: string;
   zeitpunkt: Date | null;
   betrag: number | null;
-  kategorie: number;
-  intervall: number;
+  kategorie: number | null;
+  intervall: number | null;
   created?: Date | null;
   updated?: Date | null;
   tags: Tag[];
@@ -25,8 +25,8 @@ export class BuchungFormValues {
   beschreibung: string = '';
   zeitpunkt: Date | null = null;
   betrag: number | null = null;
-  kategorie: number = 0;
-  intervall: number = 0;
+  kategorie: number | null = null;
+  intervall: number | null = null;
   created?: Date | null = null;
   updated?: Date | null = null;
   tags: Tag[] = [];

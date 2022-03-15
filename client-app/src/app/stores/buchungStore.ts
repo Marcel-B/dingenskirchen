@@ -74,7 +74,7 @@ export default class BuchungStore {
 
   get ausgabenNurMonatlich() {
     return Array.from(this.buchungRegistry.values())
-      .filter((buchung) => buchung.kategorie === 2 && buchung.intervall < 3)
+      .filter((buchung) => buchung.kategorie === 2 && buchung.intervall! < 3)
       .map((buchung) => buchung.betrag)
       .reduce((prev, curr) => {
         if (prev && curr) return prev + curr;
