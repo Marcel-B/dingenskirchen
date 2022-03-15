@@ -66,7 +66,6 @@ const BuchungForm = () => {
       ...data,
       id: uuid(),
     };
-    console.log('__Buchung', newBuchung);
     createBuchung(newBuchung)
       .then(() => navigate('/app/buchungen'))
       .catch((error) => console.log(error));
