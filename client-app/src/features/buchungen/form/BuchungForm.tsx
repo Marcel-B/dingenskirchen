@@ -13,16 +13,25 @@ import AppTextInput from '../../../app/common/form/AppTextInput';
 import { AppRadioButton } from '../../../app/common/form/AppRadioButton';
 import AppSelect from '../../../app/common/form/AppSelect';
 import { intervallOptions, kategorieOptions } from '../../../app/common/options/categoryOptions';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+
+const schema = yup.object({
+  name: yup.string().required('Name ist ein Pflichtfeld'),
+  betrag: yup.number().positive('Betrag muss positiv sein').required('Betrag ist ein Pflichtfeld'),
+  zeitpunkt: yup.date().required('Zeitpunkt ist ein Pflichtfeld'),
+  intervall: yup.number().required('Intervall ist ein Pflichtfeld'),
+}).required();
 
 const BuchungForm = () => {
   const {
     control,
     handleSubmit,
     formState: { isSubmitting, isValid },
-  } = useForm();
+  } = useForm({ resolver: yupResolver(schema), mode: 'all' });
 
   const { buchungStore, tagStore: { loadTags } } = useStore();
-  const { loadBuchung, deleteBuchung, addTag, removeTag } = buchungStore;
+  const { loadBuchung, deleteBuchung, addTag, createBuchung, removeTag } = buchungStore;
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
 
@@ -52,16 +61,15 @@ const BuchungForm = () => {
           updateBuchung(buchung)
             .then(() => navigate('/app/buchungen'))
             .catch((error) => console.log(error));
-        } else {
-          let newBuchung = {
-            ...buchung,
-            id: uuid(),
-          };
-          createBuchung(newBuchung)
-            .then(() => navigate('/app/buchungen'))
-            .catch((error) => console.log(error));
-        }
-    */
+        } else {*/
+    let newBuchung = {
+      ...data,
+      id: uuid(),
+    };
+    console.log('__Buchung', newBuchung);
+    createBuchung(newBuchung)
+      .then(() => navigate('/app/buchungen'))
+      .catch((error) => console.log(error));
   };
 
   return (
@@ -69,7 +77,7 @@ const BuchungForm = () => {
       <Typography variant={'h3'} component={'h1'}>Neue Buchung</Typography>
       <Box
         component='form'
-        onSubmit={handleSubmit(data => console.log(data))}>
+        onSubmit={handleSubmit(data => onSubmit(data as BuchungFormValues))}>
         <AppTextInput
           label='Name'
           type='text'
@@ -91,7 +99,11 @@ const BuchungForm = () => {
           label={'Zeitpunkt'}
           control={control}
           name={'zeitpunkt'} />
-        <AppSelect control={control} label={'Intervall'} values={intervallOptions} name={'intervall'} />
+        <AppSelect
+          control={control}
+          label={'Intervall'}
+          values={intervallOptions}
+          name={'intervall'} />
         <AppRadioButton
           values={kategorieOptions}
           label={'Kategorie'}
@@ -101,7 +113,7 @@ const BuchungForm = () => {
           <LoadingButton
             loading={isSubmitting}
             variant={'contained'}
-            sx={{bgcolor: 'warning.main'}}
+            sx={{ bgcolor: 'warning.main' }}
             onClick={() => handleDelete(buchung.id)}
           >Löschen</LoadingButton>
           <LoadingButton

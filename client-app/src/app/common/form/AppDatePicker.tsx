@@ -18,7 +18,12 @@ export default function AppDatePicker(props: Props) {
         {...field}
         label={props.label}
         onChange={field.onChange}
-        renderInput={(params) => <TextField {...params} margin={'dense'} />}
+        renderInput={(params) =>
+          <TextField
+            {...params}
+            margin={'dense'}
+            helperText={fieldState.error?.message}
+            error={!!fieldState.error} />}
       />
     </FormControl>
   );

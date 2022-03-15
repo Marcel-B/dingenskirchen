@@ -1,7 +1,7 @@
 import TagList from './TagList';
 import { useStore } from '../../app/stores/store';
 import { v4 as uuid } from 'uuid';
-import {Card, CardActions, CardContent, Container, Stack, TextField, Typography} from "@mui/material";
+import {Card, CardActions, CardContent, TextField, Typography} from "@mui/material";
 import SaveIcon from '@mui/icons-material/Save';
 import {Tag} from "../../app/models/tag";
 import {useForm, SubmitHandler} from 'react-hook-form';

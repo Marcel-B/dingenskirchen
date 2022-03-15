@@ -9,13 +9,14 @@ interface Props extends UseControllerProps {
 }
 
 const AppSelect = (props: Props) => {
-  const { fieldState, field } = useController({ ...props, defaultValue: '' });
+  const { field, fieldState } = useController({ ...props, defaultValue: ''});
 
   return (
     <FormControl fullWidth margin={'dense'}>
       <InputLabel>{props.label}</InputLabel>
       <Select
         label={props.label}
+        error={!!fieldState.error}
         onChange={field.onChange}
         value={field.value}>
         {props.values.map(value =>
