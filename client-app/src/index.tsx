@@ -9,11 +9,12 @@ import ReactDOM from 'react-dom';
 import reportWebVitals from './reportWebVitals';
 import { LocalizationProvider } from '@mui/lab';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import deLocale from 'date-fns/locale/de';
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <LocalizationProvider dateAdapter={AdapterDateFns}>
+      <LocalizationProvider dateAdapter={AdapterDateFns} locale={deLocale}>
       <App />
       </LocalizationProvider>
     </BrowserRouter>

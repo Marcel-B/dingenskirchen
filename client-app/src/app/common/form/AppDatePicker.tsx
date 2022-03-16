@@ -17,6 +17,7 @@ export default function AppDatePicker(props: Props) {
       <DatePicker
         {...field}
         label={props.label}
+        mask={'__.__.____'}
         onChange={field.onChange}
         renderInput={(params) =>
           <TextField
