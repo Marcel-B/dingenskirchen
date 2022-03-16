@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { buchungSlice } from './buchungSlice';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
+import { buchungenSlice } from './buchungenSlice';
 
 export const store = configureStore({
   reducer: {
-    buchung: buchungSlice.reducer
+    buchung: buchungSlice.reducer,
+    buchungen: buchungenSlice.reducer
   }
 })
 
