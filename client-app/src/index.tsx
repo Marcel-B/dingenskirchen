@@ -10,16 +10,20 @@ import reportWebVitals from './reportWebVitals';
 import { LocalizationProvider } from '@mui/lab';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import deLocale from 'date-fns/locale/de';
+import { Provider } from 'react-redux';
+import { store } from './app/stores';
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
+      <Provider store={store}>
       <LocalizationProvider dateAdapter={AdapterDateFns} locale={deLocale}>
-      <App />
+        <App />
       </LocalizationProvider>
+      </Provider>
     </BrowserRouter>
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById('root'),
 );
 
 // If you want to start measuring performance in your app, pass a function

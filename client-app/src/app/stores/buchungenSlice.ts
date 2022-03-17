@@ -1,6 +1,5 @@
 import { Buchung } from '../models/buchung';
-import { createSlice } from '@reduxjs/toolkit';
-import agent from '../api/agent';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface Buchungen {
   buchungen: Buchung[];
@@ -10,7 +9,8 @@ const initialState: Buchungen = {
   buchungen: [],
 };
 
-/*export const fetchBuchungen  = () =>  {
+/*
+export const fetchBuchungen  = () =>  {
   return (dispatch) => {
    const fetchData = async () => {
      const data = await agent.Buchungen.list();
@@ -20,11 +20,19 @@ const initialState: Buchungen = {
   try{
     fet
   }
-};*/
+};
+*/
 
 export const buchungenSlice = createSlice({
   name: 'buchungen',
   initialState,
-  reducers: {},
+  reducers: {
+    add(state, action: PayloadAction<Buchung[]>){
+      state.buchungen = action.payload;
+    }
+  },
 });
 
+
+
+export const buchungenActions = buchungenSlice.actions;
