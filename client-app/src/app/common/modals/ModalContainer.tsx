@@ -1,6 +1,8 @@
-import { observer } from 'mobx-react-lite';
-import { useStore } from '../../stores/store';
 import { Box, Modal } from '@mui/material';
+import { useAppDispatch, useAppSelector } from '../../stores';
+import { closeModal } from '../../stores/modalSlice';
+import LoginForm from '../../../features/users/LoginForm';
+import RegisterForm from '../../../features/users/RegisterForm';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -15,17 +17,20 @@ const style = {
 };
 
 const ModalContainer = () => {
-  const { modalStore } = useStore();
+  const { open, body } = useAppSelector(state => state.modal);
+  const dispatch = useAppDispatch();
 
   return (
     <Modal
-      open={modalStore.modal.open}
-      onClose={modalStore.closeModal}>
+      open={open}
+      onClose={() => dispatch(closeModal())}>
       <Box sx={style}>
-        {modalStore.modal.body}
+        {body === 'loginForm' ? <LoginForm />
+          : body === 'registerForm' ? <RegisterForm />
+            : <></>}
       </Box>
     </Modal>
   );
 };
 
-export default observer(ModalContainer);
+export default ModalContainer;

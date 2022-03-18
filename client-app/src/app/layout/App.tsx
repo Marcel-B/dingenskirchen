@@ -1,9 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 import HomePage from '../../features/home/HomePage';
-import { observer } from 'mobx-react-lite';
 import { useEffect } from 'react';
-import { useStore } from '../stores/store';
-import { LoadingComponent } from './LoadingComponent';
 import { ToastContainer } from 'react-toastify';
 import ModalContainer from '../common/modals/ModalContainer';
 import LoginForm from '../../features/users/LoginForm';
@@ -13,20 +10,24 @@ import ServerError from '../../features/buchungen/errors/ServerError';
 import MainContent from './MainContent';
 import BuchungForm from '../../features/buchungen/form/BuchungForm';
 import NotFound from '../../features/buchungen/errors/NotFound';
+import { useAppDispatch, useAppSelector } from '../stores';
+import { fetchUserAsync } from '../stores/userSlice';
 
 const App = () => {
-  const { commonStore, userStore } = useStore();
+  const dispatch = useAppDispatch();
+  const { token } = useAppSelector(store => store.user);
 
   useEffect(() => {
-    if (commonStore.token) {
-      userStore.getUser().finally(() => commonStore.setAppLoaded());
-    } else {
-      commonStore.setAppLoaded();
+    dispatch(fetchUserAsync());
+    if (token) {
+    //   userStore.getUser().finally(() => commonStore.setAppLoaded());
+    // } else {
+    //   commonStore.setAppLoaded();
     }
-  }, [commonStore, userStore]);
+  }, [dispatch, token]);
 
-  if (!commonStore.appLoaded)
-    return <LoadingComponent status='Laden'/>;
+  // if (!commonStore.appLoaded)
+  //   return <LoadingComponent status='Laden' />;
 
   return (
     <>
@@ -46,4 +47,4 @@ const App = () => {
   );
 };
 
-export default observer(App);
+export default App;

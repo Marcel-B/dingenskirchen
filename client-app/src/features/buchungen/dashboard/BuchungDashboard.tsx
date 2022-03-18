@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import ActivityFilters from './BuchungAside';
 import BuchungList from './BuchungList';
 import Grid from '@mui/material/Grid/Grid';

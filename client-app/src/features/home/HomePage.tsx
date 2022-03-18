@@ -1,19 +1,19 @@
-import { Link, Outlet, useNavigate } from 'react-router-dom';
-
-import LoginForm from '../users/LoginForm';
+import { Outlet, useNavigate } from 'react-router-dom';
 import React from 'react';
-import RegisterForm from '../users/RegisterForm';
-import { observer } from 'mobx-react-lite';
-import { useStore } from '../../app/stores/store';
 import { Button } from '@mui/material';
+import { useAppDispatch, useAppSelector } from '../../app/stores';
+import { openModal } from '../../app/stores/modalSlice';
 
 const HomePage = () => {
-  const { userStore, modalStore } = useStore();
+  const dispatch = useAppDispatch();
+  const { isLoggedIn } = useAppSelector(state => state.user);
+
   const navigate = useNavigate();
   return (
     <>
       <div className={`masthead`}>
-        <h1 style={{ textAlign: 'center', paddingTop: '3rem', marginBottom: '3rem', fontSize: '6rem' }}>Haushaltsbuch</h1>
+        <h1
+          style={{ textAlign: 'center', paddingTop: '3rem', marginBottom: '3rem', fontSize: '6rem' }}>Haushaltsbuch</h1>
         <hr />
         <div style={{ display: 'flex', justifyContent: 'center' }}>
 
@@ -26,11 +26,11 @@ const HomePage = () => {
         </div>
 
         <div style={{ display: 'flex', justifyContent: 'center' }}>
-          {userStore.isLoggedIn ? (
+          {isLoggedIn ? (
             <div>
 
-              <h2 style={{marginBottom: '2rem'}}>Willkommen im Haushaltsbuch</h2>
-              <div style={{ display:'flex', justifyContent: 'center' }}>
+              <h2 style={{ marginBottom: '2rem' }}>Willkommen im Haushaltsbuch</h2>
+              <div style={{ display: 'flex', justifyContent: 'center' }}>
                 <Button
                   variant={'contained'}
                   onClick={() => navigate(`/app/buchungen`)}>
@@ -44,7 +44,7 @@ const HomePage = () => {
                 <Button
                   variant={'contained'}
                   style={{ margin: '1rem' }}
-                  onClick={() => modalStore.openModal(<LoginForm />)}>
+                  onClick={() => dispatch(openModal('loginForm'))}>
                   Einloggen!
                 </Button>
               </div>
@@ -52,7 +52,7 @@ const HomePage = () => {
                 <Button
                   variant={'contained'}
                   style={{ margin: '1rem' }}
-                  onClick={() => modalStore.openModal(<RegisterForm />)}
+                  onClick={() => dispatch(openModal('registerForm'))}
                 >
                   Registrieren!
                 </Button>
@@ -66,4 +66,4 @@ const HomePage = () => {
   );
 };
 
-export default observer(HomePage);
+export default HomePage;

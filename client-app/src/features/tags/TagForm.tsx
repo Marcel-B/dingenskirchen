@@ -1,6 +1,5 @@
 import TagList from './TagList';
-import { useStore } from '../../app/stores/store';
-import { v4 as uuid } from 'uuid';
+//import { v4 as uuid } from 'uuid';
 import {Card, CardActions, CardContent, TextField, Typography} from "@mui/material";
 import SaveIcon from '@mui/icons-material/Save';
 import {Tag} from "../../app/models/tag";
@@ -9,19 +8,18 @@ import {useEffect} from "react";
 import {LoadingButton} from "@mui/lab";
 
 const TagForm = () => {
-  const {tagStore: {createTag}} = useStore();
   const {register, handleSubmit, reset, formState: {isSubmitting, isSubmitSuccessful}} = useForm<Tag>();
 
   const onSubmit: SubmitHandler<Tag> = data => {
-    createTag({name: data.name, id: uuid()})
-      .catch((error) => console.log(error));
+  //  createTag({name: data.name, id: uuid()})
+  //    .catch((error) => console.log(error));
   };
 
   useEffect(() => {
     if (isSubmitSuccessful) {
       reset({ name: '' });
     }
-  }, [isSubmitSuccessful]);
+  }, [isSubmitSuccessful, reset]);
 
   return (
     <>

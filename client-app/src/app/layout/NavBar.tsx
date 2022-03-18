@@ -1,14 +1,14 @@
 import { useNavigate } from 'react-router-dom';
-import { observer } from 'mobx-react-lite';
-import { useStore } from '../stores/store';
 import { AppBar, Toolbar, Button, IconButton, Typography, Menu, MenuItem, Box } from '@mui/material';
 import { AccountCircle, AutoStories } from '@mui/icons-material';
 import { useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../stores';
+import { logout } from '../stores/userSlice';
 
 const NavBar = () => {
+  const { user } = useAppSelector(store => store.user);
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { userStore: { user, logout } } = useStore();
-  const [auth, setAuth] = useState(true);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -18,7 +18,7 @@ const NavBar = () => {
     setAnchorEl(null);
   };
   const handleLogout = () => {
-    logout();
+    dispatch(logout())
     navigate('/');
   };
 
@@ -76,4 +76,4 @@ const NavBar = () => {
   );
 };
 
-export default observer(NavBar);
+export default NavBar;

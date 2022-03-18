@@ -1,5 +1,4 @@
 import { ServerError } from '../models/serverError';
-import { makeAutoObservable, reaction } from 'mobx';
 
 export default class CommonStore {
   error: ServerError | null = null;
@@ -7,16 +6,13 @@ export default class CommonStore {
   appLoaded = false;
 
   constructor() {
-    makeAutoObservable(this);
-
     // wird ausgeführt, wenn sich token ändert
-    reaction(() => this.token, token => {
-      if (token) {
-        window.localStorage.setItem('jwt', token);
-      } else {
-        window.localStorage.removeItem('jwt');
-      }
-    });
+    const token = "123";
+    if (token) {
+      window.localStorage.setItem('jwt', token);
+    } else {
+      window.localStorage.removeItem('jwt');
+    }
   }
 
   setServerError = (error: ServerError) => {

@@ -1,10 +1,8 @@
-import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useEffect} from 'react';
+import { useParams } from 'react-router-dom';
 
 import { BuchungFormValues } from '../../../app/models/buchung';
-import { observer } from 'mobx-react-lite';
-import { useStore } from '../../../app/stores/store';
-import { v4 as uuid } from 'uuid';
+//import { v4 as uuid } from 'uuid';
 import { useForm } from 'react-hook-form';
 import { Box, Container, Paper, Typography } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
@@ -15,6 +13,8 @@ import AppSelect from '../../../app/common/form/AppSelect';
 import { intervallOptions, kategorieOptions } from '../../../app/common/options/categoryOptions';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import { useAppDispatch, useAppSelector } from '../../../app/stores';
+import { buchungenSelectors, fetchBuchungAsync } from '../../../app/stores/buchungenSlice';
 
 const schema = yup.object({
   name: yup.string().required('Name ist ein Pflichtfeld'),
@@ -24,35 +24,36 @@ const schema = yup.object({
 }).required();
 
 const BuchungForm = () => {
+  const dispatch = useAppDispatch();
+  const { id } = useParams<{ id: string }>();
+  const buchung = useAppSelector(state => buchungenSelectors.selectById(state, id!));
   const {
     control,
     handleSubmit,
     formState: { isSubmitting, isValid },
   } = useForm({ resolver: yupResolver(schema), mode: 'all' });
+  //const navigate = useNavigate();
 
-  const { buchungStore, tagStore: { loadTags } } = useStore();
-  const { loadBuchung, deleteBuchung, addTag, createBuchung, removeTag } = buchungStore;
-  const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
+  /*
+    const [buchung, setBuchung] = useState<BuchungFormValues>(new BuchungFormValues());
+  */
 
-  const [buchung, setBuchung] = useState<BuchungFormValues>(new BuchungFormValues());
-
-  const handleDelete = (id: string | undefined) => {
-    if (id) {
-      deleteBuchung(id)
-        .then(() => navigate('/app/buchungen'))
-        .catch((error) => console.log(error));
-    }
-  };
+  //const handleDelete = (id: string) => {
+    /*
+        if (id) {
+          deleteBuchung(id)
+            .then(() => navigate('/app/buchungen'))
+            .catch((error) => console.log(error));
+        }
+    */
+  //};
 
   useEffect(() => {
-    loadTags().catch(error => console.log(error));
-    if (id) {
-      loadBuchung(id)
-        .then((buchung) => setBuchung(new BuchungFormValues(buchung)))
-        .catch((error) => console.log(error));
+    console.log('Buchung', buchung);
+    if (!buchung) {
+      dispatch(fetchBuchungAsync(id!));
     }
-  }, [id, loadBuchung, loadTags, addTag, removeTag]);
+  }, [id, dispatch, buchung]);
 
   const onSubmit = (data: BuchungFormValues) => {
     console.log('buchung form', data);
@@ -62,13 +63,15 @@ const BuchungForm = () => {
             .then(() => navigate('/app/buchungen'))
             .catch((error) => console.log(error));
         } else {*/
-    let newBuchung = {
-      ...data,
-      id: uuid(),
-    };
-    createBuchung(newBuchung)
-      .then(() => navigate('/app/buchungen'))
-      .catch((error) => console.log(error));
+    /*
+        let newBuchung = {
+          ...data,
+          id: uuid(),
+        };
+        createBuchung(newBuchung)
+          .then(() => navigate('/app/buchungen'))
+          .catch((error) => console.log(error));
+    */
   };
 
   return (
@@ -113,7 +116,7 @@ const BuchungForm = () => {
             loading={isSubmitting}
             variant={'contained'}
             sx={{ bgcolor: 'warning.main' }}
-            onClick={() => handleDelete(buchung.id)}
+            onClick={() => console.log('Delete triggered')}
           >Löschen</LoadingButton>
           <LoadingButton
             loading={isSubmitting}
@@ -128,4 +131,4 @@ const BuchungForm = () => {
   )
     ;
 };
-export default observer(BuchungForm);
+export default BuchungForm;

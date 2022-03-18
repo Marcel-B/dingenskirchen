@@ -14,7 +14,7 @@ const BuchungList = () => {
     if (!buchungenGeladen) {
       dispatch(fetchBuchungenAsync());
     }
-  }, [buchungenGeladen]);
+  }, [buchungenGeladen, dispatch]);
 
   if (status.includes('pending')) return <LoadingComponent status={'Lade Buchungen ...'} />;
   return (

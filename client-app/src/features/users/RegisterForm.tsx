@@ -1,11 +1,12 @@
-import { observer } from 'mobx-react-lite';
 import { useNavigate } from 'react-router-dom';
 import { Button, TextField } from '@mui/material';
 import * as yup from 'yup';
 import { UserFormValues } from '../../app/models/user';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useStore } from '../../app/stores/store';
+import { registerAsync } from '../../app/stores/userSlice';
+import { closeModal } from '../../app/stores/modalSlice';
+import { useAppDispatch } from '../../app/stores';
 
 const schema = yup.object({
   displayName: yup.string().required(),
@@ -15,16 +16,16 @@ const schema = yup.object({
 }).required();
 
 const RegisterForm = () => {
+  const dispatch = useAppDispatch();
   const { register, handleSubmit, formState: { errors } } = useForm<UserFormValues>({
     resolver: yupResolver(schema),
   });
-  const { userStore } = useStore();
   const navigate = useNavigate();
 
   const onSubmit = (data: UserFormValues) => {
-    userStore
-      .register(data)
-      .then(() => navigate('/app/buchungen'));
+    dispatch(registerAsync({ userFormValue: data }));
+    dispatch(closeModal());
+    navigate('/app/buchungen');
   };
 
   return (
@@ -74,7 +75,7 @@ const RegisterForm = () => {
         error={!!errors.password}
         helperText={errors?.password}
         name={'password'} />
-      <div style={{ display: 'flex', justifyContent: 'flex-end' , marginTop: '1rem'}}>
+      <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '1rem' }}>
         <Button
           type='submit'
           variant={'contained'}
@@ -84,4 +85,4 @@ const RegisterForm = () => {
   );
 };
 
-export default observer(RegisterForm);
+export default RegisterForm;

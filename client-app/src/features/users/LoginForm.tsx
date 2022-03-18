@@ -1,11 +1,12 @@
-import { observer } from 'mobx-react-lite';
 import { useNavigate } from 'react-router-dom';
-import { useStore } from '../../app/stores/store';
 import { Button, TextField, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { UserFormValues } from '../../app/models/user';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useAppDispatch} from '../../app/stores';
+import { loginAsync } from '../../app/stores/userSlice';
+import { closeModal } from '../../app/stores/modalSlice';
 
 const schema = yup.object({
   email: yup.string().email().required(),
@@ -13,25 +14,24 @@ const schema = yup.object({
 }).required();
 
 const LoginForm = () => {
+  const dispatch = useAppDispatch();
   const { register, handleSubmit, formState: { errors } } = useForm<UserFormValues>({
     resolver: yupResolver(schema),
   });
-  const { userStore } = useStore();
+
   const navigate = useNavigate();
 
   const onSubmit = (data: UserFormValues) => {
-
-    userStore
-      .login(data)
-      .then(() => navigate('/app/buchungen'));
-    //.catch((error) => setErrors({ error: 'Invalid email or password' }))
+    dispatch(loginAsync({ userFormValue: data }));
+    dispatch(closeModal());
+    navigate('/app/buchungen');
   };
 
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
       autoComplete={'off'}>
-      <Typography variant={'h5'} component={'h2'} sx={{color: 'text.primary'}}>Einloggen Haushaltsbuch</Typography>
+      <Typography variant={'h5'} component={'h2'} sx={{ color: 'text.primary' }}>Einloggen Haushaltsbuch</Typography>
       <TextField
         label='Email'
         fullWidth
@@ -64,5 +64,4 @@ const LoginForm = () => {
   );
 };
 
-export default observer(LoginForm);
-
+export default LoginForm;

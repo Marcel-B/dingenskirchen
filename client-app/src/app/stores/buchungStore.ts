@@ -1,9 +1,8 @@
-import { makeAutoObservable, runInAction } from 'mobx';
-
 import { Buchung, BuchungFormValues } from '../models/buchung';
 import agent from '../api/agent';
 import { format } from 'date-fns';
 import { Tag } from '../models/tag';
+import exp from 'constants';
 
 export default class BuchungStore {
   buchungRegistry = new Map<string, Buchung>();
@@ -12,20 +11,13 @@ export default class BuchungStore {
   loading = false;
   loadingInitial = false;
 
-  constructor() {
-    makeAutoObservable(this);
-  }
 
   addTag = (buchung: BuchungFormValues, tag: Tag) => {
-    runInAction(() => {
-      buchung.tags = [...buchung.tags, tag];
-    });
+    buchung.tags = [...buchung.tags, tag];
   };
 
   removeTag = (buchung: BuchungFormValues, tag: Tag) => {
-    runInAction(() => {
-      buchung.tags = [...buchung.tags.filter(t => t.id !== tag.id)];
-    });
+    buchung.tags = [...buchung.tags.filter(t => t.id !== tag.id)];
   };
 
   get buchungenByDate() {
@@ -50,46 +42,7 @@ export default class BuchungStore {
     );
   }
 
-  get einnahmenGesamt() {
-    return Array.from(this.buchungRegistry.values())
-      .filter((buchung) => buchung.kategorie === 1)
-      .map((buchung) => buchung.betrag)
-      .reduce((prev, curr) => {
-        if (prev && curr) return prev + curr;
-        if (!prev) return curr;
-        return prev;
-      }, 0);
-  }
 
-  get ausgabenGesamt() {
-    return Array.from(this.buchungRegistry.values())
-      .filter((buchung) => buchung.kategorie === 2)
-      .map((buchung) => buchung.betrag)
-      .reduce((prev, curr) => {
-        if (prev && curr) return prev + curr;
-        if (!prev) return curr;
-        return prev;
-      }, 0);
-  }
-
-  get ausgabenNurMonatlich() {
-    return Array.from(this.buchungRegistry.values())
-      .filter((buchung) => buchung.kategorie === 2 && buchung.intervall! < 3)
-      .map((buchung) => buchung.betrag)
-      .reduce((prev, curr) => {
-        if (prev && curr) return prev + curr;
-        if (!prev) return curr;
-        return prev;
-      }, 0);
-  }
-
-  get restMonatlich() {
-    return this.einnahmenGesamt! - this.ausgabenNurMonatlich!;
-  }
-
-  get restMonatlichVerrechnet() {
-    return this.einnahmenGesamt! - this.ausgabenGesamt!;
-  }
 
   loadBuchungen = async () => {
     this.loadingInitial = true;
@@ -115,9 +68,7 @@ export default class BuchungStore {
       try {
         buchung = await agent.Buchungen.details(id);
         this.setBuchung(buchung);
-        runInAction(() => {
-          this.selectedBuchung = buchung;
-        });
+        this.selectedBuchung = buchung;
         this.setLoadingInitial(false);
         return buchung;
       } catch (error) {
@@ -146,17 +97,13 @@ export default class BuchungStore {
       await agent.Buchungen.create(buchung);
       const newBuchung = new Buchung(buchung);
       this.setBuchung(newBuchung);
-      runInAction(() => {
-        // this.buchungen.push(buchung);
-        this.selectedBuchung = newBuchung;
-        this.editMode = false;
-        this.loading = false;
-      });
+      // this.buchungen.push(buchung);
+      this.selectedBuchung = newBuchung;
+      this.editMode = false;
+      this.loading = false;
     } catch (error) {
       console.log(error);
-      runInAction(() => {
-        this.loading = false;
-      });
+      this.loading = false;
     }
   };
 
@@ -164,20 +111,16 @@ export default class BuchungStore {
     this.loading = true;
     try {
       await agent.Buchungen.update(buchung);
-      runInAction(() => {
-        if (buchung.id) {
-          let updatedBuchung = { ...this.getBuchung(buchung.id), ...buchung };
-          this.buchungRegistry.set(buchung.id, updatedBuchung as Buchung);
-          this.selectedBuchung = updatedBuchung as Buchung;
-        }
-        this.editMode = false;
-        this.loading = false;
-      });
+      if (buchung.id) {
+        let updatedBuchung = { ...this.getBuchung(buchung.id), ...buchung };
+        this.buchungRegistry.set(buchung.id, updatedBuchung as Buchung);
+        this.selectedBuchung = updatedBuchung as Buchung;
+      }
+      this.editMode = false;
+      this.loading = false;
     } catch (error) {
       console.log(error);
-      runInAction(() => {
-        this.loading = false;
-      });
+      this.loading = false;
     }
   };
 
@@ -186,16 +129,69 @@ export default class BuchungStore {
     this.loading = true;
     try {
       await agent.Buchungen.delete(id);
-      runInAction(() => {
-        // this.buchungen = [...this.buchungen.filter(a => a.id !== id)];
-        this.buchungRegistry.delete(id);
-        this.loading = false;
-      });
+      // this.buchungen = [...this.buchungen.filter(a => a.id !== id)];
+      this.buchungRegistry.delete(id);
+      this.loading = false;
     } catch (error) {
       console.log(error);
-      runInAction(() => {
-        this.loading = false;
-      });
+      this.loading = false;
     }
   };
+}
+
+/**
+ * Ausgaben monatlich gerechnet.
+ * Beträge die im gewählten Monat fällig sind, oder ausgegeben worden
+ * sind. Eine jährliche Versicherung wird nur dann berechnet, wenn sie auch
+ * im gewählten Monat fällig ist.
+ */
+export const ausgabenMonatlichReal = (buchungen: Buchung[]) => {
+  return buchungen
+    .filter((buchung) => buchung.kategorie === 2 && buchung.intervall! < 3)
+    .map((buchung) => buchung.betrag)
+    .reduce((prev, curr) => {
+      if (prev && curr) return prev + curr;
+      if (!prev) return curr;
+      return prev;
+    }, 0);
+};
+
+/**
+ * Wiederkehrende Ausgaben, monatlich gerechnet.
+ * Z.B. die Miete, aber auch Versicherungen, welche 1 mal im Jahr
+ * fällig werden, werden hier auf die Monate verteilt.
+ */
+export const ausgabenGesamt = (buchungen: Buchung[]) => {
+  return buchungen
+    .filter((buchung) => buchung.kategorie === 2)
+    .map((buchung) => buchung.betrag)
+    .reduce((prev, curr) => {
+      if (prev && curr) return prev + curr;
+      if (!prev) return curr;
+      return prev;
+    }, 0);
+};
+
+/**
+ * Wiederkerende Einnamen, monatlich gerechnet.
+ * Z.B. Das Gehalt, was jeden Monat kommt.
+ * @param buchungen
+ */
+export const einnahmenGesamt = (buchungen: Buchung[]) => {
+  return buchungen
+    .filter((buchung) => buchung.kategorie === 1)
+    .map((buchung) => buchung.betrag)
+    .reduce((prev, curr) => {
+      if (prev && curr) return prev + curr;
+      if (!prev) return curr;
+      return prev;
+    }, 0);
+};
+
+export const restMonatlich = (buchungen: Buchung[]) => {
+  return (einnahmenGesamt(buchungen) ?? 0) - (ausgabenGesamt(buchungen) ?? 0);
+}
+
+export const restMonatlichReal = (buchungen: Buchung[]) => {
+  return (einnahmenGesamt(buchungen) ?? 0) - (ausgabenMonatlichReal(buchungen) ?? 0);
 }
