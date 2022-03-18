@@ -1,6 +1,5 @@
 import { TextField } from '@mui/material';
 import { useController, UseControllerProps } from 'react-hook-form';
-import { BuchungFormValues } from '../../models/buchung';
 
 interface Props extends UseControllerProps {
   label: string;

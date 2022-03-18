@@ -8,7 +8,7 @@ import {
   einnahmenGesamt,
   restMonatlich,
   restMonatlichReal,
-} from './buchungStore';
+} from './buchungCalculator';
 
 const buchungenAdapter = createEntityAdapter<Buchung>();
 
