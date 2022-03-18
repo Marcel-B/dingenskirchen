@@ -73,9 +73,9 @@ const requests = {
 const Buchungen = {
     list: () => requests.get<Buchung[]>('/buchungen'),
     details: (id: string) => requests.get<Buchung>(`/buchungen/${id}`),
-    create: (activity: BuchungFormValues) => requests.post<void>(`/buchungen`, activity),
-    update: (activity: BuchungFormValues) =>
-        requests.put<void>(`/buchungen/${activity.id}`, activity),
+    create: (buchungFormValues: BuchungFormValues) => requests.post<Buchung>(`/buchungen`, buchungFormValues),
+    update: (buchungFormValues: BuchungFormValues) =>
+        requests.put<void>(`/buchungen/${buchungFormValues.id}`, buchungFormValues),
     delete: (id: string) => requests.del<void>(`/buchungen/${id}`),
 };
 

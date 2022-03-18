@@ -1,36 +1,60 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { Buchung } from '../models/buchung';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { Buchung} from '../models/buchung';
+import agent from '../api/agent';
 
 interface BuchungState {
-  buchung: Buchung | null;
+  selectedBuchung: Buchung | null;
+  buchungen: Buchung[];
+  status: string;
+  initial: boolean;
 }
 
 const initialState: BuchungState = {
-  buchung: null,
-  /*
-    id: '',
-    betrag: null,
-    name: '',
-    beschreibung: '',
-    zeitpunkt: null,
-    kategorie: null,
-    intervall: null,
-    tags: []
-  */
+  selectedBuchung: null,
+  buchungen: [],
+  status: 'idle',
+  initial: true,
 };
+
+export const getBuchungenAsync = createAsyncThunk<Buchung[], void>(
+  'buchung/getBuchungenAsync',
+  async () => {
+    try {
+      return await agent.Buchungen.list();
+    } catch (e) {
+      console.log(e);
+      return [];
+    }
+  },
+);
 
 export const buchungSlice = createSlice({
   name: 'buchung',
   initialState,
   reducers: {
     setBuchung: (state, action) => {
-      state.buchung = action.payload;
+      state.selectedBuchung = action.payload;
     },
-    setKategorie: (state, action) => {
-      const { kategorie } = action.payload;
-      state.buchung!.kategorie = kategorie;
+    setBuchungen: (state, action) => {
+      state.buchungen = action.payload;
     },
   },
+
+  extraReducers: (builder => {
+    builder.addCase(getBuchungenAsync.pending, (state, action) => {
+      state.status = 'Laden...';
+      console.log(action);
+    });
+    builder.addCase(getBuchungenAsync.fulfilled, (state, action) => {
+      state.status = 'idle';
+      state.initial = false;
+      state.buchungen = action.payload ?? [];
+    });
+    builder.addCase(getBuchungenAsync.rejected, (state, action) => {
+      state.status = 'error';
+      console.log(action);
+    });
+  }),
 });
 
-export const { setBuchung, setKategorie } = buchungSlice.actions;
+export const { setBuchung, setBuchungen } = buchungSlice.actions;

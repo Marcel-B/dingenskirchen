@@ -26,7 +26,7 @@ const App = () => {
   }, [commonStore, userStore]);
 
   if (!commonStore.appLoaded)
-    return <LoadingComponent/>;
+    return <LoadingComponent status='Laden'/>;
 
   return (
     <>

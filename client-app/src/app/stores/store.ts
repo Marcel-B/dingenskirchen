@@ -11,6 +11,7 @@ interface Store {
   userStore: UserStore;
   modalStore: ModalStore;
   tagStore: TagStore;
+
 }
 
 export const store: Store = {
