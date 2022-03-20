@@ -46,7 +46,6 @@ export const createBuchungAsync = createAsyncThunk<Buchung, BuchungFormValues>(
   },
 );
 
-
 export const updateBuchungAsync = createAsyncThunk<Buchung, BuchungFormValues>(
   'form/updateBuchungAsync',
   async (buchunFormValues, thungAPI) => {
@@ -84,7 +83,8 @@ export const buchungenSlice = createSlice({
   initialState: buchungenAdapter.getInitialState({
     ...initialState,
   }),
-  reducers: {},
+  reducers: {
+  },
   extraReducers: (builder => {
     builder.addCase(fetchBuchungenAsync.pending, (state) => {
       state.status = 'pendingFetchBuchungen';
@@ -119,6 +119,13 @@ export const buchungenSlice = createSlice({
     });
     builder.addCase(createBuchungAsync.fulfilled, (state, action) => {
       buchungenAdapter.addOne(state, action.payload);
+      const selectors = buchungenAdapter.getSelectors();
+      const buchungen = selectors.selectAll(state);
+      state.einnahmenGesamt = einnahmenGesamt(buchungen);
+      state.ausgabenGesamt = ausgabenGesamt(buchungen);
+      state.ausgabenGesamtReal = ausgabenMonatlichReal(buchungen);
+      state.restMonatlich = restMonatlich(buchungen);
+      state.restMonatlichReal = restMonatlichReal(buchungen);
       state.status = 'idle';
     });
     builder.addCase(createBuchungAsync.rejected, (state, action) => {
@@ -130,6 +137,13 @@ export const buchungenSlice = createSlice({
     });
     builder.addCase(updateBuchungAsync.fulfilled, (state, action) => {
       buchungenAdapter.upsertOne(state, action.payload);
+      const selectors = buchungenAdapter.getSelectors();
+      const buchungen = selectors.selectAll(state);
+      state.einnahmenGesamt = einnahmenGesamt(buchungen);
+      state.ausgabenGesamt = ausgabenGesamt(buchungen);
+      state.ausgabenGesamtReal = ausgabenMonatlichReal(buchungen);
+      state.restMonatlich = restMonatlich(buchungen);
+      state.restMonatlichReal = restMonatlichReal(buchungen);
       state.status = 'idle';
     });
     builder.addCase(updateBuchungAsync.rejected, (state, action) => {
