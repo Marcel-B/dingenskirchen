@@ -4,13 +4,13 @@ import { useController, UseControllerProps } from 'react-hook-form';
 interface Props extends UseControllerProps {
   label: string;
   multiline?: boolean;
-  default?: string
   rows?: number;
+  default?: string | number | null;
   type?: string;
 }
 
 export default function AppTextInput(props: Props) {
-  const { fieldState, field } = useController({ ...props, defaultValue: '' });
+  const { fieldState, field } = useController({ ...props, defaultValue: props.default });
   return (
     <TextField
       {...props}

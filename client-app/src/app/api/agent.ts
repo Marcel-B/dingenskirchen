@@ -74,7 +74,7 @@ const Buchungen = {
   details: (id: string) => requests.get<Buchung>(`/buchungen/${id}`),
   create: (buchungFormValues: BuchungFormValues) => requests.post<Buchung>(`/buchungen`, buchungFormValues),
   update: (buchungFormValues: BuchungFormValues) =>
-    requests.put<void>(`/buchungen/${buchungFormValues.id}`, buchungFormValues),
+    requests.put<Buchung>(`/buchungen/${buchungFormValues.id}`, buchungFormValues),
   delete: (id: string) => requests.del<void>(`/buchungen/${id}`),
 };
 

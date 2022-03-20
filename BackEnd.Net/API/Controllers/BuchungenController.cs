@@ -41,7 +41,7 @@ namespace API.Controllers
                 return BadRequest();
             }
 
-            return Created(nameof(GetBuchung), await Mediator.Send(new Create.Command {Buchung = buchung}));
+            return Created(nameof(GetBuchung), await Mediator.Send(new Create.Query {Buchung = buchung}));
         }
 
         [HttpPut("{id}")]
@@ -51,7 +51,7 @@ namespace API.Controllers
         public async Task<IActionResult> EditBuchung(Guid id, Buchung buchung)
         {
             // buchung.Id = id;
-            return Ok(await Mediator.Send(new Edit.Command{Buchung = buchung}));
+            return Ok(await Mediator.Send(new Edit.Query{Buchung = buchung}));
         }
 
         [HttpDelete("{id}")]

@@ -1,5 +1,5 @@
 import { createAsyncThunk, createEntityAdapter, createSlice } from '@reduxjs/toolkit';
-import { Buchung } from '../models/buchung';
+import { Buchung, BuchungFormValues } from '../models/buchung';
 import agent from '../api/agent';
 import { RootState } from './index';
 import {
@@ -25,7 +25,7 @@ export const fetchBuchungenAsync = createAsyncThunk<Buchung[]>(
 );
 
 export const fetchBuchungAsync = createAsyncThunk<Buchung, string>(
-  'catalog/fetchBuchungAsync',
+  'buchungen/fetchBuchungAsync',
   async (id, thunkAPI) => {
     try {
       return await agent.Buchungen.details(id);
@@ -35,7 +35,30 @@ export const fetchBuchungAsync = createAsyncThunk<Buchung, string>(
   },
 );
 
+export const createBuchungAsync = createAsyncThunk<Buchung, BuchungFormValues>(
+  'form/createBuchungAsync',
+  async (buchunFormValues, thungAPI) => {
+    try {
+      return await agent.Buchungen.create(buchunFormValues);
+    } catch (e: any) {
+      return thungAPI.rejectWithValue({ error: e.data });
+    }
+  },
+);
+
+
+export const updateBuchungAsync = createAsyncThunk<Buchung, BuchungFormValues>(
+  'form/updateBuchungAsync',
+  async (buchunFormValues, thungAPI) => {
+    try {
+      return await agent.Buchungen.update(buchunFormValues);
+    } catch (e: any) {
+      return thungAPI.rejectWithValue({ error: e.data });
+    }
+  },
+);
 interface BuchungenState {
+  buchung: Buchung | null;
   buchungenGeladen: boolean;
   status: string;
   einnahmenGesamt: number | null;
@@ -46,6 +69,7 @@ interface BuchungenState {
 }
 
 const initialState: BuchungenState = {
+  buchung: null,
   buchungenGeladen: false,
   einnahmenGesamt: null,
   ausgabenGesamt: null,
@@ -89,6 +113,28 @@ export const buchungenSlice = createSlice({
     builder.addCase(fetchBuchungAsync.rejected, (state, action) => {
       console.log(action);
       state.status = 'idle';
+    });
+    builder.addCase(createBuchungAsync.pending, (state) => {
+      state.status = 'pendingCreateBuchung';
+    });
+    builder.addCase(createBuchungAsync.fulfilled, (state, action) => {
+      buchungenAdapter.addOne(state, action.payload);
+      state.status = 'idle';
+    });
+    builder.addCase(createBuchungAsync.rejected, (state, action) => {
+      state.status = 'idle';
+      console.log(action.error);
+    });
+    builder.addCase(updateBuchungAsync.pending, (state) => {
+      state.status = 'pendingCreateBuchung';
+    });
+    builder.addCase(updateBuchungAsync.fulfilled, (state, action) => {
+      buchungenAdapter.upsertOne(state, action.payload);
+      state.status = 'idle';
+    });
+    builder.addCase(updateBuchungAsync.rejected, (state, action) => {
+      state.status = 'idle';
+      console.log(action.error);
     });
   }),
 });

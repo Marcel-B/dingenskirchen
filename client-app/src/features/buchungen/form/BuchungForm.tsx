@@ -1,8 +1,8 @@
-import { useEffect} from 'react';
-import { useParams } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { BuchungFormValues } from '../../../app/models/buchung';
-//import { v4 as uuid } from 'uuid';
+import { v4 as uuid } from 'uuid';
 import { useForm } from 'react-hook-form';
 import { Box, Container, Paper, Typography } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
@@ -14,7 +14,12 @@ import { intervallOptions, kategorieOptions } from '../../../app/common/options/
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useAppDispatch, useAppSelector } from '../../../app/stores';
-import { buchungenSelectors, fetchBuchungAsync } from '../../../app/stores/buchungenSlice';
+import {
+  buchungenSelectors,
+  createBuchungAsync,
+  fetchBuchungAsync,
+  updateBuchungAsync,
+} from '../../../app/stores/buchungenSlice';
 
 const schema = yup.object({
   name: yup.string().required('Name ist ein Pflichtfeld'),
@@ -27,51 +32,44 @@ const BuchungForm = () => {
   const dispatch = useAppDispatch();
   const { id } = useParams<{ id: string }>();
   const buchung = useAppSelector(state => buchungenSelectors.selectById(state, id!));
+
   const {
     control,
     handleSubmit,
     formState: { isSubmitting, isValid },
-  } = useForm({ resolver: yupResolver(schema), mode: 'all' });
-  //const navigate = useNavigate();
-
-  /*
-    const [buchung, setBuchung] = useState<BuchungFormValues>(new BuchungFormValues());
-  */
+  } = useForm({
+    resolver: yupResolver(schema), mode: 'all',
+  });
+  const navigate = useNavigate();
 
   //const handleDelete = (id: string) => {
-    /*
-        if (id) {
-          deleteBuchung(id)
-            .then(() => navigate('/app/buchungen'))
-            .catch((error) => console.log(error));
-        }
-    */
+  /*
+      if (id) {
+        deleteBuchung(id)
+          .then(() => navigate('/app/buchungen'))
+          .catch((error) => console.log(error));
+      }
+  */
   //};
 
   useEffect(() => {
-    console.log('Buchung', buchung);
-    if (!buchung) {
-      dispatch(fetchBuchungAsync(id!));
+    if (id) {
+      dispatch(fetchBuchungAsync(id));
     }
-  }, [id, dispatch, buchung]);
+  }, [id, dispatch]);
 
   const onSubmit = (data: BuchungFormValues) => {
-    console.log('buchung form', data);
-    /*
-        if (buchung.id) {
-          updateBuchung(buchung)
-            .then(() => navigate('/app/buchungen'))
-            .catch((error) => console.log(error));
-        } else {*/
-    /*
-        let newBuchung = {
-          ...data,
-          id: uuid(),
-        };
-        createBuchung(newBuchung)
-          .then(() => navigate('/app/buchungen'))
-          .catch((error) => console.log(error));
-    */
+    if (id) {
+      data.id = id;
+      dispatch(updateBuchungAsync(data));
+    } else {
+      let newBuchung = {
+        ...data,
+        id: uuid(),
+      };
+      dispatch(createBuchungAsync(newBuchung));
+    }
+    navigate('/app/buchungen');
   };
 
   return (
@@ -83,32 +81,38 @@ const BuchungForm = () => {
         <AppTextInput
           label='Name'
           type='text'
+          default={buchung?.name}
           control={control}
           name='name' />
         <AppTextInput
           label='Betrag'
           type='number'
+          default={buchung?.betrag}
           control={control}
           name='betrag' />
         <AppTextInput
           multiline
           rows={3}
+          default={buchung?.beschreibung}
           control={control}
           label={'Beschreibung'}
           name='beschreibung'
         />
         <AppDatePicker
           label={'Zeitpunkt'}
+          default={buchung?.zeitpunkt}
           control={control}
           name={'zeitpunkt'} />
         <AppSelect
           control={control}
+          defaultValue={buchung?.intervall}
           label={'Intervall'}
           values={intervallOptions}
           name={'intervall'} />
         <AppRadioButton
           values={kategorieOptions}
           label={'Kategorie'}
+          defaultValue={buchung?.kategorie ?? 2}
           control={control}
           name={'kategorie'} />
         <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginTop: '1rem' }}>

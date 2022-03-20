@@ -8,7 +8,7 @@ interface Props extends UseControllerProps {
 }
 
 export const AppRadioButton = (props: Props) => {
-  const { fieldState, field } = useController({ ...props, defaultValue: 2 });
+  const { fieldState, field } = useController({ ...props, defaultValue: props.defaultValue });
   return (
     <FormControl
       fullWidth

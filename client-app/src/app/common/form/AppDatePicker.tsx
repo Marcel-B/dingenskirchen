@@ -5,10 +5,11 @@ import { FormControl, TextField } from '@mui/material';
 
 interface Props extends UseControllerProps {
   label: string;
+  default?: Date | null;
 };
 
 export default function AppDatePicker(props: Props) {
-  const { field, fieldState } = useController({ ...props, defaultValue: new Date() });
+  const { field, fieldState } = useController({ ...props, defaultValue: props.default ?? new Date() });
 
   return (
     <FormControl

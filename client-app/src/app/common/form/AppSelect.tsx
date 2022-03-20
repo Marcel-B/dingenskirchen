@@ -9,7 +9,7 @@ interface Props extends UseControllerProps {
 }
 
 const AppSelect = (props: Props) => {
-  const { field, fieldState } = useController({ ...props, defaultValue: ''});
+  const { field, fieldState } = useController({ ...props, defaultValue: props.defaultValue ?? ''});
 
   return (
     <FormControl fullWidth margin={'dense'}>

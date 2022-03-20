@@ -4,18 +4,19 @@ using Application.Activities;
 using AutoMapper;
 using Domain;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Persistence;
 
 namespace Application.Buchungen;
 
 public class Create
 {
-    public class Command : IRequest
+    public class Query : IRequest<BuchungDto>
     {
         public BuchungDto Buchung { get; set; }
     }
 
-    public class Handler : IRequestHandler<Command>
+    public class Handler : IRequestHandler<Query, BuchungDto>
     {
         private readonly DataContext _context;
         private readonly IMapper _mapper;
@@ -26,7 +27,7 @@ public class Create
             _mapper = mapper;
         }
 
-        public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
+        public async Task<BuchungDto> Handle(Query request, CancellationToken cancellationToken)
         {
             var buchung = new Buchung
             {
@@ -50,7 +51,7 @@ public class Create
 
             _context.Buchungen.Add(_mapper.Map<Buchung>(buchung));
             await _context.SaveChangesAsync();
-            return Unit.Value;
+            return _mapper.Map<BuchungDto>(buchung);
         }
     }
 }
