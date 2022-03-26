@@ -3,3 +3,4 @@
 buchungen.db
 buchungen.db-shm
 buchungen.db-wal
+node_modules
