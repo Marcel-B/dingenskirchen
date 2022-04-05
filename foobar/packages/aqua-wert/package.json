@@ -1,0 +1,47 @@
+{
+  "name": "aqua-wert",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "webpack --mode production",
+    "build:dev": "webpack --mode development",
+    "start": "webpack-dev-server --open --mode development",
+    "start:live": "webpack-dev-server --open --mode development --liveReload"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Jack Herrington",
+    "email": "jherr@pobox.com"
+  },
+  "devDependencies": {
+    "@babel/core": "7.9.6",
+    "@babel/plugin-transform-runtime": "^7.12.10",
+    "@babel/preset-env": "^7.10.3",
+    "@babel/preset-react": "7.9.4",
+    "@babel/preset-typescript": "^7.10.4",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
+    "autoprefixer": "^10.4.4",
+    "babel-loader": "^8.2.2",
+    "css-loader": "^3.5.3",
+    "html-webpack-plugin": "^4.5.0",
+    "postcss": "^8.4.12",
+    "style-loader": "^2.0.0",
+    "ts-loader": "^9.2.8",
+    "webpack": "^5.10.1",
+    "webpack-cli": "3.3.11",
+    "webpack-dev-server": "3.11.0"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.8.2",
+    "@emotion/styled": "^11.8.1",
+    "@mui/icons-material": "^5.5.1",
+    "@mui/material": "^5.5.3",
+    "@mui/styled-engine-sc": "^5.5.2",
+    "concurrently": "^7.0.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-hook-form": "^7.29.0",
+    "shared-types": "1.0.0",
+    "styled-components": "^5.3.5"
+  }
+}
