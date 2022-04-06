@@ -42,7 +42,9 @@ module.exports = {
     new ModuleFederationPlugin({
       name: "aqua",
       filename: "remoteEntry.js",
-      remotes: {},
+      remotes: {
+        "ts-controls": "controls@http://localhost:3088/remoteEntry.js",
+      },
       exposes: {
         "./NeueMessung": "./src/NeueMessung"
       },
