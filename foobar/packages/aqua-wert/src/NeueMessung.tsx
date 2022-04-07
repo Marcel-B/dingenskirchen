@@ -38,7 +38,7 @@ const NeueMessung = () => {
               <AppTextInput control={control} label='Wert' type='text' default={''} name='wert' />
             </Grid>
           </Grid>
-          <Button variant='contained'>Senden</Button>
+          <Button variant='contained' type='submit'>Senden</Button>
         </Paper>
       </form>
     </>

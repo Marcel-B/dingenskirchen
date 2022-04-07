@@ -8,6 +8,18 @@ export type SelectOption = {
   value: number;
 }
 
+export type MessungFormValues = {
+  wert: number | null;
+  datum: Date;
+  typ: number | null;
+}
+
+export type Messung = {
+  wert: number;
+  datum: Date;
+  typ: number;
+}
+
 export type HeaderComponent = React.FunctionComponent<{ appLinks: AppLink[] }>;
 export type NeueMessungComponent = React.FunctionComponent;
 export type CheckboxComponent = React.FunctionComponent<{ control: any, label: string }>;
