@@ -42,9 +42,11 @@ module.exports = {
     new ModuleFederationPlugin({
       name: "appstore",
       filename: "remoteEntry.js",
-      remotes: {},
+      remotes: {
+        "ts-aqua-store": "aquastore@http://localhost:3051/remoteEntry.js"
+      },
       exposes: {
-        './AppStore': './src/store.ts'
+        './store': './src/store.ts'
       },
       shared: {
         ...deps,

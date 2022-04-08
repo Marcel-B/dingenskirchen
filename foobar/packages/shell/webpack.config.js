@@ -32,7 +32,7 @@ module.exports = {
         test: /\.(ts|tsx|js|jsx)$/,
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader",
+          loader: "ts-loader",
         },
       },
     ],
@@ -44,7 +44,8 @@ module.exports = {
       filename: "remoteEntry.js",
       remotes: {
         "ts-header": "tsheader@http://localhost:3010/remoteEntry.js",
-        "ts-aqua": "aqua@http://localhost:3012/remoteEntry.js"
+        "ts-aqua": "aqua@http://localhost:3012/remoteEntry.js",
+        "ts-app-store": "appstore@http://localhost:3050/remoteEntry.js"
       },
       exposes: {},
       shared: {

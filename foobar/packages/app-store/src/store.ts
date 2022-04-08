@@ -1,11 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
+import { wertSlice } from 'ts-aqua-store/wertSlice';
 
 export const store = configureStore({
   reducer: {
-
-  }
-})
+    aquaWert: wertSlice.reducer,
+  },
+});
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

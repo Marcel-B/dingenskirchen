@@ -7,14 +7,17 @@ import DaTextInput from 'ts-controls/DaTextInput';
 import DaSelect from 'ts-controls/DaSelect';
 
 import { DatePickerComponent, TextInputComponent, SelectComponent } from 'shared-types';
+import { useAppDispatch } from 'ts-app-store/store';
+import { createMessungAsync } from 'ts-aqua-store/wertSlice';
 
 const AppDatePicker = DaDatePicker as DatePickerComponent;
 const AppTextInput = DaTextInput as TextInputComponent;
 const AppSelect = DaSelect as SelectComponent;
 
 const NeueMessung = () => {
+  const dispatch = useAppDispatch();
   const { control, handleSubmit, register } = useForm();
-  const onSubmit = (data: any) => console.log(data);
+  const onSubmit = (data: any) => dispatch(createMessungAsync(data));
   const [datum, setDatum] = React.useState<Date | null>(null);
   const [typ, setTyp] = React.useState<string>('');
 

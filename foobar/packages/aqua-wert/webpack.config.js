@@ -44,6 +44,8 @@ module.exports = {
       filename: "remoteEntry.js",
       remotes: {
         "ts-controls": "controls@http://localhost:3088/remoteEntry.js",
+        "ts-aqua-store": "aquastore@http://localhost:3051/remoteEntry.js",
+        "ts-app-store": "appstore@http://localhost:3050/remoteEntry.js"
       },
       exposes: {
         "./NeueMessung": "./src/NeueMessung"
