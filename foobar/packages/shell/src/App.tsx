@@ -14,7 +14,9 @@ const App = () =>
   <>
     <Provider store={store}>
       <AppHeader appLinks={[{ name: 'Hey', target: 'You' }, { name: 'Whats', target: 'Up!' }]} />
-      <AppNeueMessung />
+      <div style={{ width: '100vw', padding: '2rem' }}>
+        <AppNeueMessung />
+      </div>
     </Provider>
   </>;
 

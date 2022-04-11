@@ -1,6 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { Button, FormControl, Grid, InputLabel, MenuItem, Paper, Select, TextField, Typography } from '@mui/material';
+import { Button, Grid, Paper, Typography } from '@mui/material';
 
 import DaDatePicker from 'ts-controls/DaDatePicker';
 import DaTextInput from 'ts-controls/DaTextInput';
@@ -16,15 +16,16 @@ const AppSelect = DaSelect as SelectComponent;
 
 const NeueMessung = () => {
   const dispatch = useAppDispatch();
-  const { control, handleSubmit, register } = useForm();
-  const onSubmit = (data: any) => dispatch(createMessungAsync(data));
-  const [datum, setDatum] = React.useState<Date | null>(null);
-  const [typ, setTyp] = React.useState<string>('');
+  const { control, handleSubmit } = useForm();
+
+  const onSubmit = (data: any) => {
+    dispatch(createMessungAsync(data));
+  };
 
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Paper elevation={3}>
+        <Paper elevation={3} style={{padding: '2rem'}}>
           <Typography>Neue Messung</Typography>
           <Grid container spacing={12}>
             <Grid item>
@@ -32,10 +33,10 @@ const NeueMessung = () => {
             </Grid>
             <Grid item width={220}>
               <AppSelect
-                name='messung'
+                name='typ'
                 defaultValue={null}
                 control={control} label='Messung'
-                values={[{ text: 'NO2', value: 1 }, { text: 'NH2', value: 2 }, { text: 'NO3', value: 3 }]} />
+                values={[{ text: 'NO₂', value: 1 }, { text: 'NH₂', value: 2 }, { text: 'NO₃', value: 3 }, { text: 'PO₄', value: 4 }, { text: 'FE', value: 5 }]} />
             </Grid>
             <Grid item>
               <AppTextInput control={control} label='Wert' type='text' default={''} name='wert' />
