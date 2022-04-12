@@ -40,7 +40,7 @@ module.exports = {
 
   plugins: [
     new ModuleFederationPlugin({
-      name: "aqua",
+      name: "aquawert",
       filename: "remoteEntry.js",
       remotes: {
         "ts-controls": "controls@http://localhost:3088/remoteEntry.js",

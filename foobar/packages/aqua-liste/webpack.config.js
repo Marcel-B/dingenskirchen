@@ -4,7 +4,7 @@ const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPl
 const deps = require("./package.json").dependencies;
 module.exports = {
   output: {
-    publicPath: "http://localhost:3009/",
+    publicPath: "http://localhost:3011/",
   },
 
   resolve: {
@@ -12,7 +12,7 @@ module.exports = {
   },
 
   devServer: {
-    port: 3009,
+    port: 3011,
   },
 
   module: {
@@ -25,8 +25,8 @@ module.exports = {
         },
       },
       {
-        test: /\.(css|s[ac]ss)$/i,
-        use: ["style-loader", "css-loader", "postcss-loader"],
+        test: /\.css$/i,
+        use: ["style-loader", "css-loader"],
       },
       {
         test: /\.(ts|tsx|js|jsx)$/,
@@ -40,15 +40,15 @@ module.exports = {
 
   plugins: [
     new ModuleFederationPlugin({
-      name: "shell",
+      name: "aqualiste",
       filename: "remoteEntry.js",
       remotes: {
-        "ts-header": "tsheader@http://localhost:3010/remoteEntry.js",
-        "ts-aqua-wert": "aquawert@http://localhost:3012/remoteEntry.js",
-        "ts-aqua-liste": "aqualiste@http://localhost:3011/remoteEntry.js",
+        "ts-aqua-store": "aquastore@http://localhost:3051/remoteEntry.js",
         "ts-app-store": "appstore@http://localhost:3050/remoteEntry.js"
       },
-      exposes: {},
+      exposes: {
+        './AquaListe': './src/Liste'
+      },
       shared: {
         ...deps,
         react: {

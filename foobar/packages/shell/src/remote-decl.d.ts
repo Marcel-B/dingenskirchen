@@ -1,5 +1,6 @@
 declare module "ts-header/Header";
-declare module "ts-aqua/NeueMessung";
+declare module "ts-aqua-wert/NeueMessung";
+declare module "ts-aqua-liste/AquaListe";
 declare module "ts-control/DaSelect";
 declare module "ts-control/DaCheckbox";
 declare module "ts-control/DaDatePicker";
