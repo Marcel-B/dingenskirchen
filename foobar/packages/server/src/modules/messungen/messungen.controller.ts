@@ -10,13 +10,15 @@ export class MessungenController {
   @Get()
   async index() {
     const temp = await messungRepo.get();
-    return temp.map(m => {return {...m, id: m._id}});
+    return temp.map(m => {
+      return { wert: m.wert, datum: m.datum, typ: m.typ, id: m._id };
+    });
   }
 
   @Post()
   @HttpCode(201)
   async create(@Body() messung: Messung) {
-    console.log("add messung")
+    console.log('add messung');
     return await messungRepo.add(messung);
   }
 }
