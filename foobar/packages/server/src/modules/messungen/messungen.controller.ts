@@ -1,7 +1,6 @@
 import { Body, Controller, Get, HttpCode, Post } from '@nestjs/common';
 import { Messung } from 'shared-types';
-import aquaRepo from '../../repos/aquaRepo';
-import messungRepo from 'mongo/repos/messungRepo';
+import messungRepo from '../../repos/messungRepo';
 
 @Controller('messungen')
 export class MessungenController {
@@ -10,12 +9,13 @@ export class MessungenController {
 
   @Get()
   async index() {
-    return await aquaRepo.get();
+    return await messungRepo.get();
   }
 
   @Post()
   @HttpCode(201)
   async create(@Body() messung: Messung) {
+    console.log("add messung")
     return await messungRepo.add(messung);
   }
 }

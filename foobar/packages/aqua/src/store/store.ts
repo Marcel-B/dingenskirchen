@@ -1,10 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
-import { wertSlice } from 'ts-aqua-store/wertSlice';
+import { messungSlice } from './messungSlice';
 
 export const store = configureStore({
   reducer: {
-    aquaWert: wertSlice.reducer,
+    messungen: messungSlice.reducer,
   },
 });
 

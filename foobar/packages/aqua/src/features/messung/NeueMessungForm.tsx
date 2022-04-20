@@ -2,13 +2,13 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { Button, Grid, Paper, Typography } from '@mui/material';
 
-import DaDatePicker from 'ts-controls/DaDatePicker';
-import DaTextInput from 'ts-controls/DaTextInput';
-import DaSelect from 'ts-controls/DaSelect';
+import DaDatePicker from 'ts-control/DaDatePicker';
+import DaTextInput from 'ts-control/DaTextInput';
+import DaSelect from 'ts-control/DaSelect';
 
 import { DatePickerComponent, TextInputComponent, SelectComponent } from 'shared-types';
-import { useAppDispatch } from 'ts-app-store/store';
-import { createMessungAsync } from 'ts-aqua-store/wertSlice';
+import { useAppDispatch } from '../../store/store';
+import { createMessungAsync } from '../../store/messungSlice';
 
 const AppDatePicker = DaDatePicker as DatePickerComponent;
 const AppTextInput = DaTextInput as TextInputComponent;

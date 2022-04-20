@@ -4,7 +4,7 @@ const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPl
 const deps = require("./package.json").dependencies;
 module.exports = {
   output: {
-    publicPath: "http://localhost:3050/",
+    publicPath: "http://localhost:3007/",
   },
 
   resolve: {
@@ -12,7 +12,7 @@ module.exports = {
   },
 
   devServer: {
-    port: 3050,
+    port: 3007,
   },
 
   module: {
@@ -40,14 +40,12 @@ module.exports = {
 
   plugins: [
     new ModuleFederationPlugin({
-      name: "appstore",
+      name: "starter",
       filename: "remoteEntry.js",
       remotes: {
-        "ts-aqua-store": "aquastore@http://localhost:3051/remoteEntry.js"
+        "ts-control": "controls@http://localhost:3088/remoteEntry.js",
       },
-      exposes: {
-        './store': './src/store.ts'
-      },
+      exposes: {},
       shared: {
         ...deps,
         react: {

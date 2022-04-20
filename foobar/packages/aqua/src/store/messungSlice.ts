@@ -2,19 +2,6 @@ import { createAsyncThunk, createEntityAdapter, createSlice } from '@reduxjs/too
 import axios from 'axios';
 import { Messung, MessungFormValues } from 'shared-types';
 
-/*
-interface MessungState {
-  wert: number | null;
-  datum: Date;
-  typ: number | null;
-}
-
-const initialState: MessungState = {
-  wert: null,
-  datum: new Date(),
-  typ: null,
-};
-*/
 
 const messungenAdapter = createEntityAdapter<Messung>();
 
@@ -42,8 +29,8 @@ export const createMessungAsync = createAsyncThunk<Messung, MessungFormValues>(
   },
 );
 
-export const wertSlice = createSlice({
-  name: 'wert',
+export const messungSlice = createSlice({
+  name: 'messung',
   initialState: messungenAdapter.getInitialState(),
   reducers: {},
   extraReducers: (builder => {
@@ -66,4 +53,4 @@ export const wertSlice = createSlice({
   }),
 });
 
-export const commonActions = wertSlice.actions;
+export const messungenSelectors = messungenAdapter.getSelectors((state: any) => state.messungen);

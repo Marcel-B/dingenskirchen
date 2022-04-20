@@ -44,9 +44,6 @@ module.exports = {
       filename: "remoteEntry.js",
       remotes: {
         "ts-header": "tsheader@http://localhost:3010/remoteEntry.js",
-        "ts-aqua-wert": "aquawert@http://localhost:3012/remoteEntry.js",
-        "ts-aqua-liste": "aqualiste@http://localhost:3011/remoteEntry.js",
-        "ts-app-store": "appstore@http://localhost:3050/remoteEntry.js"
       },
       exposes: {},
       shared: {

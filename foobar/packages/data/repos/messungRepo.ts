@@ -66,7 +66,7 @@ function messungRepo() {
   }
 
   return { loadData, get, getById, add };
-}
+};
 
 module.exports = messungRepo();
 export default messungRepo();

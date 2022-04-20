@@ -15,6 +15,7 @@ export type MessungFormValues = {
 }
 
 export type Messung = {
+  id: string;
   wert: number;
   datum: Date;
   typ: number;
