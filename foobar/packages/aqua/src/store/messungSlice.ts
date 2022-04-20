@@ -1,6 +1,7 @@
 import { createAsyncThunk, createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { Messung, MessungFormValues } from 'shared-types';
+import { RootState } from './store';
 
 
 const messungenAdapter = createEntityAdapter<Messung>();
@@ -45,7 +46,7 @@ export const messungSlice = createSlice({
     builder.addCase(fetchMessungenAsync.pending, (state) => {
     });
     builder.addCase(fetchMessungenAsync.fulfilled, (state, action) => {
-      messungenAdapter.addMany(state, action.payload);
+      messungenAdapter.upsertMany(state, action.payload);
     });
     builder.addCase(fetchMessungenAsync.rejected, (state, action) => {
       console.log(action.error);
@@ -53,4 +54,4 @@ export const messungSlice = createSlice({
   }),
 });
 
-export const messungenSelectors = messungenAdapter.getSelectors((state: any) => state.messungen);
+export const messungenSelectors = messungenAdapter.getSelectors((state: RootState) => state.messungen);

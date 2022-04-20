@@ -1,16 +1,23 @@
 import React, { useEffect } from 'react';
-import { Messung } from 'shared-types';
 import { useAppDispatch, useAppSelector } from '../../store/store';
 import { fetchMessungenAsync, messungenSelectors } from '../../store/messungSlice';
 
 const MessungListe = () => {
   const dispatch = useAppDispatch();
-  const messungen = useAppSelector(messungenSelectors.selectAll) as Messung[];
+  const messungen = useAppSelector(messungenSelectors.selectAll);
 
   useEffect(() => {
     dispatch(fetchMessungenAsync());
-  }, []);
-  return (<><h1>Liste</h1>{messungen.map(m => <p>{m.wert}</p>)}</>);
+  }, [dispatch]);
+  return (
+    <>
+      <h1>Liste</h1>
+      <ul>
+        {
+          messungen.map((m, idx) => <li key={m.id}>{m.wert}</li>)
+        }
+      </ul>
+    </>);
 };
 
 export default MessungListe;

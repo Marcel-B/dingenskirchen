@@ -9,7 +9,8 @@ export class MessungenController {
 
   @Get()
   async index() {
-    return await messungRepo.get();
+    const temp = await messungRepo.get();
+    return temp.map(m => {return {...m, id: m._id}});
   }
 
   @Post()
