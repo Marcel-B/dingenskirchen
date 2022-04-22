@@ -4,6 +4,7 @@ import { fetchMessungenAsync, messungenSelectors } from '../../store/messungSlic
 import { DataGrid, GridColDef, GridValueFormatterParams } from '@mui/x-data-grid';
 import { format } from 'date-fns';
 import messungTypeOptions from '../../models/messungTyp';
+import { Card } from '@mui/material';
 
 const MessungListe = () => {
   const dispatch = useAppDispatch();
@@ -21,7 +22,7 @@ const MessungListe = () => {
       field: 'typ',
       headerName: 'Typ',
       width: 150,
-      valueFormatter: (params: GridValueFormatterParams<number>) => messungTypeOptions.find(m => m.value === params.value)?.text ?? "n/a",
+      valueFormatter: (params: GridValueFormatterParams<number>) => messungTypeOptions.find(m => m.value === params.value)?.text ?? 'n/a',
     },
   ];
 
@@ -29,9 +30,9 @@ const MessungListe = () => {
     dispatch(fetchMessungenAsync());
   }, [dispatch]);
   return (
-    <>
+    <Card style={{ padding: '2rem' }}>
       <h1>Messungen</h1>
-      <div style={{ height: 400 }}>
+      <div style={{ height: 400, width: 500 }}>
         <DataGrid initialState={{
           sorting: { sortModel: [{ field: 'datum', sort: 'desc' }] },
           columns: { columnVisibilityModel: { id: false } },
@@ -39,7 +40,7 @@ const MessungListe = () => {
                   rows={messungen} rowsPerPageOptions={[5]} pageSize={5}
         />
       </div>
-    </>);
+    </Card>);
 };
 
 export default MessungListe;
