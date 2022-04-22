@@ -11,7 +11,7 @@ export class MessungenController {
   async index() {
     const temp = await messungRepo.get();
     return temp.map(m => {
-      return { wert: m.wert, datum: m.datum, typ: m.typ, id: m._id };
+      return { wert: m.wert, datum: m.datum, aquarium: m.aquarium, typ: m.typ, id: m._id };
     });
   }
 
@@ -20,6 +20,6 @@ export class MessungenController {
   async create(@Body() messung: Messung) {
     console.log('add messung');
     const id = await messungRepo.add(messung);
-    return { wert: messung.wert, datum: messung.datum, typ: messung.typ, id };
+    return { wert: messung.wert, datum: messung.datum, aquarium: messung.aquarium, typ: messung.typ, id };
   }
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Button, Card, Grid, Paper, Typography } from '@mui/material';
 
@@ -7,17 +7,23 @@ import DaTextInput from 'ts-control/DaTextInput';
 import DaSelect from 'ts-control/DaSelect';
 
 import { DatePickerComponent, TextInputComponent, SelectComponent, MessungFormValues } from 'shared-types';
-import { useAppDispatch } from '../../store/store';
-import { createMessungAsync } from '../../store/messungSlice';
+import { useAppDispatch, useAppSelector } from '../../store/store';
+import { createMessungAsync, fetchMessungenAsync, messungenSelectors } from '../../store/messungSlice';
 import messungTypeOptions from '../../models/messungTyp';
+import { aquariumSelecteors, fetchAquarienAsync } from '../../store/aquariumSlice';
 
 const AppDatePicker = DaDatePicker as DatePickerComponent;
 const AppTextInput = DaTextInput as TextInputComponent;
 const AppSelect = DaSelect as SelectComponent;
 
-const NeueMessung = () => {
+const NeueMessungForm = () => {
   const dispatch = useAppDispatch();
+  const aquarien = useAppSelector(aquariumSelecteors.selectAll);
   const { control, handleSubmit, reset } = useForm<MessungFormValues>();
+
+  useEffect(() => {
+    dispatch(fetchAquarienAsync());
+  }, [dispatch]);
 
   const onSubmit = (data: MessungFormValues) => {
     dispatch(createMessungAsync(data));
@@ -43,6 +49,15 @@ const NeueMessung = () => {
             <Grid item>
               <AppTextInput control={control} label='Wert' type='text' default={''} name='wert' />
             </Grid>
+            <Grid item width={220}>
+              <AppSelect
+                name='aquarium'
+                defaultValue={null}
+                control={control} label='Aquarium'
+                values={aquarien.map(o => {
+                  return { text: o.name, value: o.id };
+                })} />
+            </Grid>
           </Grid>
           <Button variant='contained' type='submit'>Senden</Button>
         </Card>
@@ -51,4 +66,4 @@ const NeueMessung = () => {
   );
 };
 
-export default NeueMessung;
+export default NeueMessungForm;

@@ -12,6 +12,12 @@ export type MessungFormValues = {
   wert: number | null;
   datum: Date;
   typ: number | null;
+  aquarium: string;
+}
+
+export type AquariumFormValues = {
+  name: number | null;
+  liter: Date;
 }
 
 export type Messung = {
@@ -19,6 +25,13 @@ export type Messung = {
   wert: number;
   datum: Date;
   typ: number;
+  aquarium: string;
+}
+
+export type Aquarium = {
+  id: string;
+  name: string;
+  liter: number;
 }
 
 export type HeaderComponent = React.FunctionComponent<{ appLinks: AppLink[] }>;

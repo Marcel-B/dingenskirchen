@@ -7,6 +7,7 @@ import { UnauthorizedModule } from './modules/unauthorized/unauthorized.module';
 import { AppController } from './app.controller';
 import { AuthModule } from './auth/auth.module';
 import { UsersService } from './users/users.service';
+import { AquarienModule } from './modules/aquarien/aquarien.module';
 import { MessungenModule } from './modules/messungen/messungen.module';
 
 @Module({
@@ -18,6 +19,7 @@ import { MessungenModule } from './modules/messungen/messungen.module';
     }),
     AuthorizedModule,
     UnauthorizedModule,
+    AquarienModule,
     MessungenModule,
     AuthModule,
   ],
