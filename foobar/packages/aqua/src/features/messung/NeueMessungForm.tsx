@@ -9,6 +9,7 @@ import DaSelect from 'ts-control/DaSelect';
 import { DatePickerComponent, TextInputComponent, SelectComponent, MessungFormValues } from 'shared-types';
 import { useAppDispatch } from '../../store/store';
 import { createMessungAsync } from '../../store/messungSlice';
+import messungTypeOptions from '../../models/messungTyp';
 
 const AppDatePicker = DaDatePicker as DatePickerComponent;
 const AppTextInput = DaTextInput as TextInputComponent;
@@ -20,13 +21,13 @@ const NeueMessung = () => {
 
   const onSubmit = (data: MessungFormValues) => {
     dispatch(createMessungAsync(data));
-    reset({datum: new Date()});
+    reset({ datum: new Date() });
   };
 
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Paper elevation={3} style={{padding: '2rem'}}>
+        <Paper elevation={3} style={{ padding: '2rem' }}>
           <Typography>Neue Messung</Typography>
           <Grid container spacing={12}>
             <Grid item>
@@ -37,7 +38,7 @@ const NeueMessung = () => {
                 name='typ'
                 defaultValue={null}
                 control={control} label='Messung'
-                values={[{ text: 'NO₂', value: 1 }, { text: 'NH₂', value: 2 }, { text: 'NO₃', value: 3 }, { text: 'PO₄', value: 4 }, { text: 'FE', value: 5 }]} />
+                values={messungTypeOptions} />
             </Grid>
             <Grid item>
               <AppTextInput control={control} label='Wert' type='text' default={''} name='wert' />

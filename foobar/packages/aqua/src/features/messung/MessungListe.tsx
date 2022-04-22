@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from '../../store/store';
 import { fetchMessungenAsync, messungenSelectors } from '../../store/messungSlice';
 import { DataGrid, GridColDef, GridValueFormatterParams } from '@mui/x-data-grid';
 import { format } from 'date-fns';
+import messungTypeOptions from '../../models/messungTyp';
 
 const MessungListe = () => {
   const dispatch = useAppDispatch();
@@ -17,22 +18,10 @@ const MessungListe = () => {
       valueFormatter: (params: GridValueFormatterParams<string>) => format(new Date(params.value), 'dd.MM.yyyy'),
     },
     {
-      field: 'typ', headerName: 'Typ', width: 150, valueFormatter: (params: GridValueFormatterParams<number>) => {
-        switch (params.value) {
-          case 1:
-            return 'NO₂';
-          case 2:
-            return 'NH₂';
-          case 3:
-            return 'NO₃';
-          case 4:
-            return 'PO₄';
-          case 5:
-            return 'FE';
-          default:
-            return 'n/a';
-        }
-      },
+      field: 'typ',
+      headerName: 'Typ',
+      width: 150,
+      valueFormatter: (params: GridValueFormatterParams<number>) => messungTypeOptions.find(m => m.value === params.value)?.text ?? "n/a",
     },
   ];
 

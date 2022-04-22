@@ -5,7 +5,7 @@ export type AppLink = {
 
 export type SelectOption = {
   text: string;
-  value: number;
+  value: string | number;
 }
 
 export type MessungFormValues = {
