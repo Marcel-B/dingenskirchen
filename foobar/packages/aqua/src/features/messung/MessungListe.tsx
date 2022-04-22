@@ -1,16 +1,39 @@
 import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store/store';
 import { fetchMessungenAsync, messungenSelectors } from '../../store/messungSlice';
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { DataGrid, GridColDef, GridValueFormatterParams } from '@mui/x-data-grid';
+import { format } from 'date-fns';
 
 const MessungListe = () => {
   const dispatch = useAppDispatch();
   const messungen = useAppSelector(messungenSelectors.selectAll);
   const columns: GridColDef[] = [
-    { field: 'id', headerName: 'ID', width: 90 },
-    { field: 'wert', headerName: 'Wert', width: 150 },
-    { field: 'datum', headerName: 'Datum', width: 150 },
-    { field: 'typ', headerName: 'Typ', width: 150 },
+    { field: 'id', headerName: 'ID', width: 90, editable: false, hideable: true },
+    { field: 'wert', headerName: 'Wert', width: 150, editable: false },
+    {
+      field: 'datum',
+      headerName: 'Datum',
+      width: 150,
+      valueFormatter: (params: GridValueFormatterParams<string>) => format(new Date(params.value), 'dd.MM.yyyy'),
+    },
+    {
+      field: 'typ', headerName: 'Typ', width: 150, valueFormatter: (params: GridValueFormatterParams<number>) => {
+        switch (params.value) {
+          case 1:
+            return 'NO₂';
+          case 2:
+            return 'NH₂';
+          case 3:
+            return 'NO₃';
+          case 4:
+            return 'PO₄';
+          case 5:
+            return 'FE';
+          default:
+            return 'n/a';
+        }
+      },
+    },
   ];
 
   useEffect(() => {
@@ -18,9 +41,14 @@ const MessungListe = () => {
   }, [dispatch]);
   return (
     <>
-      <h1>Liste</h1>
+      <h1>Messungen</h1>
       <div style={{ height: 400 }}>
-        <DataGrid columns={columns} rows={messungen} />
+        <DataGrid initialState={{
+          sorting: { sortModel: [{ field: 'datum', sort: 'desc' }] },
+          columns: { columnVisibilityModel: { id: false } },
+        }} columns={columns}
+                  rows={messungen} rowsPerPageOptions={[5]} pageSize={5}
+        />
       </div>
     </>);
 };
