@@ -19,6 +19,7 @@ export class MessungenController {
   @HttpCode(201)
   async create(@Body() messung: Messung) {
     console.log('add messung');
-    return await messungRepo.add(messung);
+    const id = await messungRepo.add(messung);
+    return { wert: messung.wert, datum: messung.datum, typ: messung.typ, id };
   }
 }

@@ -6,7 +6,7 @@ import DaDatePicker from 'ts-control/DaDatePicker';
 import DaTextInput from 'ts-control/DaTextInput';
 import DaSelect from 'ts-control/DaSelect';
 
-import { DatePickerComponent, TextInputComponent, SelectComponent } from 'shared-types';
+import { DatePickerComponent, TextInputComponent, SelectComponent, MessungFormValues } from 'shared-types';
 import { useAppDispatch } from '../../store/store';
 import { createMessungAsync } from '../../store/messungSlice';
 
@@ -16,10 +16,11 @@ const AppSelect = DaSelect as SelectComponent;
 
 const NeueMessung = () => {
   const dispatch = useAppDispatch();
-  const { control, handleSubmit } = useForm();
+  const { control, handleSubmit, reset } = useForm<MessungFormValues>();
 
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: MessungFormValues) => {
     dispatch(createMessungAsync(data));
+    reset({datum: new Date()});
   };
 
   return (
