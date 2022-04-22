@@ -1,6 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { Button, Grid, Paper, Typography } from '@mui/material';
+import { Button, Card, Grid, Paper, Typography } from '@mui/material';
 
 import DaDatePicker from 'ts-control/DaDatePicker';
 import DaTextInput from 'ts-control/DaTextInput';
@@ -27,7 +27,7 @@ const NeueMessung = () => {
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Paper elevation={3} style={{ padding: '2rem' }}>
+        <Card style={{ padding: '2rem' }}>
           <Typography>Neue Messung</Typography>
           <Grid container spacing={12}>
             <Grid item>
@@ -45,7 +45,7 @@ const NeueMessung = () => {
             </Grid>
           </Grid>
           <Button variant='contained' type='submit'>Senden</Button>
-        </Paper>
+        </Card>
       </form>
     </>
   );
