@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { Button, Card, Grid, Paper, Typography } from '@mui/material';
+import { Button, Card, Grid, Typography } from '@mui/material';
 
 import DaDatePicker from 'ts-control/DaDatePicker';
 import DaTextInput from 'ts-control/DaTextInput';
@@ -8,9 +8,9 @@ import DaSelect from 'ts-control/DaSelect';
 
 import { DatePickerComponent, TextInputComponent, SelectComponent, MessungFormValues } from 'shared-types';
 import { useAppDispatch, useAppSelector } from '../../store/store';
-import { createMessungAsync, fetchMessungenAsync, messungenSelectors } from '../../store/messungSlice';
+import { createMessungAsync} from '../../store/messungSlice';
 import messungTypeOptions from '../../models/messungTyp';
-import { aquariumSelecteors, fetchAquarienAsync } from '../../store/aquariumSlice';
+import { aquariumSelectors, fetchAquarienAsync } from '../../store/aquariumSlice';
 
 const AppDatePicker = DaDatePicker as DatePickerComponent;
 const AppTextInput = DaTextInput as TextInputComponent;
@@ -18,7 +18,7 @@ const AppSelect = DaSelect as SelectComponent;
 
 const NeueMessungForm = () => {
   const dispatch = useAppDispatch();
-  const aquarien = useAppSelector(aquariumSelecteors.selectAll);
+  const aquarien = useAppSelector(aquariumSelectors.selectAll);
   const { control, handleSubmit, reset } = useForm<MessungFormValues>();
 
   useEffect(() => {
@@ -47,7 +47,7 @@ const NeueMessungForm = () => {
                 values={messungTypeOptions} />
             </Grid>
             <Grid item>
-              <AppTextInput control={control} label='Wert' type='text' default={''} name='wert' />
+              <AppTextInput control={control} label='Wert' type='number' default={''} name='wert' />
             </Grid>
             <Grid item width={220}>
               <AppSelect

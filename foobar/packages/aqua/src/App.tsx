@@ -8,6 +8,7 @@ import { store } from './store/store';
 import MessungListe from './features/messung/MessungListe';
 import { Divider, Stack } from '@mui/material';
 import NeuesAquariumForm from './features/aquarium/NeuesAquariumForm';
+import AquariumListe from './features/aquarium/AquariumListe';
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
             <NeuesAquariumForm />
           </Stack>
         </div>
+        <AquariumListe />
       </Stack>
     </Provider>
   );

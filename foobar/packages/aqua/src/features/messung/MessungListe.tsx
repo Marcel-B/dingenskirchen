@@ -27,6 +27,7 @@ const MessungListe = () => {
   ];
 
   useEffect(() => {
+    //console.log('access', process.env.REACT_APP_API_URL);
     dispatch(fetchMessungenAsync());
   }, [dispatch]);
   return (

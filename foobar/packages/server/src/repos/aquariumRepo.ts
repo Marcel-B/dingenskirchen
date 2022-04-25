@@ -52,6 +52,21 @@ const aquariumRepo = () => {
     }
   }
 
+  async function remove(id: string) {
+    const client = new MongoClient(url);
+    try {
+      await client.connect();
+      const db = client.db(dbName);
+      const result = await db.collection('aquarien').deleteOne({_id: id});
+      console.log(result);
+      return id;
+    } catch (error) {
+      throw error;
+    } finally {
+      await client.close();
+    }
+  }
+
   async function loadData(data) {
     const client = new MongoClient(url);
     try {
@@ -65,7 +80,7 @@ const aquariumRepo = () => {
     }
   }
 
-  return { loadData, get, getById, add };
+  return { loadData, get, getById, add, remove };
 };
 
 export default aquariumRepo();

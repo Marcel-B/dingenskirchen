@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpCode, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, Param, Post } from '@nestjs/common';
 import { Aquarium } from 'shared-types';
 import aquariumRepo from '../../repos/aquariumRepo';
 
@@ -13,6 +13,12 @@ export class AquarienController {
     return temp.map(m => {
       return { name: m.name, liter: m.liter, id: m._id };
     });
+  }
+
+  @Delete(':id')
+  async delete(@Param() params) {
+    const temp = await aquariumRepo.remove(params.id);
+    return temp;
   }
 
   @Post()
