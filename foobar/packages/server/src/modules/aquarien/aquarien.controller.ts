@@ -17,14 +17,12 @@ export class AquarienController {
 
   @Delete(':id')
   async delete(@Param() params) {
-    const temp = await aquariumRepo.remove(params.id);
-    return temp;
+    return await aquariumRepo.remove(params.id);
   }
 
   @Post()
   @HttpCode(201)
   async create(@Body() aquarium: Aquarium) {
-    console.log('add aquarium');
     const id = await aquariumRepo.add(aquarium);
     return { name: aquarium.name, liter: aquarium.liter, id };
   }

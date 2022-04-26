@@ -1,15 +1,11 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { Button, Card, Grid, Paper, Typography } from '@mui/material';
+import { Button, Card, Typography } from '@mui/material';
 
-import DaDatePicker from 'ts-control/DaDatePicker';
 import DaTextInput from 'ts-control/DaTextInput';
-import DaSelect from 'ts-control/DaSelect';
 
 import {
-  DatePickerComponent,
   TextInputComponent,
-  SelectComponent,
   AquariumFormValues,
 } from 'shared-types';
 import { useAppDispatch } from '../../store/store';
@@ -30,15 +26,12 @@ const NeuesAquariumForm = () => {
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Card style={{ padding: '2rem' }}>
-          <Typography>Neues Aquarium</Typography>
-          <Grid container spacing={12}>
-            <Grid item>
-              <AppTextInput control={control} label='Name' type='text' default={''} name='name' />
-            </Grid>
-            <Grid item>
-              <AppTextInput control={control} label='Liter' type='number' default={''} name='liter' />
-            </Grid>
-          </Grid>
+          <Typography variant='h5'>Neues Aquarium</Typography>
+          <hr />
+          <AppTextInput control={control} label='Name' type='text' default={''} name='name' />
+          <AppTextInput control={control} label='Liter' type='number' default={''} name='liter' />
+          <br />
+          <br />
           <Button variant='contained' type='submit'>Senden</Button>
         </Card>
       </form>

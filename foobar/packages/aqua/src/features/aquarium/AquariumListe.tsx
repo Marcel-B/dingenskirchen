@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store/store';
 import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
-import { Card, IconButton } from '@mui/material';
+import { Card, Divider, IconButton, Typography } from '@mui/material';
 import {
   aquariumSelectors, deleteAquariumAsync,
   fetchAquarienAsync,
@@ -11,12 +11,18 @@ import DeleteIcon from '@mui/icons-material/Delete';
 const AquariumListe = () => {
   const dispatch = useAppDispatch();
   const aquarien = useAppSelector(aquariumSelectors.selectAll);
+
+  const deleteItem = (id: string | undefined) => {
+    if (id)
+      dispatch(deleteAquariumAsync(id));
+  };
+
   const columns: GridColDef[] = [
     {
       field: 'id', headerName: ' ', width: 60, editable: false,
       renderCell: (params: GridRenderCellParams<string>) => (
         <>
-          <IconButton aria-label='delete' onClick={() => params.value ? dispatch(deleteAquariumAsync(params.value)) : ''}>
+          <IconButton aria-label='delete' onClick={() => deleteItem(params.value)}>
             <DeleteIcon />
           </IconButton>
         </>
@@ -40,10 +46,10 @@ const AquariumListe = () => {
   }, [dispatch]);
   return (
     <Card style={{ padding: '2rem' }}>
-      <h1>Aquarien</h1>
-      <hr />
+      <Typography variant='h5'>Aquarien</Typography>
+      <Divider orientation='horizontal' />
       <br />
-      <div style={{ height: 400, width: 320 }}>
+      <div style={{ height: 400, width: 380 }}>
         <DataGrid initialState={{
           sorting: { sortModel: [{ field: 'name', sort: 'asc' }] },
         }} columns={columns}

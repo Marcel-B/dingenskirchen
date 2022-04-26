@@ -9,6 +9,7 @@ import { AuthModule } from './auth/auth.module';
 import { UsersService } from './users/users.service';
 import { AquarienModule } from './modules/aquarien/aquarien.module';
 import { MessungenModule } from './modules/messungen/messungen.module';
+import { DuengungenModule } from './modules/duengungen/duengungen.module';
 
 @Module({
   controllers: [AppController],
@@ -21,6 +22,7 @@ import { MessungenModule } from './modules/messungen/messungen.module';
     UnauthorizedModule,
     AquarienModule,
     MessungenModule,
+    DuengungenModule,
     AuthModule,
   ],
 })

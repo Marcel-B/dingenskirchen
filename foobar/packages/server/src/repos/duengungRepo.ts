@@ -1,7 +1,7 @@
 import { MongoClient, ObjectId } from 'mongodb';
-import { Aquarium } from 'shared-types';
+import { Duengung } from 'shared-types';
 
-const aquariumRepo = () => {
+const duengungRepo = () => {
   const url = 'mongodb://root:example@localhost:8081';
   const dbName = 'aqua';
 
@@ -10,7 +10,7 @@ const aquariumRepo = () => {
     try {
       await client.connect();
       const db = client.db(dbName);
-      let items = db.collection('aquarien').find(query);
+      let items = db.collection('duengungen').find(query);
       if (limit > 0) {
         items = items.limit(limit);
       }
@@ -27,7 +27,7 @@ const aquariumRepo = () => {
     try {
       await client.connect();
       const db = client.db(dbName);
-      const item = await db.collection('aquarien')
+      const item = await db.collection('duengungen')
         .findOne({ _id: new ObjectId(id) });
       return item;
     } catch (error) {
@@ -37,12 +37,12 @@ const aquariumRepo = () => {
     }
   }
 
-  async function add(item: Aquarium) {
+  async function add(item: Duengung) {
     const client = new MongoClient(url);
     try {
       await client.connect();
       const db = client.db(dbName);
-      const addedItem = await db.collection('aquarien').insertOne(item);
+      const addedItem = await db.collection('duengungen').insertOne(item);
       console.log(addedItem.insertedId);
       return addedItem.insertedId;
     } catch (error) {
@@ -57,7 +57,7 @@ const aquariumRepo = () => {
     try {
       await client.connect();
       const db = client.db(dbName);
-      const result = await db.collection('aquarien').deleteOne({_id: new ObjectId(id)});
+      const result = await db.collection('duengungen').deleteOne({ _id: new ObjectId(id) });
       console.log(result);
       return id;
     } catch (error) {
@@ -72,7 +72,7 @@ const aquariumRepo = () => {
     try {
       await client.connect();
       const db = client.db(dbName);
-      return await db.collection('aquarien').insertMany(data);
+      return await db.collection('duengungen').insertMany(data);
     } catch (error) {
       throw error;
     } finally {
@@ -83,4 +83,4 @@ const aquariumRepo = () => {
   return { loadData, get, getById, add, remove };
 };
 
-export default aquariumRepo();
+export default duengungRepo();

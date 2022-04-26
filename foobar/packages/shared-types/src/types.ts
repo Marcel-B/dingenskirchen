@@ -15,6 +15,13 @@ export type MessungFormValues = {
   aquarium: string;
 }
 
+export type DuengungFormValues = {
+  menge: number | null;
+  datum: Date;
+  typ: number | null;
+  aquarium: string;
+}
+
 export type AquariumFormValues = {
   name: number | null;
   liter: Date;
@@ -23,6 +30,14 @@ export type AquariumFormValues = {
 export type Messung = {
   id: string;
   wert: number;
+  datum: Date;
+  typ: number;
+  aquarium: string;
+}
+
+export type Duengung = {
+  id: string;
+  menge: number;
   datum: Date;
   typ: number;
   aquarium: string;

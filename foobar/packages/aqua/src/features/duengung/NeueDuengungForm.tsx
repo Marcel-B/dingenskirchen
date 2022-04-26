@@ -1,32 +1,36 @@
+import { Button, Card, Divider, Typography } from '@mui/material';
 import React, { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import { Button, Card, Typography } from '@mui/material';
+import duengungTypeOptions from '../../models/duengungTyp';
 
 import DaDatePicker from 'ts-control/DaDatePicker';
 import DaTextInput from 'ts-control/DaTextInput';
 import DaSelect from 'ts-control/DaSelect';
-
-import { DatePickerComponent, TextInputComponent, SelectComponent, MessungFormValues } from 'shared-types';
-import { useAppDispatch, useAppSelector } from '../../store/store';
-import { createMessungAsync } from '../../store/messungSlice';
-import messungTypeOptions from '../../models/messungTyp';
+import {
+  DatePickerComponent,
+  DuengungFormValues,
+  SelectComponent,
+  TextInputComponent,
+} from 'shared-types';
+import { useForm } from 'react-hook-form';
 import { aquariumSelectors, fetchAquarienAsync } from '../../store/aquariumSlice';
+import { useAppDispatch, useAppSelector } from '../../store/store';
+import { createDuengungAsync } from '../../store/duengungSlice';
 
 const AppDatePicker = DaDatePicker as DatePickerComponent;
 const AppTextInput = DaTextInput as TextInputComponent;
 const AppSelect = DaSelect as SelectComponent;
 
-const NeueMessungForm = () => {
+const NeueDuengungForm = () => {
   const dispatch = useAppDispatch();
+  const { control, handleSubmit, reset } = useForm<DuengungFormValues>();
   const aquarien = useAppSelector(aquariumSelectors.selectAll);
-  const { control, handleSubmit, reset } = useForm<MessungFormValues>();
 
   useEffect(() => {
     dispatch(fetchAquarienAsync());
   }, [dispatch]);
 
-  const onSubmit = (data: MessungFormValues) => {
-    dispatch(createMessungAsync(data));
+  const onSubmit = (data: DuengungFormValues) => {
+    dispatch(createDuengungAsync(data));
     reset({ datum: new Date() });
   };
 
@@ -34,15 +38,16 @@ const NeueMessungForm = () => {
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Card style={{ padding: '2rem' }}>
-          <Typography variant='h5'>Neue Messung</Typography>
-          <hr />
+          <Typography variant='h5'>Neue Düngung</Typography>
+          <Divider orientation='horizontal' />
+          <br />
           <AppDatePicker control={control} default={new Date()} label={'Datum'} name='datum' />
           <AppSelect
             name='typ'
             defaultValue={null}
-            control={control} label='Messung'
-            values={messungTypeOptions} />
-          <AppTextInput control={control} label='Wert' type='number' default={''} name='wert' />
+            control={control} label='Düngung'
+            values={duengungTypeOptions} />
+          <AppTextInput control={control} label='Wert (ml)' type='number' default={''} name='wert' />
           <AppSelect
             name='aquarium'
             defaultValue={null}
@@ -59,4 +64,4 @@ const NeueMessungForm = () => {
   );
 };
 
-export default NeueMessungForm;
+export default NeueDuengungForm;
