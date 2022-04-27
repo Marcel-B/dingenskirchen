@@ -26,7 +26,6 @@ const AppDatePicker = (props: Props) => {
           renderInput={(params) =>
             <TextField
               {...params}
-              margin={'dense'}
               helperText={fieldState.error?.message}
               error={!!fieldState.error} />}
         />

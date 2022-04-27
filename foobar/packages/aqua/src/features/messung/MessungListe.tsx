@@ -3,14 +3,11 @@ import { useAppDispatch, useAppSelector } from '../../store/store';
 import { fetchMessungenAsync, messungenSelectors } from '../../store/messungSlice';
 import { DataGrid, GridColDef, GridValueFormatterParams } from '@mui/x-data-grid';
 import { format } from 'date-fns';
-import messungTypeOptions from '../../models/messungTyp';
 import { Card, Divider, Typography } from '@mui/material';
-import { aquariumSelectors } from '../../store/aquariumSlice';
 
 const MessungListe = () => {
   const dispatch = useAppDispatch();
   const messungen = useAppSelector(messungenSelectors.selectAll);
-  const aquarien = useAppSelector(aquariumSelectors.selectAll);
   const columns: GridColDef[] = [
     {
       field: 'id',
@@ -20,28 +17,30 @@ const MessungListe = () => {
       hideable: true,
     },
     {
-      field: 'wert',
-      headerName: 'Wert',
-      width: 150,
-      editable: false,
-    },
-    {
       field: 'datum',
       headerName: 'Datum',
       width: 150,
       valueFormatter: (params: GridValueFormatterParams<string>) => format(new Date(params.value), 'dd.MM.yyyy'),
     },
     {
-      field: 'typ',
-      headerName: 'Typ',
+      field: 'wert',
+      headerName: 'Wert',
       width: 150,
-      valueFormatter: (params: GridValueFormatterParams<number>) => messungTypeOptions.find(m => m.value === params.value)?.text ?? '-',
+    },
+    {
+      field: 'menge',
+      headerName: 'Menge',
+      width: 150,
+      editable: false,
+      valueFormatter: (params: GridValueFormatterParams<number>) => new Intl.NumberFormat('de-DE', {
+        style: 'unit',
+        unit: 'milliliter',
+      }).format(params?.value),
     },
     {
       field: 'aquarium',
       headerName: 'Aquarium',
       width: 150,
-      valueFormatter: (params: GridValueFormatterParams<string>) => aquarien.find(m => m.id === params.value)?.name ?? '-',
     },
   ];
 
@@ -53,12 +52,14 @@ const MessungListe = () => {
       <Typography variant='h5'>Messungen</Typography>
       <Divider orientation='horizontal' />
       <br />
-      <div style={{ height: 400, maxWidth: 800, minWidth: 620 }}>
+      <div style={{ height: 400, width: '100%' }}>
         <DataGrid initialState={{
           sorting: { sortModel: [{ field: 'datum', sort: 'desc' }] },
           columns: { columnVisibilityModel: { id: false } },
         }} columns={columns}
-                  rows={messungen} rowsPerPageOptions={[5]} pageSize={5}
+                  rows={messungen}
+                  rowsPerPageOptions={[5]}
+                  pageSize={5}
         />
       </div>
     </Card>);

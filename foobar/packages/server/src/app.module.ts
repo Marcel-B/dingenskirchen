@@ -10,6 +10,7 @@ import { UsersService } from './users/users.service';
 import { AquarienModule } from './modules/aquarien/aquarien.module';
 import { MessungenModule } from './modules/messungen/messungen.module';
 import { DuengungenModule } from './modules/duengungen/duengungen.module';
+import { TagebuchModule } from './modules/tagebuch/tagebuch.module';
 
 @Module({
   controllers: [AppController],
@@ -24,6 +25,8 @@ import { DuengungenModule } from './modules/duengungen/duengungen.module';
     MessungenModule,
     DuengungenModule,
     AuthModule,
+    TagebuchModule,
   ],
 })
-export class AppModule {}
+export class AppModule {
+}

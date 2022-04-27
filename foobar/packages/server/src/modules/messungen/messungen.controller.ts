@@ -1,25 +1,40 @@
 import { Body, Controller, Get, HttpCode, Post } from '@nestjs/common';
 import { Messung } from 'shared-types';
-import messungRepo from '../../repos/messungRepo';
+import Repo from '../../repos/repo';
 
 @Controller('messungen')
 export class MessungenController {
+  repo: Repo<Messung>;
+
   constructor() {
+    this.repo = new Repo<Messung>('messung');
   }
 
   @Get()
   async index() {
-    const temp = await messungRepo.get();
+    console.log("Messung");
+    const temp = await this.repo.get();
     return temp.map(m => {
-      return { wert: m.wert, datum: m.datum, aquarium: m.aquarium, typ: m.typ, id: m._id };
+      return {
+        id: m._id,
+        menge: m.menge,
+        datum: m.datum,
+        wert: m.wert,
+        aquarium: m.aquarium,
+      };
     });
   }
 
   @Post()
   @HttpCode(201)
   async create(@Body() messung: Messung) {
-    console.log('add messung');
-    const id = await messungRepo.add(messung);
-    return { wert: messung.wert, datum: messung.datum, aquarium: messung.aquarium, typ: messung.typ, id };
+    const id = await this.repo.add(messung);
+    return {
+      id,
+      menge: messung.menge,
+      datum: messung.datum,
+      wert: messung.wert,
+      aquarium: messung.aquarium,
+    };
   }
 }

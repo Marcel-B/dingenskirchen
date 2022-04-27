@@ -7,7 +7,7 @@ import { RootState } from './store';
 const duengungenAdapter = createEntityAdapter<Duengung>();
 
 export const fetchDuengungenAsync = createAsyncThunk<Duengung[]>(
-  'overview/fetchMessungenAsync',
+  'overview/fetchDuengungenAsync',
   async (_, thunkAPI) => {
     try {
       const response = await axios.get<Duengung[]>(`http://localhost:8080/duengungen`);

@@ -10,7 +10,7 @@ import { Container } from '@mui/material';
 const App = () => {
   return (
     <Provider store={store}>
-      <Container style={{paddingTop: '2rem'}}>
+      <Container style={{ paddingTop: '2rem' }}>
         <Dashboard />
       </Container>
     </Provider>

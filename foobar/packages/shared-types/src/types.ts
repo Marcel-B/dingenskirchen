@@ -9,29 +9,25 @@ export type SelectOption = {
 }
 
 export type MessungFormValues = {
-  wert: number | null;
-  datum: Date;
-  typ: number | null;
-  aquarium: string;
-}
-
-export type DuengungFormValues = {
   menge: number | null;
   datum: Date;
-  typ: number | null;
+  wert: string | null;
   aquarium: string;
-}
-
-export type AquariumFormValues = {
-  name: number | null;
-  liter: Date;
 }
 
 export type Messung = {
   id: string;
-  wert: number;
+  menge: number;
   datum: Date;
-  typ: number;
+  wert: string;
+  aquarium: string;
+}
+
+
+export type DuengungFormValues = {
+  menge: number | null;
+  datum: Date;
+  duenger: string | null;
   aquarium: string;
 }
 
@@ -39,7 +35,26 @@ export type Duengung = {
   id: string;
   menge: number;
   datum: Date;
-  typ: number;
+  duenger: string;
+  aquarium: string;
+}
+
+
+export type AquariumFormValues = {
+  name: number | null;
+  liter: Date;
+}
+
+export type Tag = {
+  id: string;
+  value: string;
+}
+
+export type Eintrag = {
+  id: string;
+  text: string;
+  datum: Date;
+  tag: string;
   aquarium: string;
 }
 

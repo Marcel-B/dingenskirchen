@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { Button, Card, Typography } from '@mui/material';
+import { Button, Card, Divider, Typography } from '@mui/material';
 
 import DaDatePicker from 'ts-control/DaDatePicker';
 import DaTextInput from 'ts-control/DaTextInput';
@@ -35,20 +35,21 @@ const NeueMessungForm = () => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <Card style={{ padding: '2rem' }}>
           <Typography variant='h5'>Neue Messung</Typography>
-          <hr />
+          <Divider orientation='horizontal' />
+          <br />
           <AppDatePicker control={control} default={new Date()} label={'Datum'} name='datum' />
           <AppSelect
-            name='typ'
+            name='wert'
             defaultValue={null}
-            control={control} label='Messung'
+            control={control} label='Wert'
             values={messungTypeOptions} />
-          <AppTextInput control={control} label='Wert' type='number' default={''} name='wert' />
+          <AppTextInput control={control} label='Menge' type='number' default={''} name='menge' />
           <AppSelect
             name='aquarium'
             defaultValue={null}
             control={control} label='Aquarium'
             values={aquarien.map(o => {
-              return { text: o.name, value: o.id };
+              return { text: o.name, value: o.name };
             })} />
           <br />
           <br />

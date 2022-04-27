@@ -1,6 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { Button, Card, Typography } from '@mui/material';
+import { Button, Card, Divider, Typography } from '@mui/material';
 
 import DaTextInput from 'ts-control/DaTextInput';
 
@@ -27,7 +27,8 @@ const NeuesAquariumForm = () => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <Card style={{ padding: '2rem' }}>
           <Typography variant='h5'>Neues Aquarium</Typography>
-          <hr />
+          <Divider orientation='horizontal' />
+          <br />
           <AppTextInput control={control} label='Name' type='text' default={''} name='name' />
           <AppTextInput control={control} label='Liter' type='number' default={''} name='liter' />
           <br />
