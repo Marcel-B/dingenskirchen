@@ -11,24 +11,24 @@ const Dashboard = () => {
   return (
     <Grid
       container
-      spacing={2}>
-      <Grid item xs={6}>
+      spacing={4}>
+      <Grid item xs={8}>
         <MessungListe />
-      </Grid>
-      <Grid item xs={6}>
-        <DuengungListe />
       </Grid>
       <Grid item xs={4}>
         <NeueMessungForm />
       </Grid>
+      <Grid item xs={8}>
+        <DuengungListe />
+      </Grid>
       <Grid item xs={4}>
         <NeueDuengungForm />
       </Grid>
+      <Grid item xs={8}>
+        <AquariumListe />
+      </Grid>
       <Grid item xs={4}>
         <NeuesAquariumForm />
-      </Grid>
-      <Grid item xs={5}>
-        <AquariumListe />
       </Grid>
     </Grid>
   );
