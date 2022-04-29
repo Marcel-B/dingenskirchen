@@ -43,17 +43,18 @@ const NeueDuengungForm = () => {
           <br />
           <AppDatePicker control={control} default={new Date()} label={'Datum'} name='datum' />
           <AppSelect
-            name='typ'
+            name='duenger'
             defaultValue={null}
-            control={control} label='Düngung'
+            control={control}
+            label='Düngung'
             values={duengungTypeOptions} />
-          <AppTextInput control={control} label='Wert (ml)' type='number' default={''} name='wert' />
+          <AppTextInput control={control} label='Wert (ml)' type='number' default={''} name='menge' />
           <AppSelect
             name='aquarium'
             defaultValue={null}
             control={control} label='Aquarium'
             values={aquarien.map(o => {
-              return { text: o.name, value: o.id };
+              return { text: o.name, value: o.name };
             })} />
           <br />
           <br />

@@ -11,6 +11,7 @@ import { AquarienModule } from './modules/aquarien/aquarien.module';
 import { MessungenModule } from './modules/messungen/messungen.module';
 import { DuengungenModule } from './modules/duengungen/duengungen.module';
 import { TagebuchModule } from './modules/tagebuch/tagebuch.module';
+import { FischeModule } from './modules/fische/fische.module';
 
 @Module({
   controllers: [AppController],
@@ -26,6 +27,7 @@ import { TagebuchModule } from './modules/tagebuch/tagebuch.module';
     DuengungenModule,
     AuthModule,
     TagebuchModule,
+    FischeModule,
   ],
 })
 export class AppModule {

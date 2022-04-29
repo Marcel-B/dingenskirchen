@@ -44,6 +44,7 @@ const AquariumListe = () => {
   useEffect(() => {
     dispatch(fetchAquarienAsync());
   }, [dispatch]);
+
   return (
     <Card style={{ padding: '2rem' }}>
       <Typography variant='h5'>Aquarien</Typography>

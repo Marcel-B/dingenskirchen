@@ -6,12 +6,18 @@ import AquariumListe from '../aquarium/AquariumListe';
 import React from 'react';
 import NeueDuengungForm from '../duengung/NeueDuengungForm';
 import DuengungListe from '../duengung/DuengungListe';
+import NeuerFischForm from '../fisch/NeuerFischForm';
+import FischListe from '../fisch/FischListe';
+import Feed from '../feed/Feed';
 
 const Dashboard = () => {
   return (
     <Grid
       container
       spacing={4}>
+      <Grid item xs={12}>
+        <Feed />
+      </Grid>
       <Grid item xs={8}>
         <MessungListe />
       </Grid>
@@ -29,6 +35,12 @@ const Dashboard = () => {
       </Grid>
       <Grid item xs={4}>
         <NeuesAquariumForm />
+      </Grid>
+      <Grid item xs={12}>
+        <FischListe />
+      </Grid>
+      <Grid item xs={6}>
+        <NeuerFischForm />
       </Grid>
     </Grid>
   );

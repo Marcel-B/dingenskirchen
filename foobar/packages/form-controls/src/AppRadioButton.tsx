@@ -8,7 +8,7 @@ interface Props extends UseControllerProps {
 }
 
 export const AppRadioButton = (props: Props) => {
-  const { fieldState, field } = useController({ ...props, defaultValue: props.defaultValue });
+  const { fieldState, field } = useController({ ...props, defaultValue: props.defaultValue ?? '' });
   return (
     <FormControl
       fullWidth
@@ -19,7 +19,7 @@ export const AppRadioButton = (props: Props) => {
         row
         value={field.value}
         onChange={(e) => {
-          field.onChange(parseInt(e.target.value));
+          field.onChange(e.target.value);
         }}
         name='row-radio-buttons-group'>
         {props.values.map(option =>
@@ -29,3 +29,4 @@ export const AppRadioButton = (props: Props) => {
     </FormControl>
   );
 };
+export default AppRadioButton;

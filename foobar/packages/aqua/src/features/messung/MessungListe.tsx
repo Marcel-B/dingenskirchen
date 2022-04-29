@@ -32,10 +32,7 @@ const MessungListe = () => {
       headerName: 'Menge',
       width: 150,
       editable: false,
-      valueFormatter: (params: GridValueFormatterParams<number>) => new Intl.NumberFormat('de-DE', {
-        style: 'unit',
-        unit: 'milliliter',
-      }).format(params?.value),
+      valueFormatter: (params: GridValueFormatterParams<number>) => new Intl.NumberFormat('de-DE', { maximumFractionDigits: 2 }).format(params?.value) + ` mg/l`,
     },
     {
       field: 'aquarium',
