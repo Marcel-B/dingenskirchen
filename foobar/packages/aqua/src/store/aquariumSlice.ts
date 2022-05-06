@@ -10,7 +10,7 @@ export const createAquariumAsync = createAsyncThunk<Aquarium, AquariumFormValues
   async (aquariumFormValues, thunkAPI) => {
     try {
       //axios.defaults.baseURL = process.env.REACT_APP_API_URL;
-      const response = await axios.post<Aquarium>(`http://localhost:8080/aquarien`, aquariumFormValues);
+      const response = await axios.post<Aquarium>(`http://localhost:4000/aquarien`, aquariumFormValues);
       return response.data;
     } catch (e: any) {
       return thunkAPI.rejectWithValue({ error: e.data });
@@ -22,7 +22,7 @@ export const fetchAquarienAsync = createAsyncThunk<Aquarium[]>(
   'overview/fetchAquarienAsync',
   async (_, thunkAPI) => {
     try {
-      const response = await axios.get<Aquarium[]>(`http://localhost:8080/aquarien`);
+      const response = await axios.get<Aquarium[]>(`http://localhost:4000/aquarien`);
       return response.data;
     } catch (e: any) {
       return thunkAPI.rejectWithValue(e.data);

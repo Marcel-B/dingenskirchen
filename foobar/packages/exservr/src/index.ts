@@ -1,11 +1,14 @@
-const express = require('express');
 import { PORT } from './config/constants';
 import { aquariumRouter } from './routes/Aquarium';
 
+const express = require('express');
+const cors = require('cors');
+
 const app = express();
 app.use(express.json());
+app.use(cors());
+app.use('/aquarien', aquariumRouter);
 
-app.use('/aquarium', aquariumRouter);
 app.get('/', (req, res) => {
   res.send('This is a test web page!');
 });

@@ -1,4 +1,3 @@
-"use strict";
 var __assign = (this && this.__assign) || function () {
     __assign = Object.assign || function(t) {
         for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -55,11 +54,10 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     }
     return to.concat(ar || Array.prototype.slice.call(from));
 };
-exports.__esModule = true;
-var mobx_1 = require("mobx");
-var buchung_1 = require("../models/buchung");
-var agent_1 = require("../api/agent");
-var date_fns_1 = require("date-fns");
+import { makeAutoObservable, runInAction } from 'mobx';
+import { Buchung } from '../models/buchung';
+import agent from '../api/agent';
+import { format } from 'date-fns';
 var BuchungStore = /** @class */ (function () {
     function BuchungStore() {
         var _this = this;
@@ -69,12 +67,12 @@ var BuchungStore = /** @class */ (function () {
         this.loading = false;
         this.loadingInitial = false;
         this.addTag = function (buchung, tag) {
-            (0, mobx_1.runInAction)(function () {
+            runInAction(function () {
                 buchung.tags = __spreadArray(__spreadArray([], buchung.tags, true), [tag], false);
             });
         };
         this.removeTag = function (buchung, tag) {
-            (0, mobx_1.runInAction)(function () {
+            runInAction(function () {
                 buchung.tags = __spreadArray([], buchung.tags.filter(function (t) { return t.id !== tag.id; }), true);
             });
         };
@@ -88,7 +86,7 @@ var BuchungStore = /** @class */ (function () {
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
-                        return [4 /*yield*/, agent_1["default"].Buchungen.list()];
+                        return [4 /*yield*/, agent.Buchungen.list()];
                     case 2:
                         buchungen = _a.sent();
                         buchungen.forEach(function (buchung) {
@@ -120,11 +118,11 @@ var BuchungStore = /** @class */ (function () {
                         _a.label = 2;
                     case 2:
                         _a.trys.push([2, 4, , 5]);
-                        return [4 /*yield*/, agent_1["default"].Buchungen.details(id)];
+                        return [4 /*yield*/, agent.Buchungen.details(id)];
                     case 3:
                         buchung = _a.sent();
                         this.setBuchung(buchung);
-                        (0, mobx_1.runInAction)(function () {
+                        runInAction(function () {
                             _this.selectedBuchung = buchung;
                         });
                         this.setLoadingInitial(false);
@@ -158,12 +156,12 @@ var BuchungStore = /** @class */ (function () {
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
-                        return [4 /*yield*/, agent_1["default"].Buchungen.create(buchung)];
+                        return [4 /*yield*/, agent.Buchungen.create(buchung)];
                     case 2:
                         _a.sent();
-                        newBuchung_1 = new buchung_1.Buchung(buchung);
+                        newBuchung_1 = new Buchung(buchung);
                         this.setBuchung(newBuchung_1);
-                        (0, mobx_1.runInAction)(function () {
+                        runInAction(function () {
                             // this.buchungen.push(buchung);
                             _this.selectedBuchung = newBuchung_1;
                             _this.editMode = false;
@@ -173,7 +171,7 @@ var BuchungStore = /** @class */ (function () {
                     case 3:
                         error_3 = _a.sent();
                         console.log(error_3);
-                        (0, mobx_1.runInAction)(function () {
+                        runInAction(function () {
                             _this.loading = false;
                         });
                         return [3 /*break*/, 4];
@@ -191,10 +189,10 @@ var BuchungStore = /** @class */ (function () {
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
-                        return [4 /*yield*/, agent_1["default"].Buchungen.update(buchung)];
+                        return [4 /*yield*/, agent.Buchungen.update(buchung)];
                     case 2:
                         _a.sent();
-                        (0, mobx_1.runInAction)(function () {
+                        runInAction(function () {
                             if (buchung.id) {
                                 var updatedBuchung = __assign(__assign({}, _this.getBuchung(buchung.id)), buchung);
                                 _this.buchungRegistry.set(buchung.id, updatedBuchung);
@@ -207,7 +205,7 @@ var BuchungStore = /** @class */ (function () {
                     case 3:
                         error_4 = _a.sent();
                         console.log(error_4);
-                        (0, mobx_1.runInAction)(function () {
+                        runInAction(function () {
                             _this.loading = false;
                         });
                         return [3 /*break*/, 4];
@@ -225,19 +223,19 @@ var BuchungStore = /** @class */ (function () {
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
-                        return [4 /*yield*/, agent_1["default"].Buchungen["delete"](id)];
+                        return [4 /*yield*/, agent.Buchungen.delete(id)];
                     case 2:
                         _a.sent();
-                        (0, mobx_1.runInAction)(function () {
+                        runInAction(function () {
                             // this.buchungen = [...this.buchungen.filter(a => a.id !== id)];
-                            _this.buchungRegistry["delete"](id);
+                            _this.buchungRegistry.delete(id);
                             _this.loading = false;
                         });
                         return [3 /*break*/, 4];
                     case 3:
                         error_5 = _a.sent();
                         console.log(error_5);
-                        (0, mobx_1.runInAction)(function () {
+                        runInAction(function () {
                             _this.loading = false;
                         });
                         return [3 /*break*/, 4];
@@ -245,7 +243,7 @@ var BuchungStore = /** @class */ (function () {
                 }
             });
         }); };
-        (0, mobx_1.makeAutoObservable)(this);
+        makeAutoObservable(this);
     }
     Object.defineProperty(BuchungStore.prototype, "buchungenByDate", {
         get: function () {
@@ -265,7 +263,7 @@ var BuchungStore = /** @class */ (function () {
     Object.defineProperty(BuchungStore.prototype, "groupedBuchungen", {
         get: function () {
             return Object.entries(this.buchungenByDate.reduce(function (buchungen, buchung) {
-                var zeitpunkt = (0, date_fns_1.format)(buchung.zeitpunkt, 'dd.MM.yyyy');
+                var zeitpunkt = format(buchung.zeitpunkt, 'dd.MM.yyyy');
                 buchungen[zeitpunkt] = buchungen[zeitpunkt]
                     ? __spreadArray(__spreadArray([], buchungen[zeitpunkt], true), [buchung], false) : [buchung];
                 return buchungen;
@@ -338,4 +336,4 @@ var BuchungStore = /** @class */ (function () {
     });
     return BuchungStore;
 }());
-exports["default"] = BuchungStore;
+export default BuchungStore;

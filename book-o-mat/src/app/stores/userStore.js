@@ -1,4 +1,3 @@
-"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -35,10 +34,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-exports.__esModule = true;
-var mobx_1 = require("mobx");
-var agent_1 = require("../api/agent");
-var store_1 = require("./store");
+import { makeAutoObservable, runInAction } from 'mobx';
+import agent from '../api/agent';
+import { store } from './store';
 var UserStore = /** @class */ (function () {
     function UserStore() {
         var _this = this;
@@ -50,12 +48,12 @@ var UserStore = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, agent_1["default"].Account.login(creds)];
+                        return [4 /*yield*/, agent.Account.login(creds)];
                     case 1:
                         user_1 = _a.sent();
-                        store_1.store.commonStore.setToken(user_1.token);
-                        (0, mobx_1.runInAction)(function () { return (_this.user = user_1); });
-                        store_1.store.modalStore.closeModal();
+                        store.commonStore.setToken(user_1.token);
+                        runInAction(function () { return (_this.user = user_1); });
+                        store.modalStore.closeModal();
                         return [3 /*break*/, 3];
                     case 2:
                         error_1 = _a.sent();
@@ -65,7 +63,7 @@ var UserStore = /** @class */ (function () {
             });
         }); };
         this.logout = function () {
-            store_1.store.commonStore.setToken(null);
+            store.commonStore.setToken(null);
             window.localStorage.removeItem('jwt');
             _this.user = null;
         };
@@ -76,10 +74,10 @@ var UserStore = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, agent_1["default"].Account.current()];
+                        return [4 /*yield*/, agent.Account.current()];
                     case 1:
                         user_2 = _a.sent();
-                        (0, mobx_1.runInAction)(function () { return (_this.user = user_2); });
+                        runInAction(function () { return (_this.user = user_2); });
                         return [3 /*break*/, 3];
                     case 2:
                         error_2 = _a.sent();
@@ -96,13 +94,13 @@ var UserStore = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, agent_1["default"].Account.register(creds)];
+                        return [4 /*yield*/, agent.Account.register(creds)];
                     case 1:
                         user_3 = _a.sent();
-                        store_1.store.commonStore.setToken(user_3.token);
-                        (0, mobx_1.runInAction)(function () { return (_this.user = user_3); });
+                        store.commonStore.setToken(user_3.token);
+                        runInAction(function () { return (_this.user = user_3); });
                         //   this.navigate('/app/buchungen');
-                        store_1.store.modalStore.closeModal();
+                        store.modalStore.closeModal();
                         return [3 /*break*/, 3];
                     case 2:
                         error_3 = _a.sent();
@@ -111,7 +109,7 @@ var UserStore = /** @class */ (function () {
                 }
             });
         }); };
-        (0, mobx_1.makeAutoObservable)(this);
+        makeAutoObservable(this);
     }
     Object.defineProperty(UserStore.prototype, "isLoggedIn", {
         get: function () {
@@ -122,4 +120,4 @@ var UserStore = /** @class */ (function () {
     });
     return UserStore;
 }());
-exports["default"] = UserStore;
+export default UserStore;

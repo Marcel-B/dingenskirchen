@@ -1,6 +1,4 @@
-"use strict";
-exports.__esModule = true;
-var mobx_1 = require("mobx");
+import { makeAutoObservable, reaction } from 'mobx';
 var CommonStore = /** @class */ (function () {
     function CommonStore() {
         var _this = this;
@@ -16,9 +14,9 @@ var CommonStore = /** @class */ (function () {
         this.setAppLoaded = function () {
             _this.appLoaded = true;
         };
-        (0, mobx_1.makeAutoObservable)(this);
+        makeAutoObservable(this);
         // wird ausgeführt, wenn sich token ändert
-        (0, mobx_1.reaction)(function () { return _this.token; }, function (token) {
+        reaction(function () { return _this.token; }, function (token) {
             if (token) {
                 window.localStorage.setItem('jwt', token);
             }
@@ -29,4 +27,4 @@ var CommonStore = /** @class */ (function () {
     }
     return CommonStore;
 }());
-exports["default"] = CommonStore;
+export default CommonStore;

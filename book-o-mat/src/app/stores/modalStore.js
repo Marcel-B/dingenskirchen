@@ -1,13 +1,10 @@
-"use strict";
-exports.__esModule = true;
-exports.ModalStore = void 0;
-var mobx_1 = require("mobx");
+import { makeAutoObservable } from 'mobx';
 var ModalStore = /** @class */ (function () {
     function ModalStore() {
         var _this = this;
         this.modal = {
             open: false,
-            body: null
+            body: null,
         };
         this.openModal = function (content) {
             _this.modal.open = true;
@@ -17,8 +14,8 @@ var ModalStore = /** @class */ (function () {
             _this.modal.open = false;
             _this.modal.body = null;
         };
-        (0, mobx_1.makeAutoObservable)(this);
+        makeAutoObservable(this);
     }
     return ModalStore;
 }());
-exports.ModalStore = ModalStore;
+export { ModalStore };
