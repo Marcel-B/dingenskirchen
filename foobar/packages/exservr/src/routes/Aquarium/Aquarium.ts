@@ -14,6 +14,6 @@ router.get('/', (req: Request, res: Response) => {
 router.patch('/', (req: Request, res: Response) => {
   aquariumController.update(req, res);
 });
-router.delete('/', (req: Request, res: Response) => {
+router.delete('/:id', (req: Request, res: Response) => {
   aquariumController.delete(req, res);
 });

@@ -1,5 +1,17 @@
 import { MongoClient, ObjectId } from 'mongodb';
 
+class Client {
+  private url = 'mongodb://marcel:h00terNullOne0ne@192.168.2.103:8099';
+  private dbName = 'aqua';
+  private client: MongoClient;
+
+  constructor(dbName: string) {
+    this.dbName = dbName;
+    this.client = new MongoClient(this.url);
+  }
+
+}
+
 class Repo<T> {
   //private url = 'mongodb://root:example@localhost:8081';
   private url = 'mongodb://marcel:h00terNullOne0ne@192.168.2.103:8099';
@@ -11,18 +23,19 @@ class Repo<T> {
   }
 
   private async getDb() {
-    await this.client.connect();
+    this.client = await this.client.connect();
     return this.client.db(this.dbName);
   }
 
   async get(query = {}, limit = 0) {
     try {
       const db = await this.getDb();
-      let items = db.collection(this.collection).find(query);
+      let items = await db.collection(this.collection).find(query);
       if (limit > 0) {
         items = items.limit(limit);
       }
-      return await items.toArray();
+      const result = await items.toArray();
+      return result;
     } catch (error) {
       throw error;
     } finally {

@@ -10,7 +10,7 @@ export const fetchDuengungenAsync = createAsyncThunk<Duengung[]>(
   'overview/fetchDuengungenAsync',
   async (_, thunkAPI) => {
     try {
-      const response = await axios.get<Duengung[]>(`http://localhost:8080/duengungen`);
+      const response = await axios.get<Duengung[]>(`http://localhost:4000/duengungen`);
       return response.data;
     } catch (e: any) {
       return thunkAPI.rejectWithValue(e.data);
@@ -22,7 +22,7 @@ export const createDuengungAsync = createAsyncThunk<Duengung, DuengungFormValues
   'form/createDuengungAsync',
   async (duengungFormValues, thungAPI) => {
     try {
-      const response = await axios.post<Duengung>(`http://localhost:8080/duengungen`, duengungFormValues);
+      const response = await axios.post<Duengung>(`http://localhost:4000/duengungen`, duengungFormValues);
       return response.data;
     } catch (e: any) {
       return thungAPI.rejectWithValue({ error: e.data });

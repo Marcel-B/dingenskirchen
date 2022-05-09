@@ -27,7 +27,6 @@ export type Messung = {
   aquarium: string;
 }
 
-
 export type DuengungFormValues = {
   menge: number | null;
   datum: Date;
@@ -95,7 +94,7 @@ export type Tag = {
   value: string;
 }
 
-export type Eintrag = {
+export type Notiz = {
   id: string;
   text: string;
   datum: Date;

@@ -34,7 +34,7 @@ export const deleteAquariumAsync = createAsyncThunk<string, string>(
   'overview/deleteAquariumAsync',
   async (id, thunkAPI) => {
     try {
-      const response = await axios.delete<string>(`http://localhost:8080/aquarien/${id}`);
+      const response = await axios.delete<string>(`http://localhost:4000/aquarien/${id}`);
       return response.data;
     } catch (e: any) {
       return thunkAPI.rejectWithValue(e.data);

@@ -10,7 +10,7 @@ export const fetchMessungenAsync = createAsyncThunk<Messung[]>(
   'overview/fetchMessungenAsync',
   async (_, thunkAPI) => {
     try {
-      const response = await axios.get<Messung[]>(`http://localhost:8080/messungen`);
+      const response = await axios.get<Messung[]>(`http://localhost:4000/messungen`);
       return response.data;
     } catch (e: any) {
       return thunkAPI.rejectWithValue(e.data);
@@ -22,7 +22,7 @@ export const createMessungAsync = createAsyncThunk<Messung, MessungFormValues>(
   'form/createMessungAsync',
   async (messungFormValues, thungAPI) => {
     try {
-      const response = await axios.post<Messung>(`http://localhost:8080/messungen`, messungFormValues);
+      const response = await axios.post<Messung>(`http://localhost:4000/messungen`, messungFormValues);
       return response.data;
     } catch (e: any) {
       return thungAPI.rejectWithValue({ error: e.data });
