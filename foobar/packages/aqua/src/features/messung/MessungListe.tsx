@@ -54,7 +54,9 @@ const MessungListe = () => {
           sorting: { sortModel: [{ field: 'datum', sort: 'desc' }] },
           columns: { columnVisibilityModel: { id: false } },
         }} columns={columns}
-                  rows={messungen}
+                  rows={messungen.map(r => {
+                    return { ...r, aquarium: r.aquarium.name };
+                  })}
                   rowsPerPageOptions={[5]}
                   pageSize={5}
         />

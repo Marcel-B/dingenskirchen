@@ -9,7 +9,7 @@ export const fetchFischeAsync = createAsyncThunk<Fisch[]>(
   'overview/fetchFischeAsync',
   async (_, thunkAPI) => {
     try {
-      const response = await axios.get<Fisch[]>(`http://localhost:4000/fische`);
+      const response = await axios.get<Fisch[]>(`https://localhost:7269/api/duengung`);
       return response.data;
     } catch (e: any) {
       return thunkAPI.rejectWithValue(e.data);
@@ -21,7 +21,7 @@ export const createFischAsync = createAsyncThunk<Fisch, FischFormValues>(
   'form/createFischAsync',
   async (fischFormValues, thunkAPI) => {
     try {
-      const response = await axios.post<Fisch>(`http://localhost:4000/fische`, fischFormValues);
+      const response = await axios.post<Fisch>(`https://localhost:7269/api/duengung`, fischFormValues);
       return response.data;
     } catch (e: any) {
       return thunkAPI.rejectWithValue({ error: e.data });

@@ -49,7 +49,7 @@ const NeueMessungForm = () => {
             defaultValue={null}
             control={control} label='Aquarium'
             values={aquarien.map(o => {
-              return { text: o.name, value: o.name };
+              return { text: o.name, value: o };
             })} />
           <br />
           <br />

@@ -5,7 +5,7 @@ export type AppLink = {
 
 export type SelectOption = {
   text: string;
-  value: string | number;
+  value: string | number | {};
 }
 
 export interface ExtendedSelectOption extends SelectOption {

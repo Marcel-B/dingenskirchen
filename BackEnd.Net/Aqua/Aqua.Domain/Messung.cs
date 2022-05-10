@@ -19,5 +19,5 @@ public class Messung
     public string Wert { get; set; }
     
     [BsonElement("aquarium")]
-    public string Aquarium { get; set; }
+    public Aquarium Aquarium { get; set; }
 }
