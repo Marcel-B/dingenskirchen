@@ -101,7 +101,7 @@ export type Notiz = {
   text: string;
   datum: Date;
   tag: string;
-  aquarium: string;
+  aquarium: Aquarium;
 }
 
 export type Aquarium = {

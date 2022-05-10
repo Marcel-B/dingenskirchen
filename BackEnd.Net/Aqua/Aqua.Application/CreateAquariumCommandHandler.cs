@@ -14,7 +14,7 @@ public class CreateAquariumCommandHandler : IRequestHandler<CreateAquariumComman
     {
         _repository = repository;
     }
-    
+
     public async Task<Aquarium> Handle(
         CreateAquariumCommand request,
         CancellationToken cancellationToken)

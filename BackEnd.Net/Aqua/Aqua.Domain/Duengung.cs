@@ -10,7 +10,7 @@ public class Duengung
     public string Id { get; set; }
     
     [BsonElement("menge")]
-    public string Menge { get; set; }
+    public double Menge { get; set; }
     
     [BsonElement("datum")]
     public DateTimeOffset Datum { get; set; }

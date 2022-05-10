@@ -5,18 +5,18 @@ using MediatR;
 
 namespace com.marcelbenders.Aqua.Application;
 
-public class DeleteAquariumCommandHandler : IRequestHandler<DeleteAquariumCommand>
+public class DeleteFischCommandHandler : IRequestHandler<DeleteFischCommand>
 {
-    private readonly IMongoRepository<Aquarium> _repository;
+    private readonly IMongoRepository<Fisch> _repository;
 
-    public DeleteAquariumCommandHandler(
-        IMongoRepository<Aquarium> repository)
+    public DeleteFischCommandHandler(
+        IMongoRepository<Fisch> repository)
     {
         _repository = repository;
     }
 
     public async Task<Unit> Handle(
-        DeleteAquariumCommand request,
+        DeleteFischCommand request,
         CancellationToken cancellationToken)
     {
         await _repository.DeleteAsync(request.Id, cancellationToken);

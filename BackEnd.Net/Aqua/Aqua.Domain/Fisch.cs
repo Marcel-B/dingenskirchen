@@ -40,7 +40,7 @@ public class Fisch
     public int Anzahl { get; set; }
     
     [BsonElement("geschlecht")]
-    public Aquarium Geschlecht { get; set; }
+    public string Geschlecht { get; set; }
     
     [BsonElement("aquarium")]
     public Aquarium Aquarium { get; set; }
