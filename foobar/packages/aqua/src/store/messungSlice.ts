@@ -10,7 +10,7 @@ export const fetchMessungenAsync = createAsyncThunk<Messung[]>(
   'overview/fetchMessungenAsync',
   async (_, thunkAPI) => {
     try {
-      const response = await axios.get<Messung[]>(`http://localhost:4000/messungen`);
+      const response = await axios.get<Messung[]>(`https://localhost:7269/api/messung`);
       return response.data;
     } catch (e: any) {
       return thunkAPI.rejectWithValue(e.data);
