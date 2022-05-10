@@ -16,7 +16,7 @@ export type MessungFormValues = {
   menge: number | null;
   datum: Date;
   wert: string | null;
-  aquarium: string;
+  aquarium: Aquarium;
 }
 
 export type Messung = {
@@ -24,7 +24,7 @@ export type Messung = {
   menge: number;
   datum: Date;
   wert: string;
-  aquarium: string;
+  aquarium: Aquarium;
 }
 
 export type DuengungFormValues = {
@@ -61,6 +61,7 @@ export type Fisch = {
   datum: Date;
   anzahl: number;
   geschlecht: string;
+  aquarium: Aquarium;
 }
 
 export type FischFormValues = {
@@ -75,6 +76,7 @@ export type FischFormValues = {
   datum: Date;
   anzahl: number;
   geschlecht: string;
+  aquarium: Aquarium;
 }
 
 // CO2 20-30 mg/l

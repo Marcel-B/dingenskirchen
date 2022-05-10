@@ -22,7 +22,7 @@ export const createMessungAsync = createAsyncThunk<Messung, MessungFormValues>(
   'form/createMessungAsync',
   async (messungFormValues, thungAPI) => {
     try {
-      const response = await axios.post<Messung>(`http://localhost:4000/messungen`, messungFormValues);
+      const response = await axios.post<Messung>(`https://localhost:7269/api/messung`, messungFormValues);
       return response.data;
     } catch (e: any) {
       return thungAPI.rejectWithValue({ error: e.data });

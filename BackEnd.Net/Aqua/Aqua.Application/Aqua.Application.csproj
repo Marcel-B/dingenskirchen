@@ -13,10 +13,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Command" />
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\Aqua.Domain\Aqua.Domain.csproj" />
       <ProjectReference Include="..\Aqua.MongoDb\Aqua.MongoDb.csproj" />
     </ItemGroup>

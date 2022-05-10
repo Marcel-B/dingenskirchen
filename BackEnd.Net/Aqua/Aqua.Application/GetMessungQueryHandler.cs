@@ -1,20 +1,20 @@
 ﻿using com.marcelbenders.Aqua.Application.Query;
 using com.marcelbenders.Aqua.Domain;
-using com.marcelbenders.Aqua.MongoDb;
+using com.marcelbenders.Aqua.MongoDb.Repository;
 using MediatR;
 
 namespace com.marcelbenders.Aqua.Application;
 
 public class GetMessungenQueryHandler : IRequestHandler<GetMessungQuery, IEnumerable<Messung>>
 {
-    private readonly IMessungRepository _repository;
+    private readonly IMongoRepository<Messung> _repository;
 
-    public GetMessungenQueryHandler(IMessungRepository repository)
+    public GetMessungenQueryHandler(IMongoRepository<Messung> repository)
     {
         _repository = repository;
     }
     public async Task<IEnumerable<Messung>> Handle(GetMessungQuery request, CancellationToken cancellationToken)
     {
-        return await _repository.GetMessungenAsync();
+        return await _repository.GetAllAsync(cancellationToken);
     }
 }
