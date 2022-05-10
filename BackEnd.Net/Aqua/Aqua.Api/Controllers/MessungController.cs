@@ -38,11 +38,12 @@ public class MessungController : ControllerBase
 
     [HttpDelete("{id}")]
     [ActionName("DeleteOneAsync"), Produces("application/json")]
-    [ProducesResponseType(StatusCodes.Status204NoContent)]
-    public async Task<IActionResult> DeleteOneAsync([FromRoute, Required] string id,
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<IActionResult> DeleteOneAsync(
+        [FromRoute, Required] string id,
         CancellationToken cancellationToken)
     {
         await _mediator.Send(new DeleteMessungCommand {Id = id}, cancellationToken);
-        return NoContent();
+        return Ok(id);
     }
 }

@@ -40,12 +40,12 @@ public class AquariumController : ControllerBase
 
     [HttpDelete("{id}")]
     [ActionName("DeleteOneAsync"), Produces("application/json")]
-    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> DeleteOneAsync(
         [FromRoute, Required] string id,
         CancellationToken cancellationToken)
     {
         await _mediator.Send(new DeleteAquariumCommand {Id = id}, cancellationToken);
-        return NoContent();
+        return Ok(id);
     }
 }
