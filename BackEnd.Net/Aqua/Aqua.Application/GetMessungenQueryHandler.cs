@@ -5,7 +5,7 @@ using MediatR;
 
 namespace com.marcelbenders.Aqua.Application;
 
-public class GetMessungenQueryHandler : IRequestHandler<GetMessungQuery, IEnumerable<Messung>>
+public class GetMessungenQueryHandler : IRequestHandler<GetMessungenQuery, IEnumerable<Messung>>
 {
     private readonly IMongoRepository<Messung> _repository;
 
@@ -13,7 +13,8 @@ public class GetMessungenQueryHandler : IRequestHandler<GetMessungQuery, IEnumer
     {
         _repository = repository;
     }
-    public async Task<IEnumerable<Messung>> Handle(GetMessungQuery request, CancellationToken cancellationToken)
+    
+    public async Task<IEnumerable<Messung>> Handle(GetMessungenQuery request, CancellationToken cancellationToken)
     {
         return await _repository.GetAllAsync(cancellationToken);
     }

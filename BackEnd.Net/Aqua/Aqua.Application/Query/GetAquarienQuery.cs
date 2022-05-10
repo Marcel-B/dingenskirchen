@@ -3,4 +3,4 @@ using MediatR;
 
 namespace com.marcelbenders.Aqua.Application.Query;
 
-public record GetMessungenQuery(long? Number = null) : IRequest<IEnumerable<Messung>>;
+public record GetAquarienQuery(long? Number = null) : IRequest<IEnumerable<Aquarium>>;

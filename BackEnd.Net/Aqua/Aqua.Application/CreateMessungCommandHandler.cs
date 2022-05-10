@@ -5,11 +5,11 @@ using MediatR;
 
 namespace com.marcelbenders.Aqua.Application;
 
-public class CreateMessungenMessungHandler : IRequestHandler<CreateMessungCommand, Messung>
+public class CreateMessungCommandHandler : IRequestHandler<CreateMessungCommand, Messung>
 {
     private readonly IMongoRepository<Messung> _repository;
 
-    public CreateMessungenMessungHandler(
+    public CreateMessungCommandHandler(
         IMongoRepository<Messung> repository)
     {
         _repository = repository;

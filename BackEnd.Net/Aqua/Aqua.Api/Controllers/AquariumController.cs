@@ -9,11 +9,11 @@ namespace com.marcelbenders.Aqua.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class MessungController : ControllerBase
+public class AquariumController : ControllerBase
 {
     private readonly IMediator _mediator;
 
-    public MessungController(
+    public AquariumController(
         IMediator mediator)
     {
         _mediator = mediator;
@@ -21,16 +21,18 @@ public class MessungController : ControllerBase
 
     [HttpGet]
     [ActionName("GetAll"), Produces("application/json")]
-    [ProducesResponseType(typeof(IEnumerable<Messung>), StatusCodes.Status200OK)]
-    public async Task<IEnumerable<Messung>> GetAll(CancellationToken cancellationToken)
+    [ProducesResponseType(typeof(IEnumerable<Aquarium>), StatusCodes.Status200OK)]
+    public async Task<IEnumerable<Aquarium>> GetAll(
+        CancellationToken cancellationToken)
     {
-        return await _mediator.Send(new GetMessungenQuery(), cancellationToken);
+        return await _mediator.Send(new GetAquarienQuery(), cancellationToken);
     }
 
     [HttpPost]
     [ActionName("CreateOneAsync"), Produces("application/json")]
-    [ProducesResponseType(typeof(Messung), StatusCodes.Status201Created)]
-    public async Task<Messung> CreateOneAsync([FromBody, Required] CreateMessungCommand command,
+    [ProducesResponseType(typeof(Aquarium), StatusCodes.Status201Created)]
+    public async Task<Aquarium> CreateOneAsync(
+        [FromBody, Required] CreateAquariumCommand command,
         CancellationToken cancellationToken)
     {
         return await _mediator.Send(command, cancellationToken);
@@ -39,10 +41,11 @@ public class MessungController : ControllerBase
     [HttpDelete("{id}")]
     [ActionName("DeleteOneAsync"), Produces("application/json")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
-    public async Task<IActionResult> DeleteOneAsync([FromRoute, Required] string id,
+    public async Task<IActionResult> DeleteOneAsync(
+        [FromRoute, Required] string id,
         CancellationToken cancellationToken)
     {
-        await _mediator.Send(new DeleteMessungCommand {Id = id}, cancellationToken);
+        await _mediator.Send(new DeleteAquariumCommand {Id = id}, cancellationToken);
         return NoContent();
     }
 }
