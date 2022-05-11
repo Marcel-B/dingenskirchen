@@ -1,6 +1,7 @@
 import { createAsyncThunk, createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import { Notiz, NotizFormValues } from 'shared-types';
 import axios from 'axios';
+import { RootState } from './store';
 
 const notizenAdapter = createEntityAdapter<Notiz>();
 
@@ -77,3 +78,4 @@ export const notizSlice = createSlice({
     });
   },
 });
+export const notizSelectors = notizenAdapter.getSelectors((state: RootState) => state.notizen);

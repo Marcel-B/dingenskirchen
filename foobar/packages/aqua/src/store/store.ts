@@ -4,6 +4,8 @@ import { messungSlice } from './messungSlice';
 import { aquariumSlice } from './aquariumSlice';
 import { duengungSlice } from './duengungSlice';
 import { fischSlice } from './fischSlice';
+import { notizSlice } from './notizSlice';
+import { tagSlice } from './tagSlice';
 
 export const store = configureStore({
   reducer: {
@@ -11,6 +13,8 @@ export const store = configureStore({
     aquarien: aquariumSlice.reducer,
     duengungen: duengungSlice.reducer,
     fische: fischSlice.reducer,
+    notizen: notizSlice.reducer,
+    tags: tagSlice.reducer,
   },
 });
 

@@ -8,6 +8,7 @@ import { aquariumSelectors, fetchAquarienAsync } from '../../store/aquariumSlice
 import { useEffect } from 'react';
 import { createNotizAsync } from '../../store/notizSlice';
 import { Button, Card, Divider, Typography } from '@mui/material';
+import { fetchTagsAsync, tagSelectors, tagSlice } from '../../store/tagSlice';
 
 const AppDatePicker = DaDatePicker as DatePickerComponent;
 const AppTextInput = DaTextInput as TextInputComponent;
@@ -17,9 +18,11 @@ const NeueNotizForm = () => {
   const dispatch = useAppDispatch();
   const { control, handleSubmit, reset } = useForm<NotizFormValues>();
   const aquarien = useAppSelector(aquariumSelectors.selectAll);
+  const tags = useAppSelector(tagSelectors.selectAll);
 
   useEffect(() => {
     dispatch(fetchAquarienAsync());
+    dispatch(fetchTagsAsync());
   }, []);
 
   const onSubmit = (data: NotizFormValues) => {
