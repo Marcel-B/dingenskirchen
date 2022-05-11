@@ -104,6 +104,13 @@ export type Notiz = {
   aquarium: Aquarium;
 }
 
+export type NotizFormValues = {
+  text: number | undefined;
+  datum: Date;
+  tag: string | undefined;
+  aquarium: Aquarium;
+}
+
 export type Aquarium = {
   id: string;
   name: string;

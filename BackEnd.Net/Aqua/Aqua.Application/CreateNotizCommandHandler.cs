@@ -23,6 +23,7 @@ public class CreateNotizCommandHandler : IRequestHandler<CreateNotizCommand, Not
         {
             Text = request.Text,
             Aquarium = request.Aquarium,
+            Tag = request.Tag,
             Datum = request.Datum,
         };
         await _repository.CreateAsync(notiz, cancellationToken);

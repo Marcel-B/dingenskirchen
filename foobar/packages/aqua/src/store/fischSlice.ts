@@ -33,8 +33,11 @@ export const deleteFischAsync = createAsyncThunk<string, string>(
   'form/deleteFischAsync',
   async (id, thunkAPI) => {
     try {
-      const response = await axios.delete<string>(`https://localhost:7269/api/fisch/${id}`);
-      return response.data;
+      const response = await axios.delete(`https://localhost:7269/api/fisch/${id}`);
+      if (response.status === 204) {
+        return id;
+      }
+      return thunkAPI.rejectWithValue({ error: response.statusText });
     } catch (e: any) {
       return thunkAPI.rejectWithValue({ error: e.data });
     }
