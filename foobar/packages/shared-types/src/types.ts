@@ -5,7 +5,7 @@ export type AppLink = {
 
 export type SelectOption = {
   text: string;
-  value: string | number | {};
+  value: string | number;
 }
 
 export interface ExtendedSelectOption extends SelectOption {
@@ -31,7 +31,7 @@ export type DuengungFormValues = {
   menge: number | null;
   datum: Date;
   duenger: string | null;
-  aquarium: string;
+  aquarium: Aquarium;
 }
 
 export type Duengung = {
@@ -39,7 +39,7 @@ export type Duengung = {
   menge: number;
   datum: Date;
   duenger: string;
-  aquarium: string;
+  aquarium: Aquarium;
 }
 
 export type Bereich = {

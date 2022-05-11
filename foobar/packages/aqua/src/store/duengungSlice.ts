@@ -30,6 +30,18 @@ export const createDuengungAsync = createAsyncThunk<Duengung, DuengungFormValues
   },
 );
 
+export const deleteDuengungAsync = createAsyncThunk<string, string>(
+  'overview/deleteDuengungAsync',
+  async (id, thunkAPI) => {
+    try {
+      const response = await axios.delete<string>(`https://localhost:7269/api/duengung/${id}`);
+      return response.data;
+    } catch (e: any) {
+      return thunkAPI.rejectWithValue(e.data);
+    }
+  },
+);
+
 export const duengungSlice = createSlice({
   name: 'duengung',
   initialState: duengungenAdapter.getInitialState(),
@@ -41,6 +53,14 @@ export const duengungSlice = createSlice({
       duengungenAdapter.addOne(state, action.payload);
     });
     builder.addCase(createDuengungAsync.rejected, (state, action) => {
+      console.log(action.error);
+    });
+    builder.addCase(deleteDuengungAsync.pending, (state) => {
+    });
+    builder.addCase(deleteDuengungAsync.fulfilled, (state, action) => {
+      duengungenAdapter.removeOne(state, action.payload);
+    });
+    builder.addCase(deleteDuengungAsync.rejected, (state, action) => {
       console.log(action.error);
     });
     builder.addCase(fetchDuengungenAsync.pending, (state) => {

@@ -19,16 +19,11 @@ const AquariumListe = () => {
 
   const columns: GridColDef[] = [
     {
-      field: 'id', headerName: ' ', width: 60, editable: false,
-      renderCell: (params: GridRenderCellParams<string>) => (
-        <>
-          <IconButton aria-label='delete' onClick={() => deleteItem(params.value)}>
-            <DeleteIcon />
-          </IconButton>
-        </>
-      ),
+      field: 'name',
+      headerName: 'Name',
+      width: 150,
+      editable: false,
     },
-    { field: 'name', headerName: 'Name', width: 150, editable: false },
     {
       field: 'liter',
       headerName: 'Größe',
@@ -36,6 +31,16 @@ const AquariumListe = () => {
       renderCell: (params: GridRenderCellParams<string>) => (
         <>
           {`${params.value} Liter`}
+        </>
+      ),
+    },
+    {
+      field: 'id', headerName: ' ', width: 60, editable: false,
+      renderCell: (params: GridRenderCellParams<string>) => (
+        <>
+          <IconButton aria-label='delete' onClick={() => deleteItem(params.value)}>
+            <DeleteIcon />
+          </IconButton>
         </>
       ),
     },

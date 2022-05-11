@@ -7,14 +7,15 @@ import {
   SelectComponent,
 } from 'shared-types';
 import { useForm } from 'react-hook-form';
-import { useAppDispatch } from '../../store/store';
+import { useAppDispatch, useAppSelector } from '../../store/store';
 import { createFischAsync } from '../../store/fischSlice';
 import DaTextInput from 'ts-control/DaTextInput';
 import DaDatePicker from 'ts-control/DaDatePicker';
 import DaRadioButton from 'ts-control/DaRadioButton';
 import DaSelect from 'ts-control/DaSelect';
-import React from 'react';
+import React, { useEffect } from 'react';
 import geschlechtTypOptions from '../../models/geschlechtTyp';
+import { aquariumSelectors, fetchAquarienAsync } from '../../store/aquariumSlice';
 
 
 const AppTextInput = DaTextInput as TextInputComponent;
@@ -25,8 +26,15 @@ const AppSelect = DaSelect as SelectComponent;
 const NeuerFischForm = () => {
   const dispatch = useAppDispatch();
   const { control, handleSubmit, reset } = useForm<FischFormValues>();
+  const aquarien = useAppSelector(aquariumSelectors.selectAll);
+
+  useEffect(() => {
+    dispatch(fetchAquarienAsync());
+  }, []);
 
   const onSubmit = (data: FischFormValues) => {
+    const aqua = aquarien.find(a => a.id === data.aquarium.toString());
+    data.aquarium = aqua!;
     dispatch(createFischAsync(data));
     reset({});
   };
@@ -58,8 +66,17 @@ const NeuerFischForm = () => {
                 label='Geschlecht'
                 values={geschlechtTypOptions} />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={6}>
               <AppDatePicker control={control} default={new Date()} label={'Datum'} name='datum' />
+            </Grid>
+            <Grid item xs={6}>
+              <AppSelect
+                name='aquarium'
+                defaultValue={null}
+                control={control} label='Aquarium'
+                values={aquarien.map(aquarium => {
+                  return { text: aquarium.name, value: aquarium.id, item: aquarium };
+                })} />
             </Grid>
             <Grid item xs={12}>
               <Divider orientation='horizontal' />

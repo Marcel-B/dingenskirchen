@@ -1,21 +1,22 @@
 import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store/store';
-import { fetchMessungenAsync, messungenSelectors } from '../../store/messungSlice';
-import { DataGrid, GridColDef, GridValueFormatterParams } from '@mui/x-data-grid';
+import { deleteMessungAsync, fetchMessungenAsync, messungenSelectors } from '../../store/messungSlice';
+import { DataGrid, GridColDef, GridRenderCellParams, GridValueFormatterParams } from '@mui/x-data-grid';
 import { format } from 'date-fns';
-import { Card, Divider, Typography } from '@mui/material';
+import { Card, Divider, IconButton, Typography } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const MessungListe = () => {
   const dispatch = useAppDispatch();
   const messungen = useAppSelector(messungenSelectors.selectAll);
+
+  const deleteItem = (id: string | undefined) => {
+    if (id) {
+      dispatch(deleteMessungAsync(id));
+    }
+  };
+
   const columns: GridColDef[] = [
-    {
-      field: 'id',
-      headerName: 'ID',
-      width: 90,
-      editable: false,
-      hideable: true,
-    },
     {
       field: 'datum',
       headerName: 'Datum',
@@ -39,6 +40,19 @@ const MessungListe = () => {
       headerName: 'Aquarium',
       width: 150,
     },
+    {
+      field: 'id',
+      headerName: ' ',
+      width: 60,
+      editable: false,
+      renderCell: (params: GridRenderCellParams<string>) => (
+        <>
+          <IconButton aria-label='delete' onClick={() => deleteItem(params.value)}>
+            <DeleteIcon />
+          </IconButton>
+        </>
+      ),
+    },
   ];
 
   useEffect(() => {
@@ -52,7 +66,6 @@ const MessungListe = () => {
       <div style={{ height: 400, width: '100%' }}>
         <DataGrid initialState={{
           sorting: { sortModel: [{ field: 'datum', sort: 'desc' }] },
-          columns: { columnVisibilityModel: { id: false } },
         }} columns={columns}
                   rows={messungen.map(r => {
                     return { ...r, aquarium: r.aquarium.name };

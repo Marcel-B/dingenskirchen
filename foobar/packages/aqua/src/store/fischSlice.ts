@@ -9,7 +9,7 @@ export const fetchFischeAsync = createAsyncThunk<Fisch[]>(
   'overview/fetchFischeAsync',
   async (_, thunkAPI) => {
     try {
-      const response = await axios.get<Fisch[]>(`https://localhost:7269/api/duengung`);
+      const response = await axios.get<Fisch[]>(`https://localhost:7269/api/fisch`);
       return response.data;
     } catch (e: any) {
       return thunkAPI.rejectWithValue(e.data);
@@ -21,7 +21,19 @@ export const createFischAsync = createAsyncThunk<Fisch, FischFormValues>(
   'form/createFischAsync',
   async (fischFormValues, thunkAPI) => {
     try {
-      const response = await axios.post<Fisch>(`https://localhost:7269/api/duengung`, fischFormValues);
+      const response = await axios.post<Fisch>(`https://localhost:7269/api/fisch`, fischFormValues);
+      return response.data;
+    } catch (e: any) {
+      return thunkAPI.rejectWithValue({ error: e.data });
+    }
+  },
+);
+
+export const deleteFischAsync = createAsyncThunk<string, string>(
+  'form/deleteFischAsync',
+  async (id, thunkAPI) => {
+    try {
+      const response = await axios.delete<string>(`https://localhost:7269/api/fisch/${id}`);
       return response.data;
     } catch (e: any) {
       return thunkAPI.rejectWithValue({ error: e.data });
@@ -40,6 +52,14 @@ export const fischSlice = createSlice({
       fischeAdapter.addOne(state, action.payload);
     });
     builder.addCase(createFischAsync.rejected, (state, action) => {
+      console.log(action.error);
+    });
+    builder.addCase(deleteFischAsync.pending, (state) => {
+    });
+    builder.addCase(deleteFischAsync.fulfilled, (state, action) => {
+      fischeAdapter.removeOne(state, action.payload);
+    });
+    builder.addCase(deleteFischAsync.rejected, (state, action) => {
       console.log(action.error);
     });
     builder.addCase(fetchFischeAsync.pending, (state) => {

@@ -30,6 +30,18 @@ export const createMessungAsync = createAsyncThunk<Messung, MessungFormValues>(
   },
 );
 
+export const deleteMessungAsync = createAsyncThunk<string, string>(
+  'form/deleteMessungAsync',
+  async (id, thunkAPI) => {
+    try {
+      const response = await axios.delete<string>(`https://localhost:7269/api/messung/${id}`);
+      return response.data;
+    } catch (e: any) {
+      return thunkAPI.rejectWithValue({ error: e.data });
+    }
+  },
+);
+
 export const messungSlice = createSlice({
   name: 'messung',
   initialState: messungenAdapter.getInitialState(),
@@ -41,6 +53,14 @@ export const messungSlice = createSlice({
       messungenAdapter.addOne(state, action.payload);
     });
     builder.addCase(createMessungAsync.rejected, (state, action) => {
+      console.log(action.error);
+    });
+    builder.addCase(deleteMessungAsync.pending, (state) => {
+    });
+    builder.addCase(deleteMessungAsync.fulfilled, (state, action) => {
+      messungenAdapter.removeOne(state, action.payload);
+    });
+    builder.addCase(deleteMessungAsync.rejected, (state, action) => {
       console.log(action.error);
     });
     builder.addCase(fetchMessungenAsync.pending, (state) => {

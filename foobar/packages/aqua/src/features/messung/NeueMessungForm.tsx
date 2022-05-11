@@ -26,6 +26,8 @@ const NeueMessungForm = () => {
   }, [dispatch]);
 
   const onSubmit = (data: MessungFormValues) => {
+    const aqua = aquarien.find(a => a.id === data.aquarium.toString());
+    data.aquarium = aqua!;
     dispatch(createMessungAsync(data));
     reset({ datum: new Date() });
   };
@@ -47,9 +49,10 @@ const NeueMessungForm = () => {
           <AppSelect
             name='aquarium'
             defaultValue={null}
-            control={control} label='Aquarium'
-            values={aquarien.map(o => {
-              return { text: o.name, value: o };
+            control={control}
+            label='Aquarium'
+            values={aquarien.map(aquarium => {
+              return { text: aquarium.name, value: aquarium.id, item: aquarium };
             })} />
           <br />
           <br />

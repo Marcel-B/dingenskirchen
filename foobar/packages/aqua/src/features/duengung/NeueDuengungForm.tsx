@@ -30,6 +30,8 @@ const NeueDuengungForm = () => {
   }, [dispatch]);
 
   const onSubmit = (data: DuengungFormValues) => {
+    const aqua = aquarien.find(a => a.id === data.aquarium.toString());
+    data.aquarium = aqua!;
     dispatch(createDuengungAsync(data));
     reset({ datum: new Date() });
   };
@@ -53,8 +55,8 @@ const NeueDuengungForm = () => {
             name='aquarium'
             defaultValue={null}
             control={control} label='Aquarium'
-            values={aquarien.map(o => {
-              return { text: o.name, value: o.name };
+            values={aquarien.map(aquarium => {
+              return { text: aquarium.name, value: aquarium.id, item: aquarium };
             })} />
           <br />
           <br />

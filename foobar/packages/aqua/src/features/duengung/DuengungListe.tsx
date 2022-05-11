@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store/store';
-import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
+import { DataGrid, GridColDef, GridRenderCellParams, GridValueFormatterParams } from '@mui/x-data-grid';
 import { Card, Divider, IconButton, Typography } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { duengungenSelectors, fetchDuengungenAsync } from '../../store/duengungSlice';
+import { deleteDuengungAsync, duengungenSelectors, fetchDuengungenAsync } from '../../store/duengungSlice';
+import { format } from 'date-fns';
 
 const DuengungListe = () => {
   const dispatch = useAppDispatch();
@@ -11,21 +12,18 @@ const DuengungListe = () => {
 
   const deleteItem = (id: string | undefined) => {
     if (id) {
-      // dispatch(deleteDuengung(id));
+      dispatch(deleteDuengungAsync(id));
     }
   };
 
   const columns: GridColDef[] = [
     {
-      field: 'id', headerName: ' ', width: 60, editable: false,
-      renderCell: (params: GridRenderCellParams<string>) => (
-        <>
-          <IconButton aria-label='delete' onClick={() => deleteItem(params.value)}>
-            <DeleteIcon />
-          </IconButton>
-        </>
-      ),
-    }, {
+      field: 'datum',
+      headerName: 'Datum',
+      width: 150,
+      valueFormatter: (params: GridValueFormatterParams<string>) => format(new Date(params.value), 'dd.MM.yyyy'),
+    },
+    {
       field: 'duenger',
       headerName: 'Dünger',
       width: 150,
@@ -44,6 +42,19 @@ const DuengungListe = () => {
       headerName: 'Aquarium',
       width: 150,
     },
+    {
+      field: 'id',
+      headerName: ' ',
+      width: 60,
+      editable: false,
+      renderCell: (params: GridRenderCellParams<string>) => (
+        <>
+          <IconButton aria-label='delete' onClick={() => deleteItem(params.value)}>
+            <DeleteIcon />
+          </IconButton>
+        </>
+      ),
+    },
   ];
 
   useEffect(() => {
@@ -59,7 +70,9 @@ const DuengungListe = () => {
         <DataGrid initialState={{
           sorting: { sortModel: [{ field: 'name', sort: 'asc' }] },
         }} columns={columns}
-                  rows={duengungen}
+                  rows={duengungen.map(d => {
+                    return { ...d, aquarium: d.aquarium.name };
+                  })}
                   rowsPerPageOptions={[5]}
                   pageSize={5}
         />
