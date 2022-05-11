@@ -13,5 +13,6 @@ public static class ServiceExtension
             .AddSingleton<IMongoRepository<Fisch>, MongoRepository<Fisch>>()
             .AddSingleton<IMongoRepository<Messung>, MongoRepository<Messung>>()
             .AddSingleton<IMongoRepository<Notiz>, MongoRepository<Notiz>>()
+            .AddSingleton<ITagRepository, TagRepository>()
             .AddSingleton<IMongoContext, MongoContext>();
 }

@@ -56,6 +56,7 @@ export const messungSlice = createSlice({
       console.log(action.error);
     });
     builder.addCase(deleteMessungAsync.pending, (state) => {
+      console.log("Delete Messung pending");
     });
     builder.addCase(deleteMessungAsync.fulfilled, (state, action) => {
       messungenAdapter.removeOne(state, action.payload);
@@ -64,6 +65,7 @@ export const messungSlice = createSlice({
       console.log(action.error);
     });
     builder.addCase(fetchMessungenAsync.pending, (state) => {
+      console.log("Fetch Messungen pending");
     });
     builder.addCase(fetchMessungenAsync.fulfilled, (state, action) => {
       messungenAdapter.upsertMany(state, action.payload);

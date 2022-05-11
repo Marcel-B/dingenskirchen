@@ -43,7 +43,7 @@ const NeueDuengungForm = () => {
           <Typography variant='h5'>Neue Düngung</Typography>
           <Divider orientation='horizontal' />
           <br />
-          <AppDatePicker control={control} default={new Date()} label={'Datum'} name='datum' />
+          <AppDatePicker control={control} default={new Date()} label='Datum' name='datum' />
           <AppSelect
             name='duenger'
             defaultValue={null}

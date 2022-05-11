@@ -15,8 +15,8 @@ public class MongoRepository<T> : IMongoRepository<T>
     {
         var name = typeof(T).Name.ToLower();
         var database = _context.GetDatabase();
-        var messungen = database.GetCollection<T>(name);
-        var all = await messungen.FindAsync(messung => true);
+        var entities = database.GetCollection<T>(name);
+        var all = await entities.FindAsync(entity => true);
         var liste = await all.ToListAsync();
         return liste;
     }

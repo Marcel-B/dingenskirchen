@@ -9,6 +9,7 @@ import DuengungListe from '../duengung/DuengungListe';
 import NeuerFischForm from '../fisch/NeuerFischForm';
 import FischListe from '../fisch/FischListe';
 import Feed from '../feed/Feed';
+import NeueNotizForm from '../notiz/NeueNotizForm';
 
 const Dashboard = () => {
   return (
@@ -41,6 +42,9 @@ const Dashboard = () => {
       </Grid>
       <Grid item xs={6}>
         <NeuerFischForm />
+      </Grid>
+      <Grid item xs={6}>
+        <NeueNotizForm />
       </Grid>
     </Grid>
   );
