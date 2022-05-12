@@ -98,11 +98,9 @@ export type Tag = {
 
 export type Feed = {
   id: string;
-  aquaType: string;
   datum: Date;
-  text?: string;
-  tag?: string;
-  aquarium?: Aquarium;
+  aquaType: string;
+  item: Aquarium | Notiz | Messung | Duengung | Fisch
 }
 
 export type Notiz = {

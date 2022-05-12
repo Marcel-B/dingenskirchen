@@ -1,7 +1,8 @@
 import { createAsyncThunk, createEntityAdapter, createSlice } from '@reduxjs/toolkit';
-import { Feed, Notiz, NotizFormValues } from 'shared-types';
+import { Feed } from 'shared-types';
 import axios from 'axios';
 import { RootState } from './store';
+
 const feedAdapter = createEntityAdapter<Feed>();
 
 export const fetchFeedAsync = createAsyncThunk<Feed[]>(

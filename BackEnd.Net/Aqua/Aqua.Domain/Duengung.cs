@@ -3,7 +3,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace com.marcelbenders.Aqua.Domain;
 
-public class Duengung : IFeedItem
+public class Duengung 
 {
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
@@ -22,5 +22,5 @@ public class Duengung : IFeedItem
     public Aquarium Aquarium { get; set; }
     
     [BsonIgnore]
-    public string AquaType { get; set; } = nameof(Duengung).ToLower();
+    public string AquaType { get; private set; } = nameof(Duengung).ToLower();
 }
