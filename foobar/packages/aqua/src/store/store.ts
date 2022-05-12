@@ -6,6 +6,7 @@ import { duengungSlice } from './duengungSlice';
 import { fischSlice } from './fischSlice';
 import { notizSlice } from './notizSlice';
 import { tagSlice } from './tagSlice';
+import { feedSlice } from './feedSlice';
 
 export const store = configureStore({
   reducer: {
@@ -15,6 +16,7 @@ export const store = configureStore({
     fische: fischSlice.reducer,
     notizen: notizSlice.reducer,
     tags: tagSlice.reducer,
+    feed: feedSlice.reducer,
   },
 });
 

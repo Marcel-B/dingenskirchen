@@ -7,5 +7,5 @@ public record CreateAquariumCommand : IRequest<Aquarium>
 {
     public string Name { get; init; }
     public int Liter { get; init; }
-    public DateTimeOffset? Datum { get; init; }
+    public DateTimeOffset Datum { get; init; }
 }

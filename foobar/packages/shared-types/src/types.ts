@@ -96,6 +96,15 @@ export type Tag = {
   value: string;
 }
 
+export type Feed = {
+  id: string;
+  aquaType: string;
+  datum: Date;
+  text?: string;
+  tag?: string;
+  aquarium?: Aquarium;
+}
+
 export type Notiz = {
   id: string;
   text: string;

@@ -23,7 +23,7 @@ public class CreateAquariumCommandHandler : IRequestHandler<CreateAquariumComman
         {
             Name = request.Name,
             Liter = request.Liter,
-            Datum = request.Datum,
+            Datum =  DateTimeOffset.Now,
         };
         await _repository.CreateAsync(aquarium, cancellationToken);
         return aquarium;
