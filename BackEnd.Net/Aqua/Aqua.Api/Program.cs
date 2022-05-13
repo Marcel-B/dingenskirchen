@@ -2,8 +2,8 @@ using com.marcelbenders.Aqua.Api.ErrorHandler;
 using com.marcelbenders.Aqua.Application;
 using com.marcelbenders.Aqua.MongoDb;
 
-var builder = WebApplication.CreateBuilder(args);
 
+var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -18,15 +18,18 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
 }
 
+app.UseSwagger();
+app.UseSwaggerUI();
 app.UseErrorHandler();
 
-app.UseCors(o => { o.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3007"); });
+app.UseDefaultFiles();
+app.UseStaticFiles();
 
-app.UseHttpsRedirection();
+app.MapFallbackToController("Index", "Controll");
+
+app.UseCors(o => { o.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3007"); });
 
 app.UseAuthorization();
 

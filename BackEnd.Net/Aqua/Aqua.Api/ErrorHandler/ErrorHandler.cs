@@ -23,7 +23,7 @@ public static class ErrorHandler
                         ? "Error"
                         : error.Error.Message;
 
-                    ErrorResponse errorResponse = null;
+                    ErrorResponse errorResponse;
                     errorResponse = error.Error switch
                     {
                         { } commonError => new ErrorResponse(commonError.Message, commonError.Message,

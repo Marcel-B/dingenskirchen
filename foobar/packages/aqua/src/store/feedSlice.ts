@@ -1,7 +1,7 @@
 import { createAsyncThunk, createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import { Feed } from 'shared-types';
-import axios from 'axios';
 import { RootState } from './store';
+import agent from '../common/agent';
 
 const feedAdapter = createEntityAdapter<Feed>();
 
@@ -9,8 +9,7 @@ export const fetchFeedAsync = createAsyncThunk<Feed[]>(
   'overview/fetchFeedAsync',
   async (_, thunkAPI) => {
     try {
-      const response = await axios.get<Feed[]>(`https://localhost:7269/api/feed`);
-      return response.data;
+      return await agent.Feed.list();
     } catch (e: any) {
       return thunkAPI.rejectWithValue(e.data);
     }

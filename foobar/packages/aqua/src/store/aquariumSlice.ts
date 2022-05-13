@@ -1,7 +1,7 @@
 import { createAsyncThunk, createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import { Aquarium, AquariumFormValues } from 'shared-types';
 import { RootState } from './store';
-import axios from 'axios';
+import agent from '../common/agent';
 
 const aquarienAdapter = createEntityAdapter<Aquarium>();
 
@@ -9,9 +9,7 @@ export const createAquariumAsync = createAsyncThunk<Aquarium, AquariumFormValues
   'form/createAquariumAsync',
   async (aquariumFormValues, thunkAPI) => {
     try {
-      //axios.defaults.baseURL = process.env.REACT_APP_API_URL;
-      const response = await axios.post<Aquarium>(`https://localhost:7269/api/aquarium`, aquariumFormValues);
-      return response.data;
+      return await agent.Aquarium.create(aquariumFormValues);
     } catch (e: any) {
       return thunkAPI.rejectWithValue({ error: e.data });
     }
@@ -22,8 +20,7 @@ export const fetchAquarienAsync = createAsyncThunk<Aquarium[]>(
   'overview/fetchAquarienAsync',
   async (_, thunkAPI) => {
     try {
-      const response = await axios.get<Aquarium[]>(`https://localhost:7269/api/aquarium`);
-      return response.data;
+      return await agent.Aquarium.list();
     } catch (e: any) {
       return thunkAPI.rejectWithValue(e.data);
     }
@@ -34,8 +31,7 @@ export const deleteAquariumAsync = createAsyncThunk<string, string>(
   'overview/deleteAquariumAsync',
   async (id, thunkAPI) => {
     try {
-      const response = await axios.delete<string>(`https://localhost:7269/api/aquarium/${id}`);
-      return response.data;
+      return await agent.Aquarium.delete(id);
     } catch (e: any) {
       return thunkAPI.rejectWithValue(e.data);
     }

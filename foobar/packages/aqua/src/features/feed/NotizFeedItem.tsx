@@ -1,6 +1,7 @@
 import { Notiz } from 'shared-types';
-import { Card, Grid } from '@mui/material';
+import { Card, Chip, Grid } from '@mui/material';
 import FeedItemHeadline from './FeedItemHeadline';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 
 interface Props {
   notiz: Notiz;
@@ -12,9 +13,16 @@ const NotizFeedItem = ({ ...props }: Props) => {
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <FeedItemHeadline datum={props.notiz.datum} text='Notiz' />
-          <div>{props.notiz.aquarium.name}</div>
-          <div>{props.notiz.text}</div>
-          <div>{props.notiz.tag}</div>
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <div>
+              <Chip style={{ marginBottom: '1rem' }} label={props.notiz.tag} />
+              <div>{props.notiz.text}</div>
+            </div>
+            <div>
+              <div>{props.notiz.aquarium.name}</div>
+              <OpenInNewIcon />
+            </div>
+          </div>
         </Grid>
       </Grid>
     </Card>);

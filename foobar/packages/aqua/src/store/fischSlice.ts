@@ -2,6 +2,7 @@ import { createAsyncThunk, createEntityAdapter, createSlice } from '@reduxjs/too
 import { Fisch, FischFormValues } from 'shared-types';
 import { RootState } from './store';
 import axios from 'axios';
+import agent from '../common/agent';
 
 const fischeAdapter = createEntityAdapter<Fisch>();
 
@@ -9,8 +10,7 @@ export const fetchFischeAsync = createAsyncThunk<Fisch[]>(
   'overview/fetchFischeAsync',
   async (_, thunkAPI) => {
     try {
-      const response = await axios.get<Fisch[]>(`https://localhost:7269/api/fisch`);
-      return response.data;
+      return await agent.Fisch.list();
     } catch (e: any) {
       return thunkAPI.rejectWithValue(e.data);
     }
@@ -21,8 +21,7 @@ export const createFischAsync = createAsyncThunk<Fisch, FischFormValues>(
   'form/createFischAsync',
   async (fischFormValues, thunkAPI) => {
     try {
-      const response = await axios.post<Fisch>(`https://localhost:7269/api/fisch`, fischFormValues);
-      return response.data;
+      return await agent.Fisch.create(fischFormValues);
     } catch (e: any) {
       return thunkAPI.rejectWithValue({ error: e.data });
     }
@@ -33,11 +32,7 @@ export const deleteFischAsync = createAsyncThunk<string, string>(
   'form/deleteFischAsync',
   async (id, thunkAPI) => {
     try {
-      const response = await axios.delete(`https://localhost:7269/api/fisch/${id}`);
-      if (response.status === 204) {
-        return id;
-      }
-      return thunkAPI.rejectWithValue({ error: response.statusText });
+      return await agent.Fisch.delete(id);
     } catch (e: any) {
       return thunkAPI.rejectWithValue({ error: e.data });
     }

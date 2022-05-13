@@ -12,9 +12,13 @@ const DuengungFeedItem = ({ ...props }: Props) => {
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <FeedItemHeadline datum={props.duengung.datum} text='Düngung' />
-          <div>{props.duengung.aquarium.name}</div>
-          <div>{props.duengung.duenger}</div>
-          <div>{props.duengung.menge} ml</div>
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <div>
+              <div>Dünger: {props.duengung.duenger}</div>
+              <div>Menge: {props.duengung.menge} ml</div>
+            </div>
+            <div>{props.duengung.aquarium.name}</div>
+          </div>
         </Grid>
       </Grid>
     </Card>);

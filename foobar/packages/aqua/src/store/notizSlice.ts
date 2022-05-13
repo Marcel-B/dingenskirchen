@@ -1,7 +1,7 @@
 import { createAsyncThunk, createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import { Notiz, NotizFormValues } from 'shared-types';
-import axios from 'axios';
 import { RootState } from './store';
+import agent from '../common/agent';
 
 const notizenAdapter = createEntityAdapter<Notiz>();
 
@@ -9,8 +9,7 @@ export const fetchNotizenAsync = createAsyncThunk<Notiz[]>(
   'overview/fetchNotizenAsync',
   async (_, thunkAPI) => {
     try {
-      const response = await axios.get<Notiz[]>(`https://localhost:7269/api/notiz`);
-      return response.data;
+      return await agent.Notiz.list();
     } catch (e: any) {
       return thunkAPI.rejectWithValue(e.data);
     }
@@ -21,8 +20,7 @@ export const createNotizAsync = createAsyncThunk<Notiz, NotizFormValues>(
   'form/createNotizAsync',
   async (formValues, thunkAPI) => {
     try {
-      const response = await axios.post<Notiz>(`https://localhost:7269/api/notiz`, formValues);
-      return response.data;
+      return await agent.Notiz.create(formValues);
     } catch (e: any) {
       return thunkAPI.rejectWithValue({ error: e.data });
     }
@@ -33,11 +31,7 @@ export const deleteNotizAsync = createAsyncThunk<string, string>(
   'form/deleteNotizAsync',
   async (id, thunkAPI) => {
     try {
-      const response = await axios.delete(`https://localhost:7269/api/notiz/${id}`);
-      if (response.status === 204) {
-        return id;
-      }
-      return thunkAPI.rejectWithValue({ error: response.statusText });
+      return await agent.Notiz.delete(id);
     } catch (e: any) {
       return thunkAPI.rejectWithValue(e.data);
     }

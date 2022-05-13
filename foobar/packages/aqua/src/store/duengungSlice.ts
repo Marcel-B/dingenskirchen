@@ -1,7 +1,7 @@
 import { createAsyncThunk, createEntityAdapter, createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
 import { Duengung, DuengungFormValues } from 'shared-types';
 import { RootState } from './store';
+import agent from '../common/agent';
 
 
 const duengungenAdapter = createEntityAdapter<Duengung>();
@@ -10,8 +10,7 @@ export const fetchDuengungenAsync = createAsyncThunk<Duengung[]>(
   'overview/fetchDuengungenAsync',
   async (_, thunkAPI) => {
     try {
-      const response = await axios.get<Duengung[]>(`https://localhost:7269/api/duengung`);
-      return response.data;
+      return await agent.Duengung.list();
     } catch (e: any) {
       return thunkAPI.rejectWithValue(e.data);
     }
@@ -22,8 +21,7 @@ export const createDuengungAsync = createAsyncThunk<Duengung, DuengungFormValues
   'form/createDuengungAsync',
   async (duengungFormValues, thungAPI) => {
     try {
-      const response = await axios.post<Duengung>(`https://localhost:7269/api/duengung`, duengungFormValues);
-      return response.data;
+      return await agent.Duengung.create(duengungFormValues);
     } catch (e: any) {
       return thungAPI.rejectWithValue({ error: e.data });
     }
@@ -34,8 +32,7 @@ export const deleteDuengungAsync = createAsyncThunk<string, string>(
   'overview/deleteDuengungAsync',
   async (id, thunkAPI) => {
     try {
-      const response = await axios.delete<string>(`https://localhost:7269/api/duengung/${id}`);
-      return response.data;
+      return await agent.Duengung.delete(id);
     } catch (e: any) {
       return thunkAPI.rejectWithValue(e.data);
     }

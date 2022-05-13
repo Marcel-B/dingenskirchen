@@ -1,7 +1,7 @@
 import { createAsyncThunk, createEntityAdapter, createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
 import { Messung, MessungFormValues } from 'shared-types';
 import { RootState } from './store';
+import agent from '../common/agent';
 
 
 const messungenAdapter = createEntityAdapter<Messung>();
@@ -10,8 +10,7 @@ export const fetchMessungenAsync = createAsyncThunk<Messung[]>(
   'overview/fetchMessungenAsync',
   async (_, thunkAPI) => {
     try {
-      const response = await axios.get<Messung[]>(`https://localhost:7269/api/messung`);
-      return response.data;
+      return await agent.Messung.list();
     } catch (e: any) {
       return thunkAPI.rejectWithValue(e.data);
     }
@@ -22,8 +21,7 @@ export const createMessungAsync = createAsyncThunk<Messung, MessungFormValues>(
   'form/createMessungAsync',
   async (messungFormValues, thungAPI) => {
     try {
-      const response = await axios.post<Messung>(`https://localhost:7269/api/messung`, messungFormValues);
-      return response.data;
+      return await agent.Messung.create(messungFormValues);
     } catch (e: any) {
       return thungAPI.rejectWithValue({ error: e.data });
     }
@@ -34,8 +32,7 @@ export const deleteMessungAsync = createAsyncThunk<string, string>(
   'form/deleteMessungAsync',
   async (id, thunkAPI) => {
     try {
-      const response = await axios.delete<string>(`https://localhost:7269/api/messung/${id}`);
-      return response.data;
+      return await agent.Messung.delete(id);
     } catch (e: any) {
       return thunkAPI.rejectWithValue({ error: e.data });
     }
@@ -56,7 +53,7 @@ export const messungSlice = createSlice({
       console.log(action.error);
     });
     builder.addCase(deleteMessungAsync.pending, (state) => {
-      console.log("Delete Messung pending");
+      console.log('Delete Messung pending');
     });
     builder.addCase(deleteMessungAsync.fulfilled, (state, action) => {
       messungenAdapter.removeOne(state, action.payload);
@@ -65,7 +62,7 @@ export const messungSlice = createSlice({
       console.log(action.error);
     });
     builder.addCase(fetchMessungenAsync.pending, (state) => {
-      console.log("Fetch Messungen pending");
+      console.log('Fetch Messungen pending');
     });
     builder.addCase(fetchMessungenAsync.fulfilled, (state, action) => {
       messungenAdapter.upsertMany(state, action.payload);

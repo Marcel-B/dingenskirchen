@@ -12,9 +12,15 @@ const FischFeedItem = ({ ...props }: Props) => {
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <FeedItemHeadline datum={props.fisch.datum} text='Fisch' />
-          <div>{props.fisch.aquarium.name}</div>
-          <div>{props.fisch.name}</div>
-          <div>{props.fisch.wissenschaftlich}</div>
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <div>
+              <div>{props.fisch.name}</div>
+              <div>{props.fisch.wissenschaftlich}</div>
+            </div>
+            <div>
+              <div>{props.fisch.aquarium.name}</div>
+            </div>
+          </div>
         </Grid>
       </Grid>
     </Card>);
