@@ -122,6 +122,7 @@ export type Aquarium = {
   id: string;
   name: string;
   liter: number;
+  datum: Date;
 }
 
 export type HeaderComponent = React.FunctionComponent<{ appLinks: AppLink[] }>;

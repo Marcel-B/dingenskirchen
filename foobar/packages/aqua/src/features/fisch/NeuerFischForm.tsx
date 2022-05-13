@@ -35,6 +35,10 @@ const NeuerFischForm = () => {
   const onSubmit = (data: FischFormValues) => {
     const aqua = aquarien.find(a => a.id === data.aquarium.toString());
     data.aquarium = aqua!;
+    data.kh.einheit = '°dH';
+    data.gh.einheit = '°dH';
+    data.ph.einheit = '';
+    data.temperatur.einheit = '°C';
     dispatch(createFischAsync(data));
     reset({});
   };

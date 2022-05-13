@@ -21,11 +21,13 @@ public class FeedRepository : IFeedRepository
         var duengungen = database.GetCollection<Duengung>(nameof(Duengung).ToLower());
         var aquariuen = database.GetCollection<Aquarium>(nameof(Aquarium).ToLower());
         var messungen = database.GetCollection<Messung>(nameof(Messung).ToLower());
+        var fische = database.GetCollection<Fisch>(nameof(Fisch).ToLower());
         
         var notizenList = await notizen.Find(x => true).Sort("{datum: 1}").ToListAsync(cancellationToken);
         var duengungenList = await duengungen.Find(x => true).SortBy(x => x.Datum).ToListAsync(cancellationToken);
         var aquarienList = await aquariuen.Find(x => true).SortBy(x => x.Datum).ToListAsync(cancellationToken);
         var messungenList = await messungen.Find(x => true).SortBy(x => x.Datum).ToListAsync(cancellationToken);
+        var fischeList = await fische.Find(x => true).SortBy(x => x.Datum).ToListAsync(cancellationToken);
         
         result.AddRange(notizenList.Select(n => new FeedItem
             {AquaType = n.AquaType, Datum = n.Datum, Id = n.Id, Item = n}));
@@ -34,6 +36,8 @@ public class FeedRepository : IFeedRepository
         result.AddRange(aquarienList.Select(x => new FeedItem
             {Id = x.Id, Datum = x.Datum, AquaType = x.AquaType, Item = x}));
         result.AddRange(messungenList.Select(x => new FeedItem
+            {Id = x.Id, Datum = x.Datum, AquaType = x.AquaType, Item = x}));
+        result.AddRange(fischeList.Select(x => new FeedItem
             {Id = x.Id, Datum = x.Datum, AquaType = x.AquaType, Item = x}));
 
         return result.OrderByDescending(x => x.Datum).ToArray();
