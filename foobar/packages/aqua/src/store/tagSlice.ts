@@ -1,6 +1,6 @@
 import { createAsyncThunk, createEntityAdapter, createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
 import { RootState } from './store';
+import agent from '../common/agent';
 
 const tagsAdapter = createEntityAdapter<string>();
 
@@ -8,11 +8,7 @@ export const fetchTagsAsync = createAsyncThunk<string[]>(
   'overview/fetchTagsAsync',
   async (_, thunkAPI) => {
     try {
-      const response = await axios.get<string[]>(`https://localhost:7269/api/tag`);
-      if (response.status === 200) {
-        return response.data;
-      }
-      return thunkAPI.rejectWithValue(response.statusText);
+      return await agent.Tag.list();
     } catch (e: any) {
       return thunkAPI.rejectWithValue(e.data);
     }

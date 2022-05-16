@@ -3,63 +3,63 @@ const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPl
 
 const deps = require("./package.json").dependencies;
 module.exports = {
-  output: {
-    publicPath: "http://localhost:3007/",
-  },
+    output: {
+        publicPath: "http://localhost:3007/",
+    },
 
-  resolve: {
-    extensions: [".tsx", ".ts", ".jsx", ".js", ".json"],
-  },
+    resolve: {
+        extensions: [".tsx", ".ts", ".jsx", ".js", ".json"],
+    },
 
-  devServer: {
-    port: 3007,
-  },
+    devServer: {
+        port: 3007,
+    },
 
-  module: {
-    rules: [
-      {
-        test: /\.m?js/,
-        type: "javascript/auto",
-        resolve: {
-          fullySpecified: false,
-        },
-      },
-      {
-        test: /\.css$/i,
-        use: ["style-loader", "css-loader"],
-      },
-      {
-        test: /\.(ts|tsx|js|jsx)$/,
-        exclude: /node_modules/,
-        use: {
-          loader: "ts-loader",
-        },
-      },
+    module: {
+        rules: [
+            {
+                test: /\.m?js/,
+                type: "javascript/auto",
+                resolve: {
+                    fullySpecified: false,
+                },
+            },
+            {
+                test: /\.css$/i,
+                use: ["style-loader", "css-loader"],
+            },
+            {
+                test: /\.(ts|tsx|js|jsx)$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: "ts-loader",
+                },
+            },
+        ],
+    },
+
+    plugins: [
+        new ModuleFederationPlugin({
+            name: "starter",
+            filename: "remoteEntry.js",
+            remotes: {
+                "ts-control": "controls@http://localhost:3079/remoteEntry.js",
+            },
+            exposes: {},
+            shared: {
+                ...deps,
+                react: {
+                    singleton: true,
+                    requiredVersion: deps.react,
+                },
+                "react-dom": {
+                    singleton: true,
+                    requiredVersion: deps["react-dom"],
+                },
+            },
+        }),
+        new HtmlWebPackPlugin({
+            template: "./src/index.html",
+        }),
     ],
-  },
-
-  plugins: [
-    new ModuleFederationPlugin({
-      name: "starter",
-      filename: "remoteEntry.js",
-      remotes: {
-        "ts-control": "controls@http://localhost:3088/remoteEntry.js",
-      },
-      exposes: {},
-      shared: {
-        ...deps,
-        react: {
-          singleton: true,
-          requiredVersion: deps.react,
-        },
-        "react-dom": {
-          singleton: true,
-          requiredVersion: deps["react-dom"],
-        },
-      },
-    }),
-    new HtmlWebPackPlugin({
-      template: "./src/index.html",
-    }),
-  ],
 };

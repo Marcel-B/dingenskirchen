@@ -9,6 +9,7 @@ import { useEffect } from 'react';
 import { createNotizAsync } from '../../store/notizSlice';
 import { Button, Card, Divider, Typography } from '@mui/material';
 import { fetchTagsAsync, tagSelectors, tagSlice } from '../../store/tagSlice';
+import TagInput from '../../common/TagInput';
 
 const AppDatePicker = DaDatePicker as DatePickerComponent;
 const AppTextInput = DaTextInput as TextInputComponent;
@@ -53,6 +54,7 @@ const NeueNotizForm = () => {
             })} />
           <AppTextInput control={control} label='Text' type='text' default='' name='text' />
           <AppTextInput control={control} label='Tag' type='text' default='' name='tag' />
+          <TagInput/>
           <br />
           <br />
           <Button variant='contained' type='submit'>Senden</Button>
