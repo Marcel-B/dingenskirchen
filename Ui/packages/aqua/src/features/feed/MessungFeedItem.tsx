@@ -4,9 +4,10 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 interface Props {
     messung: Messung;
+    datum: string;
 }
 
-const MessungFeedItem = ({...props}: Props) => {
+const MessungFeedItem = ({datum, ...props}: Props) => {
     const getFormattedValue = (value: number, wert: string) => {
         switch (wert) {
             case "PO₄":
@@ -37,13 +38,20 @@ const MessungFeedItem = ({...props}: Props) => {
                 <Chip label={props.messung.aquarium.name} variant='outlined'/>
             </AccordionSummary>
             <AccordionDetails>
+
                 <Box sx={{
                     display: 'flex',
+                    justifyContent: 'space-between'
                 }}>
                     <Box sx={{
-                        mr: 1
-                    }}>{props.messung.wert}</Box>
-                    <Box>{getFormattedValue(props.messung.menge, props.messung.wert)}</Box>
+                        display: 'flex',
+                    }}>
+                        <Box sx={{
+                            mr: 1
+                        }}>{props.messung.wert}</Box>
+                        <Box>{getFormattedValue(props.messung.menge, props.messung.wert)}</Box>
+                    </Box>
+                    <Box>{datum}</Box>
                 </Box>
             </AccordionDetails>
         </Accordion>);

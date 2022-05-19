@@ -4,9 +4,10 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 interface Props {
     aquarium: Aquarium;
+    datum: string;
 }
 
-const AquariumFeedItem = ({...props}: Props) => {
+const AquariumFeedItem = ({datum, ...props}: Props) => {
     return (
         <Accordion>
             <AccordionSummary
@@ -19,12 +20,14 @@ const AquariumFeedItem = ({...props}: Props) => {
                     display: 'flex',
                     justifyContent: 'space-between'
                 }}>
-                    <Box>
-                        <Box>{props.aquarium.name}</Box>
+                    <Box sx={{
+                        display: 'flex'
+                    }}>
+                        <Box sx={{mr: 1}}>{props.aquarium.name}</Box>
                         <Box>{props.aquarium.liter} Liter</Box>
                     </Box>
                     <Box>
-                        {props.aquarium.name}
+                        {datum}
                     </Box>
                 </Box>
             </AccordionDetails>

@@ -3,7 +3,6 @@ import {useAppDispatch, useAppSelector} from '../../store/store';
 import {fetchFeedAsync} from '../../store/feedSlice';
 import {useEffect} from 'react';
 import FeedItem from './FeedItem';
-import {format} from "date-fns";
 import moment from 'moment-with-locales-es6';
 
 const Feed = () => {
@@ -20,7 +19,7 @@ const Feed = () => {
     return (
         <>
             <Typography variant='h5'>Feed</Typography>
-            <Divider orientation='horizontal' sx={{marginBottom: '1rem'}}/>
+            <Divider orientation='horizontal' sx={{mb: 1}}/>
             <ul>
                 {feed.map(groupedFeed => (
                     <Card sx={{
@@ -36,6 +35,7 @@ const Feed = () => {
                                 key={feedItem.id}
                                 aquaType={feedItem.aquaType}
                                 item={feedItem.item}
+                                datum={moment(new Date(feedItem.item.datum)).locale('de').format('LLLL')}
                                 id={feedItem.id}/>
                         ))}
                     </Card>))}

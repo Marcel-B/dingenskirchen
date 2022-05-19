@@ -4,9 +4,10 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 interface Props {
     duengung: Duengung;
+    datum: string;
 }
 
-const DuengungFeedItem = ({...props}: Props) => {
+const DuengungFeedItem = ({datum, ...props}: Props) => {
     return (
         <Accordion>
             <AccordionSummary
@@ -16,15 +17,23 @@ const DuengungFeedItem = ({...props}: Props) => {
             </AccordionSummary>
             <AccordionDetails>
                 <Box sx={{
-                    display: 'flex'
+                    display: 'flex',
+                    justifyContent: 'space-between'
                 }}>
                     <Box sx={{
-                        mr: 1
+                        display: 'flex'
                     }}>
-                        {props.duengung.menge} ml
+                        <Box sx={{
+                            mr: 1
+                        }}>
+                            {props.duengung.menge} ml
+                        </Box>
+                        <Box>
+                            {props.duengung.duenger}
+                        </Box>
                     </Box>
                     <Box>
-                        {props.duengung.duenger}
+                        {datum}
                     </Box>
                 </Box>
             </AccordionDetails>

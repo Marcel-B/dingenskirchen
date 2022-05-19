@@ -7,34 +7,46 @@ import FischFeedItem from './FischFeedItem';
 import MessungFeedItem from './MessungFeedItem';
 import {Accordion, AccordionDetails, AccordionSummary} from "@mui/material";
 
-const FeedItem = (props: FeedItem) => {
+interface Props {
+    id: string;
+    item: Aquarium | Notiz | Messung | Duengung | Fisch;
+    aquaType: string;
+    datum: string;
+}
+
+const FeedItem = ({id, item, aquaType, datum}: Props) => {
     return (
         <>
             {
-                props.aquaType === 'notiz' ? (
+                aquaType === 'notiz' ? (
                         <NotizFeedItem
-                            key={props.id}
-                            notiz={props.item as Notiz}/>
+                            key={id}
+                            datum={datum}
+                            notiz={item as Notiz}/>
                     ) :
-                    props.aquaType === 'fisch' ? (
+                    aquaType === 'fisch' ? (
                             <FischFeedItem
-                                key={props.id}
-                                fisch={props.item as Fisch}/>
+                                key={id}
+                                datum={datum}
+                                fisch={item as Fisch}/>
                         ) :
-                        props.aquaType === 'aquarium' ? (
+                        aquaType === 'aquarium' ? (
                                 <AquariumFeedItem
-                                    key={props.id}
-                                    aquarium={props.item as Aquarium}/>
+                                    key={id}
+                                    datum={datum}
+                                    aquarium={item as Aquarium}/>
                             ) :
-                            props.aquaType === 'duengung' ? (
+                            aquaType === 'duengung' ? (
                                     <DuengungFeedItem
-                                        key={props.id}
-                                        duengung={props.item as Duengung}/>
+                                        key={id}
+                                        datum={datum}
+                                        duengung={item as Duengung}/>
                                 ) :
-                                props.aquaType === 'messung' ? (
+                                aquaType === 'messung' ? (
                                     <MessungFeedItem
-                                        key={props.id}
-                                        messung={props.item as Messung}/>
+                                        key={id}
+                                        datum={datum}
+                                        messung={item as Messung}/>
                                 ) : (
 
                                     <Accordion>

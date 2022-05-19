@@ -1,13 +1,25 @@
 import {Fisch} from 'shared-types';
-import {Accordion, AccordionDetails, AccordionSummary, Box, Card, Chip, Grid, Typography} from '@mui/material';
+import {
+    Accordion,
+    AccordionDetails,
+    AccordionSummary,
+    Box,
+    Card,
+    Chip,
+    Divider,
+    Grid,
+    Paper,
+    Typography
+} from '@mui/material';
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 
 interface Props {
     fisch: Fisch;
+    datum: string;
 }
 
-const FischFeedItem = ({...props}: Props) => {
+const FischFeedItem = ({datum, ...props}: Props) => {
     return (
         <Accordion>
             <AccordionSummary
@@ -16,20 +28,75 @@ const FischFeedItem = ({...props}: Props) => {
                 <Chip label={props.fisch.aquarium.name} variant='outlined'/>
             </AccordionSummary>
             <AccordionDetails>
-                <Box sx={{
-                    display: 'flex',
-                    justifyContent: 'space-between'
-                }}>
-                    <Box sx={{
-                        display: 'flex',
-                        justifyContent: 'space-between'
-                    }}>
-                        <div>{props.fisch.name}</div>
-                        <div>{props.fisch.wissenschaftlich}</div>
-                    </Box>
-                </Box>
+                <Typography variant='h5'>{props.fisch.name}</Typography>
+                <Typography variant='subtitle1'>Allgemein</Typography>
+                <Divider orientation='horizontal'/>
+                <Grid container spacing={2} sx={{mb: 2}}>
+                    <Grid item xs={3} md={3}>
+                        <Typography variant='body2' sx={{color: 'text.secondary'}}>Wissenschaftlich:</Typography>
+                    </Grid>
+                    <Grid item xs={5} md={5}>
+                        <Typography variant='body2'>{props.fisch.wissenschaftlich}</Typography>
+                    </Grid>
+                    <Grid item xs={3} md={3}>
+                        <Typography variant='body2' sx={{color: 'text.secondary'}}>Anzahl:</Typography>
+                    </Grid>
+                    <Grid item xs={1} md={1}>
+                        <Typography variant='body2'>{props.fisch.anzahl}</Typography>
+                    </Grid>
+                    <Grid item xs={3} md={3}>
+                        <Typography variant='body2' sx={{color: 'text.secondary'}}>Herkunft:</Typography>
+                    </Grid>
+                    <Grid item xs={5} md={5}>
+                        <Typography variant='body2'>{props.fisch.herkunft}</Typography>
+                    </Grid>
+                    <Grid item xs={3} md={3}>
+                        <Typography variant='body2' sx={{color: 'text.secondary'}}>Geschlecht:</Typography>
+                    </Grid>
+                    <Grid item xs={1} md={1}>
+                        <Typography variant='body2'>{props.fisch.geschlecht}</Typography>
+                    </Grid>
+                </Grid>
+                <Typography variant='subtitle1'>Haltung</Typography>
+                <Divider orientation='horizontal'/>
+                <Grid container spacing={2}>
+                    <Grid item xs={2} md={2}>
+                        <Typography variant='body2' sx={{color: 'text.secondary'}}>PH:</Typography>
+                    </Grid>
+                    <Grid item xs={2} md={2}>
+                        <Typography variant='body2'>{props.fisch.ph.von}-{props.fisch.ph.bis}</Typography>
+                    </Grid>
+                    <Grid item xs={2} md={2}>
+                        <Typography variant='body2' sx={{color: 'text.secondary'}}>KH:</Typography>
+                    </Grid>
+                    <Grid item xs={2} md={2}>
+                        <Typography
+                            variant='body2'>{props.fisch.kh.von}-{props.fisch.kh.bis}{props.fisch.kh.einheit}</Typography>
+                    </Grid>
+                    <Grid item xs={2} md={2}>
+                        <Typography variant='body2' sx={{color: 'text.secondary'}}>GH:</Typography>
+                    </Grid>
+                    <Grid item xs={2} md={2}>
+                        <Typography
+                            variant='body2'>{props.fisch.gh.von}-{props.fisch.gh.bis}{props.fisch.gh.einheit}</Typography>
+                    </Grid>
+                    <Grid item xs={2} md={2}>
+                        <Typography variant='body2' sx={{color: 'text.secondary'}}>Temperatur:</Typography>
+                    </Grid>
+                    <Grid item xs={2} md={2}>
+                        <Typography
+                            variant='body2'>{props.fisch.temperatur.von}-{props.fisch.temperatur.bis}{props.fisch.temperatur.einheit}</Typography>
+                    </Grid>
+                    <Grid item xs={2} md={2}>
+                        <Typography variant='body2' sx={{color: 'text.secondary'}}>Schwimmzone:</Typography>
+                    </Grid>
+                    <Grid item xs={2} md={2}>
+                        <Typography variant='body2'>{props.fisch.schwimmzone}</Typography>
+                    </Grid>
+                </Grid>
             </AccordionDetails>
-        </Accordion>);
+        </Accordion>)
+        ;
 };
 
 export default FischFeedItem;
