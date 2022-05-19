@@ -24,11 +24,14 @@ if (app.Environment.IsDevelopment())
 app.UseSwagger();
 app.UseSwaggerUI();
 app.UseErrorHandler();
-
-app.UseCors(o => { o.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3007"); });
+app.UseCors(o =>
+{
+    o.
+        AllowAnyHeader().
+        AllowAnyMethod().
+        WithOrigins("http://localhost:9000", "http://localhost:3007");
+});
 
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.Run();

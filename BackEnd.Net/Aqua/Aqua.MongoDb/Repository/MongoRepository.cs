@@ -15,9 +15,10 @@ public class MongoRepository<T> : IMongoRepository<T>
     {
         var name = typeof(T).Name.ToLower();
         var database = _context.GetDatabase();
+            
         var entities = database.GetCollection<T>(name);
-        var all = await entities.FindAsync(entity => true);
-        var liste = await all.ToListAsync();
+        var all =  entities.Find(entity => true).Sort("{datum: 1}");
+        var liste = await all.ToListAsync(cancellationToken: cancellationToken);
         return liste;
     }
 

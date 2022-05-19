@@ -1,6 +1,6 @@
 namespace com.marcelbenders.Aqua.Domain;
 
-public interface IFeedItem
+public class FeedItem : IFeedItem
 {
     public string Id { get; set; }
     public DateTimeOffset Datum { get; set; }

@@ -11,7 +11,7 @@ var app = builder.Build();
 
 app.UseSwagger();
 app.UseSwaggerUI();
-app.UseCors(o => { o.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3007"); });
+app.UseCors(o => { o.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin(); });
 app.UseDefaultFiles();
 app.UseStaticFiles();
 

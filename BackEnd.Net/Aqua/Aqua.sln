@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aqua.Domain", "Aqua.Domain\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aqua.MongoDb", "Aqua.MongoDb\Aqua.MongoDb.csproj", "{057D490D-FE74-48AB-98FC-811B9D2199D0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aqua.Web", "Aqua.Web\Aqua.Web.csproj", "{ED91C221-EB7E-4AD1-8331-716C8787B79E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +38,9 @@ Global
 		{057D490D-FE74-48AB-98FC-811B9D2199D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{057D490D-FE74-48AB-98FC-811B9D2199D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{057D490D-FE74-48AB-98FC-811B9D2199D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED91C221-EB7E-4AD1-8331-716C8787B79E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED91C221-EB7E-4AD1-8331-716C8787B79E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED91C221-EB7E-4AD1-8331-716C8787B79E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED91C221-EB7E-4AD1-8331-716C8787B79E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

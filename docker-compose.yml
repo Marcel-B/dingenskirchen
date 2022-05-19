@@ -1,0 +1,43 @@
+version: "3.9"  # optional since v1.27.0
+services:
+  api:
+    image: millegalb/aqua.api
+    build:
+      context: BackEnd.Net/Aqua
+      dockerfile: AquaApi.Dockerfile
+    ports:
+      - "3088:3088"
+    volumes:
+      - ./UI/packages/aqua/dist:/app/wwwroot
+    networks:
+      - sky
+    links:
+      - controlls
+  web:
+    image: millegalb/aqua.web
+    build:
+      context: BackEnd.Net/Aqua/Aqua.Web
+      dockerfile: Dockerfile
+    ports:
+      - "9000:80"
+    volumes:
+      - ./UI/packages/aqua/dist:/app/wwwroot
+    networks:
+      - sky
+    links:
+      - controlls
+      - api
+  controlls:
+    image: millegalb/form-controlls
+    build:
+      context: BackEnd.Net/Controlls/src
+      dockerfile: Dockerfile
+    ports:
+      - "3080:3080"
+    volumes:
+      - ./UI/packages/form-controls/dist:/app/wwwroot
+    networks:
+      - sky
+
+networks:
+  sky:

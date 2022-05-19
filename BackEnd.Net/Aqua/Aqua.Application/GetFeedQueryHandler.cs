@@ -13,7 +13,7 @@ public class GetFeedQueryHandler : IRequestHandler<GetFeedQuery, IEnumerable<IFe
     {
         _repository = repository;
     }
-    
+
     public async Task<IEnumerable<IFeedItem>> Handle(GetFeedQuery request, CancellationToken cancellationToken)
     {
         return await _repository.GetFeedAsync(cancellationToken);
