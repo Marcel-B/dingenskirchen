@@ -1,9 +1,14 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {useForm} from 'react-hook-form';
-import {Button, Card, Divider, Typography} from '@mui/material';
-
+import {
+    Button,
+    Card,
+    Divider,
+    Typography
+} from '@mui/material';
 import DaTextInput from 'ts-control/DaTextInput';
-
+import {yupResolver} from '@hookform/resolvers/yup';
+import * as yup from "yup";
 import {
     TextInputComponent,
     AquariumFormValues,
@@ -13,9 +18,14 @@ import {createAquariumAsync} from '../../store/aquariumSlice';
 
 const AppTextInput = DaTextInput as TextInputComponent;
 
+const schema = yup.object({
+    name: yup.string().required('benötigt'),
+    liter: yup.number().typeError('muss eine Zahl sein').positive('muss positiv sein').integer('muss eine natürliche Zahl sein').required('benötigt')
+}).required();
+
 const NeuesAquariumForm = () => {
     const dispatch = useAppDispatch();
-    const {control, handleSubmit, reset} = useForm<AquariumFormValues>();
+    const {control, handleSubmit, reset} = useForm<AquariumFormValues>({resolver: yupResolver(schema)});
 
     const onSubmit = (data: AquariumFormValues) => {
         dispatch(createAquariumAsync(data));
