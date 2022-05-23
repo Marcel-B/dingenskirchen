@@ -5,7 +5,7 @@ import {Card, Divider, IconButton, Typography} from '@mui/material';
 import {
     aquariumSelectors, deleteAquariumAsync,
     fetchAquarienAsync,
-} from '../../store/aquariumSlice';
+} from './aquariumSlice';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 const AquariumListe = () => {
@@ -58,8 +58,7 @@ const AquariumListe = () => {
             <div style={{height: 400, width: 380}}>
                 <DataGrid initialState={{
                     sorting: {sortModel: [{field: 'name', sort: 'asc'}]},
-                }} columns={columns}
-                          rows={aquarien} rowsPerPageOptions={[5]} pageSize={5}
+                }} columns={columns} rows={aquarien} rowsPerPageOptions={[5]} pageSize={5}
                 />
             </div>
         </Card>);

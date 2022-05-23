@@ -1,28 +1,25 @@
-import { Button, Card, Divider, Typography } from '@mui/material';
-import React, { useEffect } from 'react';
-import duengungTypeOptions from '../../models/duengungTyp';
-
-import DaDatePicker from 'ts-control/DaDatePicker';
-import DaTextInput from 'ts-control/DaTextInput';
-import DaSelect from 'ts-control/DaSelect';
 import {
-  DatePickerComponent,
-  DuengungFormValues,
-  SelectComponent,
-  TextInputComponent,
-} from 'shared-types';
+  Box,
+  Button,
+  Card,
+  Divider,
+  Typography
+} from '@mui/material';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { aquariumSelectors, fetchAquarienAsync } from '../../store/aquariumSlice';
+import { aquariumSelectors, fetchAquarienAsync } from '../aquarium/aquariumSlice';
 import { useAppDispatch, useAppSelector } from '../../store/store';
-import { createDuengungAsync } from '../../store/duengungSlice';
-
-const AppDatePicker = DaDatePicker as DatePickerComponent;
-const AppTextInput = DaTextInput as TextInputComponent;
-const AppSelect = DaSelect as SelectComponent;
+import { createDuengungAsync } from './duengungSlice';
+import * as yup from 'yup';
+import duengungTypeOptions from "../../models/duengungTyp";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { DuengungFormValues } from "shared-types";
+import Allgemein from "./Allgemein";
+import schema from "./duengungValidationSchema";
 
 const NeueDuengungForm = () => {
   const dispatch = useAppDispatch();
-  const { control, handleSubmit, reset } = useForm<DuengungFormValues>();
+  const {control, handleSubmit, reset} = useForm<DuengungFormValues>({resolver: yupResolver(schema)});
   const aquarien = useAppSelector(aquariumSelectors.selectAll);
 
   useEffect(() => {
@@ -33,34 +30,28 @@ const NeueDuengungForm = () => {
     const aqua = aquarien.find(a => a.id === data.aquarium.toString());
     data.aquarium = aqua!;
     dispatch(createDuengungAsync(data));
-    reset({ datum: new Date() });
+    reset({datum: new Date()});
   };
 
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Card style={{ padding: '2rem' }}>
+        <Card style={{padding: '2rem'}}>
           <Typography variant='h5'>Neue Düngung</Typography>
-          <Divider orientation='horizontal' />
-          <br />
-          <AppDatePicker control={control} default={new Date()} label='Datum' name='datum' />
-          <AppSelect
-            name='duenger'
-            defaultValue={null}
-            control={control}
-            label='Düngung'
-            values={duengungTypeOptions} />
-          <AppTextInput control={control} label='Wert (ml)' type='number' default={''} name='menge' />
-          <AppSelect
-            name='aquarium'
-            defaultValue={null}
-            control={control} label='Aquarium'
-            values={aquarien.map(aquarium => {
-              return { text: aquarium.name, value: aquarium.id, item: aquarium };
-            })} />
-          <br />
-          <br />
-          <Button variant='contained' type='submit'>Senden</Button>
+          <Divider orientation='horizontal' sx={{
+            mb: 1
+          }}/>
+          <Box sx={{
+            mb: 2
+          }}>
+            <Allgemein control={control} aquarien={aquarien}/>
+          </Box>
+          <Box sx={{
+            display: 'flex',
+            justifyContent: "flex-end"
+          }}>
+            <Button variant='contained' type='submit'>Senden</Button>
+          </Box>
         </Card>
       </form>
     </>

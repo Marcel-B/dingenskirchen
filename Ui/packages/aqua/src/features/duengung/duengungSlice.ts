@@ -1,8 +1,13 @@
 import { createAsyncThunk, createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import { Duengung, DuengungFormValues } from 'shared-types';
-import { RootState } from './store';
-import agent from '../common/agent';
+import { RootState } from '../../store/store';
+import agent from '../../common/agent';
 
+interface DuengungState {
+  addDuengung: boolean;
+  editDuengung: boolean;
+  duengungId: string;
+}
 
 const duengungenAdapter = createEntityAdapter<Duengung>();
 
@@ -23,7 +28,7 @@ export const createDuengungAsync = createAsyncThunk<Duengung, DuengungFormValues
     try {
       return await agent.Duengung.create(duengungFormValues);
     } catch (e: any) {
-      return thungAPI.rejectWithValue({ error: e.data });
+      return thungAPI.rejectWithValue({error: e.data});
     }
   },
 );
@@ -41,8 +46,21 @@ export const deleteDuengungAsync = createAsyncThunk<string, string>(
 
 export const duengungSlice = createSlice({
   name: 'duengung',
-  initialState: duengungenAdapter.getInitialState(),
-  reducers: {},
+  initialState: duengungenAdapter.getInitialState<DuengungState>({
+    addDuengung: false,
+    editDuengung: false,
+    duengungId: ''
+  }),
+  reducers: {
+    resetDuengung: (state) => {
+      state.addDuengung = false;
+      state.editDuengung = false;
+      state.duengungId = '';
+    },
+    addDuengung: (state) => {
+      state.addDuengung = true;
+    }
+  },
   extraReducers: (builder => {
     builder.addCase(createDuengungAsync.pending, (state) => {
     });
@@ -72,3 +90,4 @@ export const duengungSlice = createSlice({
 });
 
 export const duengungenSelectors = duengungenAdapter.getSelectors((state: RootState) => state.duengungen);
+export const {addDuengung, resetDuengung} = duengungSlice.actions;

@@ -8,19 +8,26 @@ import {
 } from '@mui/material';
 import DaTextInput from 'ts-control/DaTextInput';
 import {yupResolver} from '@hookform/resolvers/yup';
-import * as yup from "yup";
+import * as yup from 'yup';
 import {
     TextInputComponent,
     AquariumFormValues,
 } from 'shared-types';
 import {useAppDispatch} from '../../store/store';
-import {createAquariumAsync} from '../../store/aquariumSlice';
+import {createAquariumAsync} from './aquariumSlice';
 
 const AppTextInput = DaTextInput as TextInputComponent;
 
 const schema = yup.object({
-    name: yup.string().required('benötigt'),
-    liter: yup.number().typeError('muss eine Zahl sein').positive('muss positiv sein').integer('muss eine natürliche Zahl sein').required('benötigt')
+    name: yup
+        .string()
+        .required('benötigt'),
+    liter: yup
+        .number()
+        .typeError('muss eine Zahl sein')
+        .positive('muss positiv sein')
+        .integer('muss eine natürliche Zahl sein')
+        .required('benötigt')
 }).required();
 
 const NeuesAquariumForm = () => {

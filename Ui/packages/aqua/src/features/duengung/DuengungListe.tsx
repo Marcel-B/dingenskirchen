@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from '../../store/store';
 import { DataGrid, GridColDef, GridRenderCellParams, GridValueFormatterParams } from '@mui/x-data-grid';
 import { Card, Divider, IconButton, Typography } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { deleteDuengungAsync, duengungenSelectors, fetchDuengungenAsync } from '../../store/duengungSlice';
+import { deleteDuengungAsync, duengungenSelectors, fetchDuengungenAsync } from './duengungSlice';
 import { format } from 'date-fns';
 
 const DuengungListe = () => {

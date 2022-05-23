@@ -8,12 +8,12 @@ interface Props extends UseControllerProps {
 }
 
 export const AppRadioButton = (props: Props) => {
-  const { fieldState, field } = useController({ ...props, defaultValue: props.defaultValue ?? '' });
+  const {fieldState, field} = useController({...props, defaultValue: props.defaultValue ?? ''});
   return (
     <FormControl
       fullWidth
-      error={!!fieldState.error}
-      margin={'dense'}>
+      margin='dense'
+      error={!!fieldState.error}>
       <Typography>{props.label}</Typography>
       <RadioGroup
         row
@@ -23,7 +23,7 @@ export const AppRadioButton = (props: Props) => {
         }}
         name='row-radio-buttons-group'>
         {props.values.map(option =>
-          <FormControlLabel control={<Radio />} label={option.text} key={option.value} value={option.value} />,
+          <FormControlLabel control={<Radio/>} label={option.text} key={option.value} value={option.value}/>,
         )}
       </RadioGroup>
     </FormControl>

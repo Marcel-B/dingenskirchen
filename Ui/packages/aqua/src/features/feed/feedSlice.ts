@@ -1,6 +1,6 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import {Feed} from 'shared-types';
-import agent from '../common/agent';
+import agent from '../../common/agent';
 
 export const fetchFeedAsync = createAsyncThunk<Feed>(
     'overview/fetchFeedAsync',

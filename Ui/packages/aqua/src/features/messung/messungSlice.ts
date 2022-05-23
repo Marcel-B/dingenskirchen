@@ -1,8 +1,13 @@
 import { createAsyncThunk, createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import { Messung, MessungFormValues } from 'shared-types';
-import { RootState } from './store';
-import agent from '../common/agent';
+import { RootState } from '../../store/store';
+import agent from '../../common/agent';
 
+interface MessungState {
+  addMessung: boolean;
+  editMessung: boolean;
+  messungId: string;
+}
 
 const messungenAdapter = createEntityAdapter<Messung>();
 
@@ -23,7 +28,7 @@ export const createMessungAsync = createAsyncThunk<Messung, MessungFormValues>(
     try {
       return await agent.Messung.create(messungFormValues);
     } catch (e: any) {
-      return thungAPI.rejectWithValue({ error: e.data });
+      return thungAPI.rejectWithValue({error: e.data});
     }
   },
 );
@@ -34,15 +39,28 @@ export const deleteMessungAsync = createAsyncThunk<string, string>(
     try {
       return await agent.Messung.delete(id);
     } catch (e: any) {
-      return thunkAPI.rejectWithValue({ error: e.data });
+      return thunkAPI.rejectWithValue({error: e.data});
     }
   },
 );
 
 export const messungSlice = createSlice({
   name: 'messung',
-  initialState: messungenAdapter.getInitialState(),
-  reducers: {},
+  initialState: messungenAdapter.getInitialState<MessungState>({
+    addMessung: false,
+    editMessung: false,
+    messungId: ''
+  }),
+  reducers: {
+    resetMessung: (state) => {
+      state.addMessung = false;
+      state.editMessung = false;
+      state.messungId = '';
+    },
+    addMessung: (state) => {
+      state.addMessung = true;
+    }
+  },
   extraReducers: (builder => {
     builder.addCase(createMessungAsync.pending, (state) => {
     });
@@ -74,3 +92,4 @@ export const messungSlice = createSlice({
 });
 
 export const messungenSelectors = messungenAdapter.getSelectors((state: RootState) => state.messungen);
+export const {addMessung, resetMessung} = messungSlice.actions;

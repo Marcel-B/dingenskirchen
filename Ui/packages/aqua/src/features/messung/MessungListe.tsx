@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store/store';
-import { deleteMessungAsync, fetchMessungenAsync, messungenSelectors } from '../../store/messungSlice';
+import { deleteMessungAsync, fetchMessungenAsync, messungenSelectors } from './messungSlice';
 import { DataGrid, GridColDef, GridRenderCellParams, GridValueFormatterParams } from '@mui/x-data-grid';
 import { format } from 'date-fns';
 import { Card, Divider, IconButton, Typography } from '@mui/material';

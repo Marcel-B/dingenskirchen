@@ -1,7 +1,7 @@
 import { createAsyncThunk, createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import { Aquarium, AquariumFormValues } from 'shared-types';
-import { RootState } from './store';
-import agent from '../common/agent';
+import { RootState } from '../../store/store';
+import agent from '../../common/agent';
 
 const aquarienAdapter = createEntityAdapter<Aquarium>();
 

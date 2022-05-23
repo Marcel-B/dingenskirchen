@@ -1,12 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
-import { messungSlice } from './messungSlice';
-import { aquariumSlice } from './aquariumSlice';
-import { duengungSlice } from './duengungSlice';
-import { fischSlice } from './fischSlice';
-import { notizSlice } from './notizSlice';
+import { messungSlice } from '../features/messung/messungSlice';
+import { aquariumSlice } from '../features/aquarium/aquariumSlice';
+import { duengungSlice } from '../features/duengung/duengungSlice';
+import { fischSlice } from '../features/fisch/fischSlice';
+import { notizSlice } from '../features/notiz/notizSlice';
 import { tagSlice } from './tagSlice';
-import { feedSlice } from './feedSlice';
+import { feedSlice } from '../features/feed/feedSlice';
+import { commonSlice } from "./commonSlice";
 
 export const store = configureStore({
   reducer: {
@@ -17,6 +18,7 @@ export const store = configureStore({
     notizen: notizSlice.reducer,
     tags: tagSlice.reducer,
     feed: feedSlice.reducer,
+    common: commonSlice.reducer
   },
 });
 

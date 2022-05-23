@@ -1,7 +1,13 @@
 import { createAsyncThunk, createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import { Notiz, NotizFormValues } from 'shared-types';
-import { RootState } from './store';
-import agent from '../common/agent';
+import { RootState } from '../../store/store';
+import agent from '../../common/agent';
+
+interface NotizState {
+  addNotiz: boolean;
+  editNotiz: boolean;
+  notizId: string;
+}
 
 const notizenAdapter = createEntityAdapter<Notiz>();
 
@@ -22,7 +28,7 @@ export const createNotizAsync = createAsyncThunk<Notiz, NotizFormValues>(
     try {
       return await agent.Notiz.create(formValues);
     } catch (e: any) {
-      return thunkAPI.rejectWithValue({ error: e.data });
+      return thunkAPI.rejectWithValue({error: e.data});
     }
   },
 );
@@ -40,8 +46,21 @@ export const deleteNotizAsync = createAsyncThunk<string, string>(
 
 export const notizSlice = createSlice({
   name: 'notiz',
-  initialState: notizenAdapter.getInitialState(),
-  reducers: {},
+  initialState: notizenAdapter.getInitialState<NotizState>({
+    addNotiz: false,
+    editNotiz: false,
+    notizId: ''
+  }),
+  reducers: {
+    resetNotiz: (state) => {
+      state.addNotiz = false;
+      state.editNotiz = false;
+      state.notizId = '';
+    },
+    addNotiz: (state) => {
+      state.addNotiz = true;
+    }
+  },
   extraReducers: builder => {
     builder.addCase(createNotizAsync.pending, (state) => {
       console.log('Create Notiz pending');
@@ -73,3 +92,4 @@ export const notizSlice = createSlice({
   },
 });
 export const notizSelectors = notizenAdapter.getSelectors((state: RootState) => state.notizen);
+export const {addNotiz, resetNotiz} = notizSlice.actions;
