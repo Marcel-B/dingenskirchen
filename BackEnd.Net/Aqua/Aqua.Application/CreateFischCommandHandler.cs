@@ -21,6 +21,7 @@ public class CreateFischCommandHandler : IRequestHandler<CreateFischCommand, Fis
     {
         var fisch = new Fisch
         {
+            UserId = request.UserId,
             Name = request.Name,
             Wissenschaftlich = request.Wissenschaftlich,
             Herkunft = request.Herkunft,

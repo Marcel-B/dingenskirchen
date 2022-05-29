@@ -10,9 +10,9 @@ import { useEffect } from "react";
 import { fetchFeedAsync } from "../feed/feedSlice";
 import { showSuccessMessage } from "../../store/commonSlice";
 import { FischFormValues } from "shared-types";
-import { fisch } from "./fischStyle";
+import { fisch as fischColor } from "./fischStyle";
 import schema from "./fischValidationSchema";
-import { createFischAsync, resetFisch } from "./fischSlice";
+import { createFischAsync, fischeSelectors, resetFisch, updateFischAsync } from "./fischSlice";
 import SetMealIcon from '@mui/icons-material/SetMeal';
 import Werte from "./Werte";
 
@@ -21,10 +21,10 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 800,
+  width: 880,
   bgcolor: 'background.paper',
   border: '6px solid',
-  borderColor: fisch,
+  borderColor: fischColor,
   borderRadius: 4,
   boxShadow: 24,
   p: 4,
@@ -32,13 +32,17 @@ const style = {
 
 const FischDialog = () => {
   const dispatch = useAppDispatch();
-  const {addFisch} = useAppSelector(state => state.fische);
+  const {addFisch, updateFisch, fischId} = useAppSelector(state => state.fische);
+  const fisch = useAppSelector(state => fischeSelectors.selectById(state, fischId));
   const {control, handleSubmit, reset} = useForm<FischFormValues>({resolver: yupResolver(schema)});
   const aquarien = useAppSelector(aquariumSelectors.selectAll);
 
   useEffect(() => {
     dispatch(fetchAquarienAsync());
-  }, []);
+    if (fisch) {
+      reset({...fisch, aquarium: fisch.aquarium});
+    }
+  }, [fisch]);
 
   const handleClose = () => {
   }
@@ -46,29 +50,35 @@ const FischDialog = () => {
   const onSubmit = (data: FischFormValues) => {
     const aqua = aquarien.find(a => a.id === data.aquarium.toString());
     data.aquarium = aqua!;
-    dispatch(createFischAsync(data));
+    if (updateFisch) {
+      data.id = fischId;
+      dispatch(updateFischAsync(data))
+        .then(_ => dispatch(fetchFeedAsync()));
+      dispatch(showSuccessMessage('Fisch geändert'));
+    } else {
+      dispatch(createFischAsync(data))
+        .then(_ => dispatch(fetchFeedAsync()));
+      dispatch(showSuccessMessage('Fisch gespeichert'));
+    }
     reset({datum: new Date()});
-    dispatch(resetFisch());
-    dispatch(fetchFeedAsync());
-    dispatch(showSuccessMessage('Fisch gespeichert'));
   };
 
   return (
     <Modal
-      open={addFisch}
+      open={addFisch || updateFisch}
       onClose={handleClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
       closeAfterTransition
     >
-      <Fade in={addFisch}>
+      <Fade in={addFisch || updateFisch}>
         <Box sx={style}>
           <Box sx={{
             display: 'flex',
             justifyContent: 'space-between'
           }}>
-            <Typography variant='h4'>Neuer Fisch</Typography>
-            <SetMealIcon sx={{pt: 1, color: fisch}}/>
+            <Typography variant='h4'>{updateFisch ? 'Fisch ändern' : 'Neuer Fisch'}</Typography>
+            <SetMealIcon sx={{pt: 1, color: fischColor}}/>
           </Box>
           <Divider orientation='horizontal' sx={{
             mb: 1

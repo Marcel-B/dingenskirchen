@@ -7,7 +7,7 @@ module.exports = (env) => {
     return {
         entry: './src/index',
         output: {
-            publicPath: env === 'prod' ? "http://localhost:9000/" : "http://localhost:3007/",
+            publicPath: env === 'prod' ? "http://192.168.2.103:9005/" : "http://localhost:3007/",
         },
 
         resolve: {
@@ -15,6 +15,9 @@ module.exports = (env) => {
         },
 
         devServer: {
+            historyApiFallback: true,
+            contentBase: './',
+            hot: true,
             port: 3007,
         },
 
@@ -48,7 +51,7 @@ module.exports = (env) => {
                 name: "starter",
                 filename: "remoteEntry.js",
                 remotes: {
-                    "ts-control": env === 'prod' ? "controls@http://localhost:3080/remoteEntry.js" : "controls@http://localhost:3079/remoteEntry.js",
+                    "ts-control": env === 'prod' ? "controls@http://192.168.2.103:3080/remoteEntry.js" : "controls@http://localhost:3079/remoteEntry.js",
                 },
                 exposes: {},
                 shared: {

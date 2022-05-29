@@ -3,7 +3,4 @@ using MediatR;
 
 namespace com.marcelbenders.Aqua.Application.Query;
 
-public class GetFeedQuery : IRequest<IEnumerable<IFeedItem>>
-{
-    public short Tage { get; init; } = short.MaxValue;
-}
+public record GetFeedQuery(string UserId, short? Tage) : IRequest<IEnumerable<IFeedItem>>;

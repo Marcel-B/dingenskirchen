@@ -17,7 +17,7 @@ public class GetGroupedFeedQueryHandler : IRequestHandler<GetGroupedFeedQuery, F
 
     public async Task<Feed> Handle(GetGroupedFeedQuery request, CancellationToken cancellationToken)
     {
-        var feed = await _repository.GetFeedAsync(cancellationToken);
+        var feed = await _repository.GetFeedAsync(request.UserId, cancellationToken);
         var result = feed
             .Select(item => new FeedItem
             {

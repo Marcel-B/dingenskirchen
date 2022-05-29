@@ -47,9 +47,11 @@
     "react-dom": "^16.13.0",
     "react-hook-form": "^7.30.0",
     "react-redux": "^8.0.0",
+    "react-router-dom": "6",
     "react-scripts": "^5.0.1",
     "shared-types": "1.0.0",
     "styled-components": "^5.3.5",
+    "tone": "^14.8.40",
     "yup": "^0.32.11"
   }
 }

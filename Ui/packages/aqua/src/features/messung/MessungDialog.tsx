@@ -12,8 +12,8 @@ import { showSuccessMessage } from "../../store/commonSlice";
 import DeviceThermostatIcon from '@mui/icons-material/DeviceThermostat';
 import { MessungFormValues } from "shared-types";
 import schema from "./messungValidationSchema";
-import { messung } from "./messungStyle";
-import { createMessungAsync, resetMessung } from "./messungSlice";
+import { messung as messungColor } from "./messungStyle";
+import { createMessungAsync, messungenSelectors, resetMessung, updateMessungAsync } from "./messungSlice";
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -23,7 +23,7 @@ const style = {
   width: 400,
   bgcolor: 'background.paper',
   border: '6px solid',
-  borderColor: messung,
+  borderColor: messungColor,
   borderRadius: 4,
   boxShadow: 24,
   p: 4,
@@ -31,13 +31,17 @@ const style = {
 
 const MessungDialog = () => {
   const dispatch = useAppDispatch();
-  const {addMessung} = useAppSelector(state => state.messungen);
+  const {addMessung, updateMessung, messungId} = useAppSelector(state => state.messungen);
+  const messung = useAppSelector(state => messungenSelectors.selectById(state, messungId));
   const {control, handleSubmit, reset} = useForm<MessungFormValues>({resolver: yupResolver(schema)});
   const aquarien = useAppSelector(aquariumSelectors.selectAll);
 
   useEffect(() => {
     dispatch(fetchAquarienAsync());
-  }, []);
+    if (messung) {
+      reset({...messung});
+    }
+  }, [messung]);
 
   const handleClose = () => {
   }
@@ -45,29 +49,38 @@ const MessungDialog = () => {
   const onSubmit = (data: MessungFormValues) => {
     const aqua = aquarien.find(a => a.id === data.aquarium.toString());
     data.aquarium = aqua!;
-    dispatch(createMessungAsync(data));
+    if (updateMessung) {
+      data.id = messungId;
+      dispatch(updateMessungAsync(data))
+        .then(_ =>
+          dispatch(fetchFeedAsync()));
+      dispatch(showSuccessMessage('Messung geändert'));
+    } else {
+      dispatch(createMessungAsync(data))
+        .then(_ =>
+          dispatch(fetchFeedAsync()));
+      dispatch(showSuccessMessage('Messung gespeichert'));
+    }
     reset({datum: new Date()});
     dispatch(resetMessung());
-    dispatch(fetchFeedAsync());
-    dispatch(showSuccessMessage('Messung gespeichert'));
   };
 
   return (
     <Modal
-      open={addMessung}
+      open={addMessung || updateMessung}
       onClose={handleClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
       closeAfterTransition
     >
-      <Fade in={addMessung}>
+      <Fade in={addMessung || updateMessung}>
         <Box sx={style}>
           <Box sx={{
             display: 'flex',
             justifyContent: 'space-between'
           }}>
-            <Typography variant='h4'>Neue Messung</Typography>
-            <DeviceThermostatIcon sx={{pt: 1, color: messung}}/>
+            <Typography variant='h4'>{updateMessung ? 'Messung ändern' : 'Neue Messung'}</Typography>
+            < DeviceThermostatIcon sx={{pt: 1, color: messungColor}}/>
           </Box>
           <Divider orientation='horizontal' sx={{
             mb: 1

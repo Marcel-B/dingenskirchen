@@ -9,7 +9,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import SaveIcon from "@mui/icons-material/Save";
 import ScienceIcon from '@mui/icons-material/Science';
 import { duenger } from "./duengungStyle";
-import { addDuengung, createDuengungAsync, resetDuengung } from "./duengungSlice";
+import { createDuengungAsync, duengungenSelectors, resetDuengung, updateDuengungAsync } from "./duengungSlice";
 import schema from "./duengungValidationSchema";
 import Allgemein from "./Allgemein";
 import { fetchFeedAsync } from "../feed/feedSlice";
@@ -31,13 +31,22 @@ const style = {
 
 const DuengungDialog = () => {
   const dispatch = useAppDispatch();
-  const {addDuengung} = useAppSelector(state => state.duengungen);
+  const {addDuengung, updateDuengung, duengungId} = useAppSelector(state => state.duengungen);
+  const duengung = useAppSelector(state => duengungenSelectors.selectById(state, duengungId));
   const {control, handleSubmit, reset} = useForm<DuengungFormValues>({resolver: yupResolver(schema)});
   const aquarien = useAppSelector(aquariumSelectors.selectAll);
 
   useEffect(() => {
     dispatch(fetchAquarienAsync());
-  }, []);
+    if (duengung) {
+      reset({
+        aquarium: duengung.aquarium,
+        duenger: duengung.duenger,
+        datum: duengung.datum,
+        menge: duengung.menge
+      });
+    }
+  }, [duengung]);
 
   const handleClose = () => {
   }
@@ -45,28 +54,36 @@ const DuengungDialog = () => {
   const onSubmit = (data: DuengungFormValues) => {
     const aqua = aquarien.find(a => a.id === data.aquarium.toString());
     data.aquarium = aqua!;
-    dispatch(createDuengungAsync(data));
+    if (updateDuengung) {
+      data.id = duengungId;
+      dispatch(updateDuengungAsync(data))
+        .then(_ => dispatch(fetchFeedAsync()));
+      dispatch(showSuccessMessage('Düngung geändert'));
+    } else {
+      dispatch(createDuengungAsync(data))
+        .then(_ =>
+          dispatch(fetchFeedAsync()));
+      dispatch(showSuccessMessage('Düngung gespeichert'));
+    }
     reset({datum: new Date()});
     dispatch(resetDuengung());
-    dispatch(fetchFeedAsync());
-    dispatch(showSuccessMessage('Düngung gespeichert'));
   }
 
   return (
     <Modal
-      open={addDuengung}
+      open={addDuengung || updateDuengung}
       onClose={handleClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
       closeAfterTransition
     >
-      <Fade in={addDuengung}>
+      <Fade in={addDuengung || updateDuengung}>
         <Box sx={style}>
           <Box sx={{
             display: 'flex',
             justifyContent: 'space-between'
           }}>
-            <Typography variant='h4'>Neue Düngung</Typography>
+            <Typography variant='h4'>{updateDuengung ? 'Düngung ändern' : 'Neue Düngung'}</Typography>
             <ScienceIcon sx={{pt: 1, color: duenger}}/>
           </Box>
           <Divider orientation='horizontal' sx={{

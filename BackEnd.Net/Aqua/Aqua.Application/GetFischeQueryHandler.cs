@@ -13,11 +13,11 @@ public class GetFischeQueryHandler : IRequestHandler<GetFischeQuery, IEnumerable
     {
         _repository = repository;
     }
-    
+
     public async Task<IEnumerable<Fisch>> Handle(
         GetFischeQuery request,
         CancellationToken cancellationToken)
     {
-        return await _repository.GetAllAsync(cancellationToken);
+        return await _repository.GetAllAsync(request.UserId, cancellationToken);
     }
 }

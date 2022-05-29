@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using com.marcelbenders.Aqua.Api.Extensions;
 using com.marcelbenders.Aqua.Application.Command;
 using com.marcelbenders.Aqua.Application.Query;
 using com.marcelbenders.Aqua.Domain;
@@ -25,7 +26,7 @@ public class AquariumController : ControllerBase
     public async Task<IEnumerable<Aquarium>> GetAll(
         CancellationToken cancellationToken)
     {
-        return await _mediator.Send(new GetAquarienQuery(), cancellationToken);
+        return await _mediator.Send(new GetAquarienQuery(HttpContext.GetUserIdentifier()), cancellationToken);
     }
 
     [HttpPost]
@@ -35,6 +36,20 @@ public class AquariumController : ControllerBase
         [FromBody, Required] CreateAquariumCommand command,
         CancellationToken cancellationToken)
     {
+        var userId = HttpContext.GetUserIdentifier();
+        command.UserId = userId;
+        return await _mediator.Send(command, cancellationToken);
+    }
+
+    [HttpPut("{id}")]
+    [ActionName("updateOneAsync"), Produces("application/json")]
+    [ProducesResponseType(typeof(Aquarium), StatusCodes.Status201Created)]
+    public async Task<Aquarium> UpdateOneAsync(
+        [FromRoute, Required] string id,
+        [FromBody, Required] UpdateAquariumCommand command,
+        CancellationToken cancellationToken)
+    {
+        command.UserId = HttpContext.GetUserIdentifier();
         return await _mediator.Send(command, cancellationToken);
     }
 

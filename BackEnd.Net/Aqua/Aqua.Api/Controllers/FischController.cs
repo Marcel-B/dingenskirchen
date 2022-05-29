@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using com.marcelbenders.Aqua.Api.Extensions;
 using com.marcelbenders.Aqua.Application.Command;
 using com.marcelbenders.Aqua.Application.Query;
 using com.marcelbenders.Aqua.Domain;
@@ -25,7 +26,7 @@ public class FischController : ControllerBase
     public async Task<IEnumerable<Fisch>> GetAll(
         CancellationToken cancellationToken)
     {
-        return await _mediator.Send(new GetFischeQuery(), cancellationToken);
+        return await _mediator.Send(new GetFischeQuery(HttpContext.GetUserIdentifier()), cancellationToken);
     }
 
     [HttpPost]
@@ -35,6 +36,19 @@ public class FischController : ControllerBase
         [FromBody, Required] CreateFischCommand command,
         CancellationToken cancellationToken)
     {
+        command.UserId = HttpContext.GetUserIdentifier();
+        return await _mediator.Send(command, cancellationToken);
+    }
+
+    [HttpPut("{id}")]
+    [ActionName("updateOneAsync"), Produces("application/json")]
+    [ProducesResponseType(typeof(Fisch), StatusCodes.Status201Created)]
+    public async Task<Fisch> UpdateOneAsync(
+        [FromRoute, Required] string id,
+        [FromBody, Required] UpdateFischCommand command,
+        CancellationToken cancellationToken)
+    {
+        command.UserId = HttpContext.GetUserIdentifier();
         return await _mediator.Send(command, cancellationToken);
     }
 

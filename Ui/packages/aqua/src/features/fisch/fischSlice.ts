@@ -5,7 +5,7 @@ import agent from '../../common/agent';
 
 interface FischState {
   addFisch: boolean;
-  editFisch: boolean;
+  updateFisch: boolean;
   fischId: string;
 }
 
@@ -33,6 +33,17 @@ export const createFischAsync = createAsyncThunk<Fisch, FischFormValues>(
   },
 );
 
+export const updateFischAsync = createAsyncThunk<Fisch, FischFormValues>(
+  'form/updateFischAsync',
+  async (fischFormValues, thunkAPI) => {
+    try {
+      return await agent.Fisch.update(fischFormValues);
+    } catch (e: any) {
+      return thunkAPI.rejectWithValue({error: e.data});
+    }
+  },
+);
+
 export const deleteFischAsync = createAsyncThunk<string, string>(
   'form/deleteFischAsync',
   async (id, thunkAPI) => {
@@ -48,21 +59,21 @@ export const fischSlice = createSlice({
   name: 'fisch',
   initialState: fischeAdapter.getInitialState<FischState>({
     addFisch: false,
-    editFisch: false,
+    updateFisch: false,
     fischId: ''
   }),
   reducers: {
     addFisch: (state) => {
       state.addFisch = true;
     },
+    updateFisch: (state, action) => {
+      state.updateFisch = true;
+      state.fischId = action.payload;
+    },
     resetFisch: (state) => {
       state.addFisch = false;
-      state.editFisch = false;
+      state.updateFisch = false;
       state.fischId = '';
-    },
-    editFisch: (state, action) => {
-      state.editFisch = true;
-      state.fischId = action.payload;
     },
   },
   extraReducers: (builder => {
@@ -70,12 +81,15 @@ export const fischSlice = createSlice({
     });
     builder.addCase(createFischAsync.fulfilled, (state, action) => {
       fischeAdapter.addOne(state, action.payload);
-      //state.success = true;
-      //state.message = `Fisch ${action.payload.name} hinzugefügt`;
     });
     builder.addCase(createFischAsync.rejected, (state, action) => {
-      //state.error = true;
-      //state.message = action.error.message ?? 'Fehler';
+    });
+    builder.addCase(updateFischAsync.pending, (state) => {
+    });
+    builder.addCase(updateFischAsync.fulfilled, (state, action) => {
+      fischeAdapter.upsertOne(state, action.payload);
+    });
+    builder.addCase(updateFischAsync.rejected, (state, action) => {
     });
     builder.addCase(deleteFischAsync.pending, (state) => {
     });
@@ -84,23 +98,17 @@ export const fischSlice = createSlice({
     });
     builder.addCase(deleteFischAsync.rejected, (state, action) => {
       console.log(action.error);
-      //state.error = true;
-      //state.message = action.error.message ?? 'Fehler';
     });
     builder.addCase(fetchFischeAsync.pending, (state) => {
     });
     builder.addCase(fetchFischeAsync.fulfilled, (state, action) => {
       fischeAdapter.upsertMany(state, action.payload);
-      //state.success = true;
-      //state.message = 'Fische geladen';
     });
     builder.addCase(fetchFischeAsync.rejected, (state, action) => {
       console.log(action.error.message);
-      //state.error = true;
-      //state.message = action.error.message ?? 'Fehler';
     });
   }),
 });
 
 export const fischeSelectors = fischeAdapter.getSelectors((state: RootState) => state.fische);
-export const {resetFisch, editFisch, addFisch} = fischSlice.actions;
+export const {resetFisch, updateFisch, addFisch} = fischSlice.actions;

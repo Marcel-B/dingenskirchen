@@ -18,3 +18,4 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "Controlls.Api.dll"]
+# docker buildx build -f Dockerfile --platform linux/amd64 --push -t  millegalb/form-controlls:1.0.2 .

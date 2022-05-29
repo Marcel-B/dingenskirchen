@@ -17,6 +17,8 @@ const MessungFeedItem = ({datum, ...props}: Props) => {
       case "NH₄":
       case "NO₂":
       case "NO₃":
+      case "K":
+      case "FE":
         return new Intl.NumberFormat('de-DE', {
           maximumFractionDigits: 2,
           minimumFractionDigits: 2

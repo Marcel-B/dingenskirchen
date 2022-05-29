@@ -4,5 +4,5 @@ namespace com.marcelbenders.Aqua.MongoDb.Repository;
 
 public interface IFeedRepository
 {
-    Task<IEnumerable<IFeedItem>> GetFeedAsync(CancellationToken cancellationToken);
+    Task<IEnumerable<IFeedItem>> GetFeedAsync(string userId, CancellationToken cancellationToken);
 }

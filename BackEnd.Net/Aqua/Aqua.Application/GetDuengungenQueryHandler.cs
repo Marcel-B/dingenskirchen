@@ -13,11 +13,11 @@ public class GetDuengungenQueryHandler : IRequestHandler<GetDuengungenQuery, IEn
     {
         _repository = repository;
     }
-    
+
     public async Task<IEnumerable<Duengung>> Handle(
         GetDuengungenQuery request,
         CancellationToken cancellationToken)
     {
-        return await _repository.GetAllAsync(cancellationToken);
+        return await _repository.GetAllAsync(request.UserId, cancellationToken);
     }
 }

@@ -11,13 +11,14 @@ public class MongoRepository<T> : IMongoRepository<T>
         _context = context;
     }
 
-    public async Task<IEnumerable<T>> GetAllAsync(CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<T>> GetAllAsync(string userId, CancellationToken cancellationToken = default)
     {
         var name = typeof(T).Name.ToLower();
         var database = _context.GetDatabase();
-            
+
+        var filter = Builders<T>.Filter.Eq("userId", userId);
         var entities = database.GetCollection<T>(name);
-        var all =  entities.Find(entity => true).Sort("{datum: 1}");
+        var all = entities.Find(filter).Sort("{datum: 1}");
         var liste = await all.ToListAsync(cancellationToken: cancellationToken);
         return liste;
     }
@@ -30,6 +31,22 @@ public class MongoRepository<T> : IMongoRepository<T>
             .GetCollection<T>(name)
             .InsertOneAsync(entity, cancellationToken: cancellationToken);
         return entity;
+    }
+
+    public async Task<T> UpdateByIdAsync(string id, T value, CancellationToken cancellationToken = default)
+    {
+        var name = typeof(T).Name.ToLower();
+        var database = _context.GetDatabase();
+        var filter = Builders<T>.Filter.Eq("Id", id);
+        var result = await database
+            .GetCollection<T>(name)
+            .ReplaceOneAsync(filter, value, cancellationToken: cancellationToken);
+        if (result.IsAcknowledged)
+        {
+            return value;
+        }
+
+        throw new Exception("Fehler beim update");
     }
 
     public async Task DeleteAsync(string id, CancellationToken cancellationToken = default)

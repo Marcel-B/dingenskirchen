@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using com.marcelbenders.Aqua.Api.Extensions;
 using com.marcelbenders.Aqua.Application.Command;
 using com.marcelbenders.Aqua.Application.Query;
 using com.marcelbenders.Aqua.Domain;
@@ -24,7 +25,19 @@ public class MessungController : ControllerBase
     [ProducesResponseType(typeof(IEnumerable<Messung>), StatusCodes.Status200OK)]
     public async Task<IEnumerable<Messung>> GetAll(CancellationToken cancellationToken)
     {
-        return await _mediator.Send(new GetMessungenQuery(), cancellationToken);
+        return await _mediator.Send(new GetMessungenQuery(HttpContext.GetUserIdentifier()), cancellationToken);
+    }
+
+    [HttpPut("{id}")]
+    [ActionName("updateOneAsync"), Produces("application/json")]
+    [ProducesResponseType(typeof(Messung), StatusCodes.Status201Created)]
+    public async Task<Messung> UpdateOneAsync(
+        [FromRoute, Required] string id,
+        [FromBody, Required] UpdateMessungCommand command,
+        CancellationToken cancellationToken)
+    {
+        command.UserId = HttpContext.GetUserIdentifier();
+        return await _mediator.Send(command, cancellationToken);
     }
 
     [HttpPost]
@@ -33,6 +46,7 @@ public class MessungController : ControllerBase
     public async Task<Messung> CreateOneAsync([FromBody, Required] CreateMessungCommand command,
         CancellationToken cancellationToken)
     {
+        command.UserId = HttpContext.GetUserIdentifier();
         return await _mediator.Send(command, cancellationToken);
     }
 

@@ -21,6 +21,7 @@ public class CreateDuengungCommandHandler : IRequestHandler<CreateDuengungComman
     {
         var duengung = new Duengung
         {
+            UserId = request.UserId,
             Menge = request.Menge,
             Datum = request.Datum,
             Duenger = request.Duenger,

@@ -2,7 +2,7 @@ import { Card, Divider, IconButton, Typography } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import { useAppDispatch, useAppSelector } from '../../store/store';
-import { deleteFischAsync, editFisch, fetchFischeAsync, fischeSelectors } from './fischSlice';
+import { deleteFischAsync, updateFisch, fetchFischeAsync, fischeSelectors } from './fischSlice';
 import React, { useEffect } from 'react';
 import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 
@@ -15,15 +15,15 @@ const FischListe = () => {
     }
   };
 
-  const deleteItem = (id: string | undefined) => {
+  const handleDeleteItem = (id: string | undefined) => {
     if (id) {
       dispatch(deleteFischAsync(id));
     }
   };
 
-  const handleEditFisch = (id: string | undefined) => {
+  const handleUpdateItem = (id: string | undefined) => {
     if (id) {
-      dispatch(editFisch(id));
+      dispatch(updateFisch(id));
     }
   }
   useEffect(() => {
@@ -61,11 +61,12 @@ const FischListe = () => {
       headerName: ' ',
       renderCell: (params: GridRenderCellParams<string>) => (
         <>
-          <IconButton aria-label='delete' onClick={() => deleteItem(params.value)}>
-            <DeleteIcon/>
+          <IconButton aria-label='edit' onClick={() => handleUpdateItem(params.value)}>
+            <ModeEditIcon color='info'/>
           </IconButton>
-          <IconButton aria-label='edit' onClick={() => handleEditFisch(params.value)}>
-            <ModeEditIcon/>
+          <IconButton aria-label='delete' onClick={() => handleDeleteItem(params.value)}>
+            <DeleteIcon color='error'
+            />
           </IconButton>
         </>
       ),
@@ -75,14 +76,16 @@ const FischListe = () => {
   return (
     <>
       <Card style={{padding: '2rem'}}>
-        <Typography variant='h5'>Fische</Typography>
+        <Typography variant='h3'>Fische</Typography>
         <Divider orientation='horizontal'/>
         <br/>
         <div style={{height: 400, width: '100%'}}>
           <DataGrid initialState={{
             sorting: {sortModel: [{field: 'name', sort: 'asc'}]},
           }} columns={columns}
-                    rows={fische} rowsPerPageOptions={[5]} pageSize={5}
+                    rows={fische}
+                    rowsPerPageOptions={[5]}
+                    pageSize={5}
           />
         </div>
       </Card>

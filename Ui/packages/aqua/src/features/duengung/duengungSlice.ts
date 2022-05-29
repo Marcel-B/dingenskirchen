@@ -1,11 +1,11 @@
-import { createAsyncThunk, createEntityAdapter, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createEntityAdapter, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Duengung, DuengungFormValues } from 'shared-types';
 import { RootState } from '../../store/store';
 import agent from '../../common/agent';
 
 interface DuengungState {
   addDuengung: boolean;
-  editDuengung: boolean;
+  updateDuengung: boolean;
   duengungId: string;
 }
 
@@ -24,11 +24,22 @@ export const fetchDuengungenAsync = createAsyncThunk<Duengung[]>(
 
 export const createDuengungAsync = createAsyncThunk<Duengung, DuengungFormValues>(
   'form/createDuengungAsync',
-  async (duengungFormValues, thungAPI) => {
+  async (duengungFormValues, thunkAPI) => {
     try {
       return await agent.Duengung.create(duengungFormValues);
     } catch (e: any) {
-      return thungAPI.rejectWithValue({error: e.data});
+      return thunkAPI.rejectWithValue({error: e.data});
+    }
+  },
+);
+
+export const updateDuengungAsync = createAsyncThunk<Duengung, DuengungFormValues>(
+  'form/updateDuengungAsync',
+  async (duengungFormValues, thunkAPI) => {
+    try {
+      return await agent.Duengung.update(duengungFormValues);
+    } catch (e: any) {
+      return thunkAPI.rejectWithValue({error: e.data});
     }
   },
 );
@@ -48,18 +59,23 @@ export const duengungSlice = createSlice({
   name: 'duengung',
   initialState: duengungenAdapter.getInitialState<DuengungState>({
     addDuengung: false,
-    editDuengung: false,
+    updateDuengung: false,
     duengungId: ''
   }),
   reducers: {
-    resetDuengung: (state) => {
-      state.addDuengung = false;
-      state.editDuengung = false;
-      state.duengungId = '';
-    },
     addDuengung: (state) => {
       state.addDuengung = true;
-    }
+    },
+    updateDuengung: (state, action: PayloadAction<string>) => {
+      state.updateDuengung = true;
+      state.addDuengung = false;
+      state.duengungId = action.payload;
+    },
+    resetDuengung: (state) => {
+      state.addDuengung = false;
+      state.updateDuengung = false;
+      state.duengungId = '';
+    },
   },
   extraReducers: (builder => {
     builder.addCase(createDuengungAsync.pending, (state) => {
@@ -68,6 +84,14 @@ export const duengungSlice = createSlice({
       duengungenAdapter.addOne(state, action.payload);
     });
     builder.addCase(createDuengungAsync.rejected, (state, action) => {
+      console.log(action.error);
+    });
+    builder.addCase(updateDuengungAsync.pending, (state) => {
+    });
+    builder.addCase(updateDuengungAsync.fulfilled, (state, action) => {
+      duengungenAdapter.upsertOne(state, action.payload);
+    });
+    builder.addCase(updateDuengungAsync.rejected, (state, action) => {
       console.log(action.error);
     });
     builder.addCase(deleteDuengungAsync.pending, (state) => {
@@ -90,4 +114,4 @@ export const duengungSlice = createSlice({
 });
 
 export const duengungenSelectors = duengungenAdapter.getSelectors((state: RootState) => state.duengungen);
-export const {addDuengung, resetDuengung} = duengungSlice.actions;
+export const {addDuengung, updateDuengung, resetDuengung} = duengungSlice.actions;

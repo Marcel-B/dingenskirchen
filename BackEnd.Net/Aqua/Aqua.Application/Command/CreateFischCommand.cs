@@ -5,6 +5,7 @@ namespace com.marcelbenders.Aqua.Application.Command;
 
 public record CreateFischCommand : IRequest<Fisch>
 {
+    public string? UserId { get; set; }
     public string Name { get; init; }
     public string Wissenschaftlich { get; init; }
     public string Herkunft { get; init; }

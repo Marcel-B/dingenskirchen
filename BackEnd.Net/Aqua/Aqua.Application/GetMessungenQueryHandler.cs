@@ -16,6 +16,6 @@ public class GetMessungenQueryHandler : IRequestHandler<GetMessungenQuery, IEnum
     
     public async Task<IEnumerable<Messung>> Handle(GetMessungenQuery request, CancellationToken cancellationToken)
     {
-        return await _repository.GetAllAsync(cancellationToken);
+        return await _repository.GetAllAsync(request.UserId, cancellationToken);
     }
 }

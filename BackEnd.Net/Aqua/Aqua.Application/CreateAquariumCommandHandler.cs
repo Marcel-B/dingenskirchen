@@ -22,6 +22,7 @@ public class CreateAquariumCommandHandler : IRequestHandler<CreateAquariumComman
         var aquarium = new Aquarium
         {
             Name = request.Name,
+            UserId = request.UserId,
             Liter = request.Liter,
             Datum =  DateTimeOffset.Now,
         };

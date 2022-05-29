@@ -21,6 +21,7 @@ public class CreateNotizCommandHandler : IRequestHandler<CreateNotizCommand, Not
     {
         var notiz = new Notiz
         {
+            UserId = request.UserId,
             Text = request.Text,
             Aquarium = request.Aquarium,
             Tag = request.Tag,

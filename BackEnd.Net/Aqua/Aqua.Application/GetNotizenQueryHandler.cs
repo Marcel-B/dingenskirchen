@@ -13,11 +13,11 @@ public class GetNotizenQueryHandler : IRequestHandler<GetNotizenQuery, IEnumerab
     {
         _repository = repository;
     }
-    
+
     public async Task<IEnumerable<Notiz>> Handle(
         GetNotizenQuery request,
         CancellationToken cancellationToken)
     {
-        return await _repository.GetAllAsync(cancellationToken);
+        return await _repository.GetAllAsync(request.UserId, cancellationToken);
     }
 }

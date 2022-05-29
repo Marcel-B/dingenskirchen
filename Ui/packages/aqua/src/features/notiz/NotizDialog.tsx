@@ -1,6 +1,6 @@
 import { Box, Button, Divider, Fade, Modal, Typography } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../../store/store";
-import { createNotizAsync, resetNotiz } from "./notizSlice";
+import { createNotizAsync, notizSelectors, resetNotiz, updateNotizAsync } from "./notizSlice";
 import SaveIcon from '@mui/icons-material/Save';
 import CloseIcon from '@mui/icons-material/Close';
 import Allgemein from "./Allgemein";
@@ -12,7 +12,7 @@ import { aquariumSelectors, fetchAquarienAsync } from "../aquarium/aquariumSlice
 import { useEffect } from "react";
 import { fetchFeedAsync } from "../feed/feedSlice";
 import StickyNote2Icon from '@mui/icons-material/StickyNote2';
-import { notiz } from "./notizStyle";
+import { notiz as notizColor } from "./notizStyle";
 import { showSuccessMessage } from "../../store/commonSlice";
 
 const style = {
@@ -23,7 +23,7 @@ const style = {
   width: 400,
   bgcolor: 'background.paper',
   border: '6px solid',
-  borderColor: notiz,
+  borderColor: notizColor,
   borderRadius: 4,
   boxShadow: 24,
   p: 4,
@@ -31,13 +31,22 @@ const style = {
 
 const NotizDialog = () => {
   const dispatch = useAppDispatch();
-  const {addNotiz} = useAppSelector(state => state.notizen);
+  const {addNotiz, updateNotiz, notizId} = useAppSelector(state => state.notizen);
+  const notiz = useAppSelector(state => notizSelectors.selectById(state, notizId));
   const {control, handleSubmit, reset} = useForm<NotizFormValues>({resolver: yupResolver(schema)});
   const aquarien = useAppSelector(aquariumSelectors.selectAll);
 
   useEffect(() => {
     dispatch(fetchAquarienAsync());
-  }, []);
+    if (notiz) {
+      reset({
+        text: notiz.text,
+        tag: notiz.tag,
+        datum: notiz.datum,
+        aquarium: notiz.aquarium
+      });
+    }
+  }, [updateNotiz, notizId]);
 
   const handleClose = () => {
   }
@@ -45,29 +54,35 @@ const NotizDialog = () => {
   const onSubmit = (data: NotizFormValues) => {
     const aqua = aquarien.find(a => a.id === data.aquarium.toString());
     data.aquarium = aqua!;
-    dispatch(createNotizAsync(data));
+    if (updateNotiz) {
+      data.id = notizId;
+      dispatch(updateNotizAsync(data))
+        .then(_ => dispatch(fetchFeedAsync()));
+      dispatch(showSuccessMessage('Notiz geändert'));
+    } else {
+      dispatch(createNotizAsync(data))
+        .then(_ => dispatch(fetchFeedAsync()));
+      dispatch(showSuccessMessage('Notiz gespeichert'));
+    }
     reset({datum: new Date()});
-    dispatch(resetNotiz());
-    dispatch(fetchFeedAsync());
-    dispatch(showSuccessMessage('Notiz gespeichert'));
   };
 
   return (
     <Modal
-      open={addNotiz}
+      open={addNotiz || updateNotiz}
       onClose={handleClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
       closeAfterTransition
     >
-      <Fade in={addNotiz}>
+      <Fade in={addNotiz || updateNotiz}>
         <Box sx={style}>
           <Box sx={{
             display: 'flex',
             justifyContent: 'space-between'
           }}>
-            <Typography variant='h4'>Neue Notiz</Typography>
-            <StickyNote2Icon sx={{pt: 1, color: notiz}}/>
+            <Typography variant='h4'>{updateNotiz ? 'Notiz ändern' : 'Neue Notiz'}</Typography>
+            <StickyNote2Icon sx={{pt: 1, color: notizColor}}/>
           </Box>
           <Divider orientation='horizontal' sx={{
             mb: 1

@@ -11,11 +11,17 @@
 
     <PropertyGroup Condition=" '$(RunConfiguration)' == 'Aqua' " />
     <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.5" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.5">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.1" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\Aqua.Application\Aqua.Application.csproj" />
+      <ProjectReference Include="..\Aqua.SqlServer\Aqua.SqlServer.csproj" />
     </ItemGroup>
 
     <ItemGroup>

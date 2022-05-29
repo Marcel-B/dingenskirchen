@@ -12,7 +12,7 @@ export const commonSlice = createSlice({
     error: false,
     success: false,
     message: ''
-  },
+  } as CommonState,
   reducers: {
     showSuccessMessage: (state, action) => {
       state.message = action.payload;

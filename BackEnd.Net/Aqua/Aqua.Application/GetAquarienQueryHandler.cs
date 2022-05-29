@@ -18,6 +18,6 @@ public class GetAquarienQueryHandler : IRequestHandler<GetAquarienQuery, IEnumer
         GetAquarienQuery request,
         CancellationToken cancellationToken)
     {
-        return await _repository.GetAllAsync(cancellationToken);
+        return await _repository.GetAllAsync(request.UserId, cancellationToken);
     }
 }

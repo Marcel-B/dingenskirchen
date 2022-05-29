@@ -3,7 +3,4 @@ using MediatR;
 
 namespace com.marcelbenders.Aqua.Application.Query;
 
-public class GetGroupedFeedQuery : IRequest<Feed>
-{
-    public short Tage { get; init; } = short.MaxValue;
-}
+public record GetGroupedFeedQuery(string UserId, short? Tage) : IRequest<Feed>;

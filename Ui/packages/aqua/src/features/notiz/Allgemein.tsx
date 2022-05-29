@@ -19,8 +19,8 @@ const Allgemein = ({control, aquarien}: Props) => {
       <AppDatePicker control={control} default={new Date()} label='Datum' name='datum'/>
       <AppSelect
         name='aquarium'
-        defaultValue={null}
         control={control}
+        defaultValue={null}
         label='Aquarium'
         values={aquarien.map(aquarium => {
           return {

@@ -10,8 +10,6 @@ import { useForm } from 'react-hook-form';
 import { aquariumSelectors, fetchAquarienAsync } from '../aquarium/aquariumSlice';
 import { useAppDispatch, useAppSelector } from '../../store/store';
 import { createDuengungAsync } from './duengungSlice';
-import * as yup from 'yup';
-import duengungTypeOptions from "../../models/duengungTyp";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { DuengungFormValues } from "shared-types";
 import Allgemein from "./Allgemein";

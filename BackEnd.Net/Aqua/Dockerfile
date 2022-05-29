@@ -14,6 +14,7 @@ COPY Aqua.Application/*.csproj  Aqua.Application/
 COPY Aqua.MongoDb/*.csproj  Aqua.MongoDb/
 COPY Aqua.Domain/*.csproj  Aqua.Domain/
 COPY Aqua.Web/*.csproj  Aqua.Web/
+COPY Aqua.SqlServer/*.csproj  Aqua.SqlServer/
 RUN dotnet restore
 
 # copy everything else and build app
@@ -22,6 +23,7 @@ COPY Aqua.Application/ ./Aqua.Application/
 COPY Aqua.MongoDb/ ./Aqua.MongoDb/
 COPY Aqua.Domain/ ./Aqua.Domain/
 COPY Aqua.Web/ ./Aqua.Web/
+COPY Aqua.SqlServer/ ./Aqua.SqlServer/
 
 RUN dotnet build "Aqua.Api/Aqua.Api.csproj" -c Release -o /app/build
 
@@ -35,3 +37,5 @@ ENTRYPOINT ["dotnet", "Aqua.Api.dll"]
 
 # docker build -f AquaApi.Dockerfile -t millegalb/aqua.api:0.0.5 .
 # docker run --rm --name api -p 3088:3088 millegalb/aqua.api:0.0.5
+
+#docker buildx build -f Dockerfile --platform linux/amd64 --push -t  millegalb/aqua.web:1.0.4 .

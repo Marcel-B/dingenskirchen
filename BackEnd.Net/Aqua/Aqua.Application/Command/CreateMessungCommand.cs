@@ -5,6 +5,7 @@ namespace com.marcelbenders.Aqua.Application.Command;
 
 public record CreateMessungCommand : IRequest<Messung>
 {
+    public string? UserId { get; set; }
     public Aquarium Aquarium { get; init; }
     public DateTimeOffset Datum { get; init; }
     public double Menge { get; init; }

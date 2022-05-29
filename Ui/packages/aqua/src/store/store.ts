@@ -8,6 +8,8 @@ import { notizSlice } from '../features/notiz/notizSlice';
 import { tagSlice } from './tagSlice';
 import { feedSlice } from '../features/feed/feedSlice';
 import { commonSlice } from "./commonSlice";
+import { userSlice } from "../common/user/userSlice";
+import { timerSlice } from "../features/timer/timerSlice";
 
 export const store = configureStore({
   reducer: {
@@ -18,7 +20,9 @@ export const store = configureStore({
     notizen: notizSlice.reducer,
     tags: tagSlice.reducer,
     feed: feedSlice.reducer,
-    common: commonSlice.reducer
+    common: commonSlice.reducer,
+    user: userSlice.reducer,
+    timer: timerSlice.reducer
   },
 });
 

@@ -1,11 +1,11 @@
-import { createAsyncThunk, createEntityAdapter, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createEntityAdapter, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Notiz, NotizFormValues } from 'shared-types';
 import { RootState } from '../../store/store';
 import agent from '../../common/agent';
 
 interface NotizState {
   addNotiz: boolean;
-  editNotiz: boolean;
+  updateNotiz: boolean;
   notizId: string;
 }
 
@@ -33,6 +33,17 @@ export const createNotizAsync = createAsyncThunk<Notiz, NotizFormValues>(
   },
 );
 
+export const updateNotizAsync = createAsyncThunk<Notiz, NotizFormValues>(
+  'form/updateNotizAsync',
+  async (formValues, thunkAPI) => {
+    try {
+      return await agent.Notiz.update(formValues);
+    } catch (e: any) {
+      return thunkAPI.rejectWithValue({error: e.data});
+    }
+  },
+);
+
 export const deleteNotizAsync = createAsyncThunk<string, string>(
   'form/deleteNotizAsync',
   async (id, thunkAPI) => {
@@ -48,18 +59,23 @@ export const notizSlice = createSlice({
   name: 'notiz',
   initialState: notizenAdapter.getInitialState<NotizState>({
     addNotiz: false,
-    editNotiz: false,
+    updateNotiz: false,
     notizId: ''
   }),
   reducers: {
-    resetNotiz: (state) => {
-      state.addNotiz = false;
-      state.editNotiz = false;
-      state.notizId = '';
-    },
     addNotiz: (state) => {
       state.addNotiz = true;
-    }
+    },
+    updateNotiz: (state, action: PayloadAction<string>) => {
+      state.updateNotiz = true;
+      state.addNotiz = false;
+      state.notizId = action.payload;
+    },
+    resetNotiz: (state) => {
+      state.addNotiz = false;
+      state.updateNotiz = false;
+      state.notizId = '';
+    },
   },
   extraReducers: builder => {
     builder.addCase(createNotizAsync.pending, (state) => {
@@ -70,6 +86,18 @@ export const notizSlice = createSlice({
     });
     builder.addCase(createNotizAsync.fulfilled, (state, action) => {
       notizenAdapter.addOne(state, action.payload);
+      state.addNotiz = false;
+    });
+    builder.addCase(updateNotizAsync.pending, (state) => {
+      console.log('Update Notiz pending');
+    });
+    builder.addCase(updateNotizAsync.rejected, (state, action) => {
+      console.error(action.error);
+    });
+    builder.addCase(updateNotizAsync.fulfilled, (state, action) => {
+      notizenAdapter.upsertOne(state, action.payload);
+      state.notizId = '';
+      state.updateNotiz = false;
     });
     builder.addCase(deleteNotizAsync.pending, (state) => {
       console.log('Delete Notiz pending');
@@ -92,4 +120,4 @@ export const notizSlice = createSlice({
   },
 });
 export const notizSelectors = notizenAdapter.getSelectors((state: RootState) => state.notizen);
-export const {addNotiz, resetNotiz} = notizSlice.actions;
+export const {addNotiz, resetNotiz, updateNotiz} = notizSlice.actions;

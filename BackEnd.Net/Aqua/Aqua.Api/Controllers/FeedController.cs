@@ -1,7 +1,9 @@
+using com.marcelbenders.Aqua.Api.Extensions;
 using com.marcelbenders.Aqua.Application.Dto;
 using com.marcelbenders.Aqua.Application.Query;
 using com.marcelbenders.Aqua.Domain;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace com.marcelbenders.Aqua.Api.Controllers;
@@ -24,15 +26,17 @@ public class FeedController : ControllerBase
     public async Task<IEnumerable<IFeedItem>> GetAllAsync(
         CancellationToken cancellationToken)
     {
-        return await _mediator.Send(new GetFeedQuery(), cancellationToken);
+        return await _mediator.Send(new GetFeedQuery(HttpContext.GetUserIdentifier(), short.MaxValue),
+            cancellationToken);
     }
-    
+
     [HttpGet("Grouped")]
     [ActionName("GetAllGroupedAsync"), Produces("application/json")]
     [ProducesResponseType(typeof(Feed), StatusCodes.Status200OK)]
     public async Task<Feed> GetAllGroupedAsync(
         CancellationToken cancellationToken)
     {
-        return await _mediator.Send(new GetGroupedFeedQuery(), cancellationToken);
+        return await _mediator.Send(new GetGroupedFeedQuery(HttpContext.GetUserIdentifier(), short.MaxValue),
+            cancellationToken);
     }
 }

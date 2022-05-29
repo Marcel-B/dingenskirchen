@@ -16,6 +16,6 @@ public class GetFeedQueryHandler : IRequestHandler<GetFeedQuery, IEnumerable<IFe
 
     public async Task<IEnumerable<IFeedItem>> Handle(GetFeedQuery request, CancellationToken cancellationToken)
     {
-        return await _repository.GetFeedAsync(cancellationToken);
+        return await _repository.GetFeedAsync(request.UserId, cancellationToken);
     }
 }
