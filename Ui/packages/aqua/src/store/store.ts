@@ -7,7 +7,7 @@ import { fischSlice } from '../features/fisch/fischSlice';
 import { notizSlice } from '../features/notiz/notizSlice';
 import { tagSlice } from './tagSlice';
 import { feedSlice } from '../features/feed/feedSlice';
-import { commonSlice } from "./commonSlice";
+import { commonSlice } from "../common/commonSlice";
 import { userSlice } from "../common/user/userSlice";
 import { timerSlice } from "../features/timer/timerSlice";
 

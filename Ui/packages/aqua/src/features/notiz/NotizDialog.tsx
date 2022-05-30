@@ -13,7 +13,7 @@ import { useEffect } from "react";
 import { fetchFeedAsync } from "../feed/feedSlice";
 import StickyNote2Icon from '@mui/icons-material/StickyNote2';
 import { notiz as notizColor } from "./notizStyle";
-import { showSuccessMessage } from "../../store/commonSlice";
+import { showSuccessMessage } from "../../common/commonSlice";
 
 const style = {
   position: 'absolute' as 'absolute',

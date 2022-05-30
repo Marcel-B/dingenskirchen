@@ -4,19 +4,18 @@ import { fetchFeedAsync } from './feedSlice';
 import { useEffect } from 'react';
 import FeedItem from './FeedItem';
 import moment from 'moment-with-locales-es6';
-import NotizDialog from "../notiz/NotizDialog";
-import DuengungDialog from "../duengung/DuengungDialog";
-import MessungDialog from "../messung/MessungDialog";
-import FischDialog from "../fisch/FischDialog";
-import AquariumDialog from "../aquarium/AquariumDialog";
-import LoginDialog from "../../common/user/LoginDialog";
+import { setStatus } from "../../common/commonSlice";
+import StatusType from "../../models/statusType";
 
 const Feed = () => {
   const feed = useAppSelector(state => state.feed.feed.groupedFeeds);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(fetchFeedAsync());
+    dispatch(setStatus(StatusType.Loading));
+    dispatch(fetchFeedAsync())
+      .then(() => dispatch(setStatus(StatusType.Idle)));
+
   }, []);
 
   const formatValue = (date: Date) => {
@@ -43,7 +42,7 @@ const Feed = () => {
                 datum={moment(new Date(feedItem.item.datum)).locale('de').format('LLLL')}
                 id={feedItem.id}/>
             ))}
-          </Card>) : <Typography variant='h1'>Bitte anmelden</Typography>}
+          </Card>) : <Typography variant='h1'>...</Typography>}
       </ul>
       <br/>
     </>);

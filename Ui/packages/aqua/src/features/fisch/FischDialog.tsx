@@ -8,7 +8,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { aquariumSelectors, fetchAquarienAsync } from "../aquarium/aquariumSlice";
 import { useEffect } from "react";
 import { fetchFeedAsync } from "../feed/feedSlice";
-import { showSuccessMessage } from "../../store/commonSlice";
+import { showSuccessMessage } from "../../common/commonSlice";
 import { FischFormValues } from "shared-types";
 import { fisch as fischColor } from "./fischStyle";
 import schema from "./fischValidationSchema";

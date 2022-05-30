@@ -1,7 +1,7 @@
 import { useAppDispatch, useAppSelector } from "../../store/store";
 import { useForm } from "react-hook-form";
 import { UserFormValues } from "shared-types";
-import { showSuccessMessage } from "../../store/commonSlice";
+import { showSuccessMessage } from "../commonSlice";
 import { Box, Button, Divider, Fade, Modal, Typography } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { loginUserAsync, registerUserAsync, setLoginUser, setRegisterUser } from "./userSlice";

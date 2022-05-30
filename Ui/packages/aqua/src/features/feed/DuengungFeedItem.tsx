@@ -2,7 +2,6 @@ import { Duengung } from 'shared-types';
 import { Accordion, AccordionDetails, AccordionSummary, Box, Chip, Typography } from '@mui/material';
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ScienceIcon from '@mui/icons-material/Science';
-import { yellow } from "@mui/material/colors";
 import { duenger } from "../duengung/duengungStyle";
 
 interface Props {

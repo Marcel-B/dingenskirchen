@@ -2,7 +2,7 @@ import { Alert, Box, Button, Container, Divider, Grid, Paper, Snackbar, Typograp
 import React from 'react';
 import Feed from '../feed/Feed';
 import { useAppDispatch, useAppSelector } from "../../store/store";
-import { resetMessage } from "../../store/commonSlice";
+import { resetMessage } from "../../common/commonSlice";
 import InfoCard from "../info/InfoCard";
 import TimerItem from '../timer/TimerItem';
 import { addTimer } from "../timer/timerSlice";

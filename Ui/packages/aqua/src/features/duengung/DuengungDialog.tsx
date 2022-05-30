@@ -13,7 +13,7 @@ import { createDuengungAsync, duengungenSelectors, resetDuengung, updateDuengung
 import schema from "./duengungValidationSchema";
 import Allgemein from "./Allgemein";
 import { fetchFeedAsync } from "../feed/feedSlice";
-import { showSuccessMessage } from "../../store/commonSlice";
+import { showSuccessMessage } from "../../common/commonSlice";
 
 const style = {
   position: 'absolute' as 'absolute',

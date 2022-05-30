@@ -10,7 +10,7 @@ import {
 } from "./aquariumSlice";
 import { useEffect } from "react";
 import { fetchFeedAsync } from "../feed/feedSlice";
-import { showSuccessMessage } from "../../store/commonSlice";
+import { showSuccessMessage } from "../../common/commonSlice";
 import { Box, Button, Divider, Fade, Modal, Typography } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import SaveIcon from "@mui/icons-material/Save";

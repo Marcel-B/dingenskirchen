@@ -1,6 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { User, UserFormValues } from "shared-types";
 import agent from "../agent";
+import StatusType from "../../models/statusType";
+import statusType from "../../models/statusType";
 
 interface UserState {
   user: User | null;
@@ -8,6 +10,7 @@ interface UserState {
   loginUser: boolean;
   registerUser: boolean;
   token: string | null;
+  status: StatusType;
 }
 
 export const loginUserAsync = createAsyncThunk<User, UserFormValues>(
@@ -50,6 +53,7 @@ export const userSlice = createSlice({
     loginUser: false,
     isLoggedIn: false,
     registerUser: false,
+    status: StatusType.Idle,
     token: window.localStorage.getItem('jwt')
   } as UserState,
   reducers: {
@@ -74,42 +78,49 @@ export const userSlice = createSlice({
   },
   extraReducers: (builder => {
     builder.addCase(loginUserAsync.pending, (state) => {
-
+      state.status = statusType.Loading;
     });
     builder.addCase(loginUserAsync.rejected, (state, action) => {
       state.user = null;
       state.isLoggedIn = false;
+      state.status = statusType.Error;
+
     });
     builder.addCase(loginUserAsync.fulfilled, (state, action) => {
       state.user = action.payload;
       state.isLoggedIn = true;
       state.token = action.payload.token;
       window.localStorage.setItem('jwt', state.token);
+      state.status = statusType.Idle;
     });
     builder.addCase(registerUserAsync.pending, (state) => {
-
+      state.status = statusType.Loading;
     });
     builder.addCase(registerUserAsync.rejected, (state, action) => {
       state.user = null;
       state.isLoggedIn = false;
+      state.status = statusType.Error;
     });
     builder.addCase(registerUserAsync.fulfilled, (state, action) => {
       state.user = action.payload;
       state.isLoggedIn = true;
       state.token = action.payload.token;
+      state.status = statusType.Idle;
       window.localStorage.setItem('jwt', state.token);
     });
     builder.addCase(getCurrentUserAsync.pending, (state) => {
-
+      state.status = statusType.Loading;
     });
     builder.addCase(getCurrentUserAsync.rejected, (state, action) => {
       state.user = null;
       state.isLoggedIn = false;
+      state.status = statusType.Error;
     });
     builder.addCase(getCurrentUserAsync.fulfilled, (state, action) => {
       state.user = action.payload;
       state.isLoggedIn = true;
       state.token = action.payload.token;
+      state.status = statusType.Idle;
       window.localStorage.setItem('jwt', state.token);
     })
   })

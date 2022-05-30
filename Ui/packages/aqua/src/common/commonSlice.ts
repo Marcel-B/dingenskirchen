@@ -1,9 +1,13 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import StatusType from "../models/statusType";
+import { store } from "../store/store";
+import { getCurrentUserAsync } from "./user/userSlice";
 
 interface CommonState {
   error: boolean;
   success: boolean;
   message: string;
+  status: StatusType;
 }
 
 export const commonSlice = createSlice({
@@ -11,9 +15,13 @@ export const commonSlice = createSlice({
   initialState: {
     error: false,
     success: false,
-    message: ''
+    message: '',
+    status: StatusType.Idle
   } as CommonState,
   reducers: {
+    setStatus: (state, action: PayloadAction<StatusType>) => {
+      state.status = action.payload;
+    },
     showSuccessMessage: (state, action) => {
       state.message = action.payload;
       state.success = true;
@@ -27,7 +35,7 @@ export const commonSlice = createSlice({
       state.message = action.payload;
       state.error = true;
     },
-  }
+  },
 })
 
-export const {showSuccessMessage, showErrorMessage, resetMessage} = commonSlice.actions;
+export const {showSuccessMessage, showErrorMessage, resetMessage, setStatus} = commonSlice.actions;

@@ -1,5 +1,5 @@
 import { Notiz } from 'shared-types';
-import { Accordion, AccordionDetails, AccordionSummary, Box, Card, Chip, Grid, Typography } from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary, Box, Chip, Typography } from '@mui/material';
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import StickyNote2Icon from '@mui/icons-material/StickyNote2';
 import { notiz } from "../notiz/notizStyle";
