@@ -1,23 +1,25 @@
-import { Box, Divider, IconButton, Paper, Typography } from "@mui/material";
+import { Box, Button, Divider, IconButton, Paper, Typography } from "@mui/material";
 import { useAppDispatch } from "../../store/store";
 import { incrementSecond, pauseTimer, removeTimer, resetTimer, setTime, startTimer, Timer } from "./timerSlice";
-import { TextInputComponent, TimerItemValues } from 'shared-types';
+import {
+  TextInputComponent,
+  TimerItemValues
+} from 'shared-types';
 import DaTextInput from 'ts-control/DaTextInput';
 import DeleteIcon from '@mui/icons-material/Delete';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import StopIcon from '@mui/icons-material/Stop';
 import * as Tone from 'tone'
-import { useEffect } from "react";
-import { useForm } from "react-hook-form";
-import TestType, { testTimerTypes } from "../../models/testType";
 
 const AppTextInput = DaTextInput as TextInputComponent;
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
 
 interface Props {
   timer: Timer;
 }
 
-const TimerItem = ({timer}: Props) => {
+const TestTimerItem = ({timer}: Props) => {
   const dispatch = useAppDispatch();
   const {control, reset, handleSubmit} = useForm<TimerItemValues>();
 
@@ -93,10 +95,6 @@ const TimerItem = ({timer}: Props) => {
         variant='h5'>{displayTime(timer.current)}</Typography>
     </Box>
     <Divider orientation='horizontal'/>
-    {timer.testType !== TestType.Common ?
-      <ul>{testTimerTypes.find(ttt => ttt.type === timer.testType)!.description.split(",").map(item =>
-        <li><Typography variant='body2'>{item}</Typography></li>)}</ul> :
-      <></>}
 
     <form onSubmit={handleSubmit(start)}>
       <AppTextInput disabled={timer.active} min={0} max={60} default='' control={control} name='minuten' label='Minuten'
@@ -109,23 +107,15 @@ const TimerItem = ({timer}: Props) => {
       }}>
         <Box>
           <IconButton disabled={timer.active} color='primary' type='submit'><PlayArrowIcon/></IconButton>
-          <IconButton
-            disabled={!timer.active}
-            color='warning'
-            onClick={() => handleStopTimer()}>
-            <StopIcon/>
-          </IconButton>
+          <IconButton disabled={!timer.active} color='warning'
+                      onClick={() => handleStopTimer()}><StopIcon/></IconButton>
         </Box>
         <Box>
-          <IconButton
-            color='error'
-            onClick={() => handleDeleteTimer()}>
-            <DeleteIcon/>
-          </IconButton>
+          <IconButton color='error' onClick={() => handleDeleteTimer()}><DeleteIcon/></IconButton>
         </Box>
       </Box>
     </form>
   </Paper>);
 };
 
-export default TimerItem;
+export default TestTimerItem;

@@ -1,6 +1,4 @@
 import { SelectOption } from 'shared-types';
-
-
 const duengungTypeOptions: SelectOption[] = [
   { text: 'Phosphat (PO)', value: 'Phosphat' },
   { text: 'Eisen (FE)', value: 'Eisen' },

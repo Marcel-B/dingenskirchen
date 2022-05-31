@@ -1,30 +1,14 @@
-import { Alert, Box, Button, Container, Divider, Grid, Paper, Snackbar, Typography } from '@mui/material';
+import { Alert, Box, Container, Divider, Grid, Snackbar, Typography } from '@mui/material';
 import React from 'react';
 import Feed from '../feed/Feed';
 import { useAppDispatch, useAppSelector } from "../../store/store";
 import { resetMessage } from "../../common/commonSlice";
 import InfoCard from "../info/InfoCard";
-import TimerItem from '../timer/TimerItem';
-import { addTimer } from "../timer/timerSlice";
-import TimerIcon from '@mui/icons-material/Timer';
-import {
-  TextInputComponent,
-} from 'shared-types';
-import DaTextInput from 'ts-control/DaTextInput';
-import { useForm } from "react-hook-form";
-
-const AppTextInput = DaTextInput as TextInputComponent;
+import TimerControl from "../timer/TimerControl";
 
 const Dashboard = () => {
   const {error, success, message} = useAppSelector(state => state.common);
-  const {timer} = useAppSelector(state => state.timer);
   const dispatch = useAppDispatch();
-  const {handleSubmit, control, reset} = useForm<{ name: string }>();
-
-  const handleAddTimer = (data: { name: string }) => {
-    dispatch(addTimer(data.name));
-    reset();
-  }
 
   const handleClose = () => {
     dispatch(resetMessage());
@@ -54,28 +38,7 @@ const Dashboard = () => {
           </Box>
           <Divider orientation='horizontal'/>
           <InfoCard/>
-
-          <Box sx={{
-            display: 'flex',
-            alignItems: 'baseline',
-            justifyContent: 'space-between'
-          }}>
-            <Typography variant='h4'
-                        sx={{
-                          mt: 1
-                        }}>Timer</Typography>
-            <TimerIcon fontSize='medium' color='disabled'/>
-          </Box>
-          <Divider orientation='horizontal'/>
-          <Paper sx={{p: 2, mt: 2}}>
-            <form onSubmit={handleSubmit(handleAddTimer)}>
-              <AppTextInput control={control} label='Name' name='name' type='text' default=''/>
-              <Button type='submit'>Neuer Timer</Button>
-            </form>
-          </Paper>
-          {timer.map(t =>
-            <TimerItem timer={t} key={t.name}/>
-          )}
+          <TimerControl/>
         </Grid>
       </Grid>
       <Snackbar open={error} autoHideDuration={3000} onClose={handleClose}>
