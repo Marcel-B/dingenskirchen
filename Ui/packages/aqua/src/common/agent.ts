@@ -9,7 +9,6 @@ import {
   FischFormValues,
   Duengung,
   DuengungFormValues,
-  Tag,
   MessungFormValues,
   Messung, User, UserFormValues,
 } from 'shared-types';

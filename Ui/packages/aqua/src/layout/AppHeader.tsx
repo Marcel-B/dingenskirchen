@@ -46,7 +46,10 @@ const AppHeader = () => {
     dispatch(logout());
   }
   return (
-    <AppBar position="sticky">
+    <AppBar sx={{
+      position: 'sticky',
+      mb: 2
+    }}>
       <Container maxWidth='xl'>
         <Toolbar disableGutters>
           <Typography
