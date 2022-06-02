@@ -18,7 +18,7 @@ import { store } from "../store/store";
 const responseBody = <T>(response: AxiosResponse<T>) => response.data;
 
 axios.defaults.baseURL = 'http://localhost:5046';
-//axios.defaults.baseURL = 'http://192.168.2.103:3088';
+// axios.defaults.baseURL = 'http://192.168.2.103:3088';
 
 axios.interceptors.request.use(config => {
   const state = store?.getState();

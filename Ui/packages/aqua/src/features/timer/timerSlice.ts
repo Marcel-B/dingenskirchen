@@ -69,6 +69,7 @@ export const timerSlice = createSlice({
       const timer = state.timer.find(timer => timer.name === action.payload);
       if (timer) {
         timer.active = true;
+        timer.ringActive = false;
         state.timer = [...state.timer.filter(timer => timer.name !== action.payload), timer]
           .sort((a, b) => a.current > b.current ? 1 : a.current === b.current ? 0 : -1);
       }
