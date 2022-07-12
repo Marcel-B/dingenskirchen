@@ -1,15 +1,15 @@
 using com.marcelbenders.Aqua.Application.Query;
-using com.marcelbenders.Aqua.Domain;
-using com.marcelbenders.Aqua.MongoDb.Repository;
+using com.marcelbenders.Aqua.Domain.Sql;
+using com.marcelbenders.Aqua.Persistence;
 using MediatR;
 
 namespace com.marcelbenders.Aqua.Application;
 
 public class GetNotizenQueryHandler : IRequestHandler<GetNotizenQuery, IEnumerable<Notiz>>
 {
-    private readonly IMongoRepository<Notiz> _repository;
+    private readonly INotizRepository _repository;
 
-    public GetNotizenQueryHandler(IMongoRepository<Notiz> repository)
+    public GetNotizenQueryHandler(INotizRepository repository)
     {
         _repository = repository;
     }
@@ -18,6 +18,6 @@ public class GetNotizenQueryHandler : IRequestHandler<GetNotizenQuery, IEnumerab
         GetNotizenQuery request,
         CancellationToken cancellationToken)
     {
-        return await _repository.GetAllAsync(request.UserId, cancellationToken);
+        return await _repository.GetByUserIdAsync(request.UserId, cancellationToken);
     }
 }

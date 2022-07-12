@@ -1,9 +1,13 @@
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
 const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
+
 
 const deps = require("./package.json").dependencies;
-module.exports = (env) => {
+module.exports = (_, {mode, env}) => {
+    const envPath = mode ? `.env.${mode}` : '.env';
+
     return {
         entry: './src/index',
         output: {
@@ -38,7 +42,7 @@ module.exports = (env) => {
                     test: /\.(ts|tsx|js|jsx)$/,
                     exclude: /node_modules/,
                     use: {
-                        loader: "ts-loader",
+                        loader: "babel-loader",
                     },
                 },
             ],
@@ -69,6 +73,9 @@ module.exports = (env) => {
             new HtmlWebPackPlugin({
                 template: "./src/index.html",
             }),
+            new Dotenv({
+                path: envPath
+            })
         ],
     }
 };

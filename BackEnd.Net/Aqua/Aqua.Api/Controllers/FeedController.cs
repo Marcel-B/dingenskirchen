@@ -3,7 +3,6 @@ using com.marcelbenders.Aqua.Application.Dto;
 using com.marcelbenders.Aqua.Application.Query;
 using com.marcelbenders.Aqua.Domain;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace com.marcelbenders.Aqua.Api.Controllers;
@@ -34,9 +33,11 @@ public class FeedController : ControllerBase
     [ActionName("GetAllGroupedAsync"), Produces("application/json")]
     [ProducesResponseType(typeof(Feed), StatusCodes.Status200OK)]
     public async Task<Feed> GetAllGroupedAsync(
-        CancellationToken cancellationToken)
+        [FromQuery] short page = 1,
+        [FromQuery] short days = 7,
+        CancellationToken cancellationToken = default)
     {
-        return await _mediator.Send(new GetGroupedFeedQuery(HttpContext.GetUserIdentifier(), short.MaxValue),
+        return await _mediator.Send(new GetGroupedFeedQuery(HttpContext.GetUserIdentifier(), days, page),
             cancellationToken);
     }
 }

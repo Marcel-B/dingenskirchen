@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using com.marcelbenders.Aqua.Api.Extensions;
 using com.marcelbenders.Aqua.Application.Command;
 using com.marcelbenders.Aqua.Application.Query;
-using com.marcelbenders.Aqua.Domain;
+using com.marcelbenders.Aqua.Domain.Sql;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -39,7 +39,7 @@ public class NotizController : ControllerBase
         command.UserId = HttpContext.GetUserIdentifier();
         return await _mediator.Send(command, cancellationToken);
     }
-    
+
     [HttpPut("{id}")]
     [ActionName("updateOneAsync"), Produces("application/json")]
     [ProducesResponseType(typeof(Notiz), StatusCodes.Status201Created)]
@@ -56,7 +56,7 @@ public class NotizController : ControllerBase
     [ActionName("DeleteOneAsync"), Produces("application/json")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> DeleteOneAsync(
-        [FromRoute, Required] string id,
+        [FromRoute, Required] Guid id,
         CancellationToken cancellationToken)
     {
         await _mediator.Send(new DeleteNotizCommand {Id = id}, cancellationToken);

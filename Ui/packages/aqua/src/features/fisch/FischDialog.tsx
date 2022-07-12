@@ -15,6 +15,7 @@ import schema from "./fischValidationSchema";
 import { createFischAsync, fischeSelectors, resetFisch, updateFischAsync } from "./fischSlice";
 import SetMealIcon from '@mui/icons-material/SetMeal';
 import Werte from "./Werte";
+import React from 'react';
 
 const style = {
   position: 'absolute' as 'absolute',

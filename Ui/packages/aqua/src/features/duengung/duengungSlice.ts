@@ -15,7 +15,7 @@ export const fetchDuengungenAsync = createAsyncThunk<Duengung[]>(
   'overview/fetchDuengungenAsync',
   async (_, thunkAPI) => {
     try {
-      return await agent.Duengung.list();
+      return await agent.DuengungCall.list();
     } catch (e: any) {
       return thunkAPI.rejectWithValue(e.data);
     }
@@ -26,7 +26,7 @@ export const createDuengungAsync = createAsyncThunk<Duengung, DuengungFormValues
   'form/createDuengungAsync',
   async (duengungFormValues, thunkAPI) => {
     try {
-      return await agent.Duengung.create(duengungFormValues);
+      return await agent.DuengungCall.create(duengungFormValues);
     } catch (e: any) {
       return thunkAPI.rejectWithValue({error: e.data});
     }
@@ -37,7 +37,7 @@ export const updateDuengungAsync = createAsyncThunk<Duengung, DuengungFormValues
   'form/updateDuengungAsync',
   async (duengungFormValues, thunkAPI) => {
     try {
-      return await agent.Duengung.update(duengungFormValues);
+      return await agent.DuengungCall.update(duengungFormValues);
     } catch (e: any) {
       return thunkAPI.rejectWithValue({error: e.data});
     }
@@ -48,7 +48,7 @@ export const deleteDuengungAsync = createAsyncThunk<string, string>(
   'overview/deleteDuengungAsync',
   async (id, thunkAPI) => {
     try {
-      return await agent.Duengung.delete(id);
+      return await agent.DuengungCall.delete(id);
     } catch (e: any) {
       return thunkAPI.rejectWithValue(e.data);
     }

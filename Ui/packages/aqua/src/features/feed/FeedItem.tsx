@@ -6,6 +6,7 @@ import AquariumFeedItem from './AquariumFeedItem';
 import FischFeedItem from './FischFeedItem';
 import MessungFeedItem from './MessungFeedItem';
 import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
+import React from 'react';
 
 interface Props {
   id: string;

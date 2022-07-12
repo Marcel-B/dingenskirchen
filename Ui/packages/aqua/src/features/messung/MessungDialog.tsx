@@ -6,7 +6,7 @@ import Allgemein from "./Allgemein";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { aquariumSelectors, fetchAquarienAsync } from "../aquarium/aquariumSlice";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { fetchFeedAsync } from "../feed/feedSlice";
 import { showSuccessMessage } from "../../common/commonSlice";
 import DeviceThermostatIcon from '@mui/icons-material/DeviceThermostat';

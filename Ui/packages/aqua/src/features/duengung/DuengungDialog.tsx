@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { DuengungFormValues } from "shared-types";
 import { yupResolver } from "@hookform/resolvers/yup/dist/yup";
 import { aquariumSelectors, fetchAquarienAsync } from "../aquarium/aquariumSlice";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { Box, Button, Divider, Fade, Modal, Typography } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import SaveIcon from "@mui/icons-material/Save";

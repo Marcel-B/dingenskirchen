@@ -1,16 +1,15 @@
 using com.marcelbenders.Aqua.Application.Command;
-using com.marcelbenders.Aqua.Domain;
-using com.marcelbenders.Aqua.MongoDb.Repository;
+using com.marcelbenders.Aqua.Persistence;
 using MediatR;
 
 namespace com.marcelbenders.Aqua.Application;
 
 public class DeleteNotizCommandHandler : IRequestHandler<DeleteNotizCommand>
 {
-    private readonly IMongoRepository<Notiz> _repository;
+    private readonly INotizRepository _repository;
 
     public DeleteNotizCommandHandler(
-        IMongoRepository<Notiz> repository)
+        INotizRepository repository)
     {
         _repository = repository;
     }

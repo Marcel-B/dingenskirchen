@@ -1,7 +1,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using com.marcelbenders.Aqua.Domain;
+using com.marcelbenders.Aqua.Domain.Sql;
 using Microsoft.IdentityModel.Tokens;
 
 namespace com.marcelbenders.Aqua.Api.Services;

@@ -15,7 +15,7 @@ export const fetchMessungenAsync = createAsyncThunk<Messung[]>(
   'overview/fetchMessungenAsync',
   async (_, thunkAPI) => {
     try {
-      return await agent.Messung.list();
+      return await agent.MessungCall.list();
     } catch (e: any) {
       return thunkAPI.rejectWithValue(e.data);
     }
@@ -26,7 +26,7 @@ export const createMessungAsync = createAsyncThunk<Messung, MessungFormValues>(
   'form/createMessungAsync',
   async (messungFormValues, thungAPI) => {
     try {
-      return await agent.Messung.create(messungFormValues);
+      return await agent.MessungCall.create(messungFormValues);
     } catch (e: any) {
       return thungAPI.rejectWithValue({error: e.data});
     }
@@ -37,7 +37,7 @@ export const updateMessungAsync = createAsyncThunk<Messung, MessungFormValues>(
   'form/updateMessungAsync',
   async (messungFormValues, thungAPI) => {
     try {
-      return await agent.Messung.update(messungFormValues);
+      return await agent.MessungCall.update(messungFormValues);
     } catch (e: any) {
       return thungAPI.rejectWithValue({error: e.data});
     }
@@ -48,7 +48,7 @@ export const deleteMessungAsync = createAsyncThunk<string, string>(
   'form/deleteMessungAsync',
   async (id, thunkAPI) => {
     try {
-      return await agent.Messung.delete(id);
+      return await agent.MessungCall.delete(id);
     } catch (e: any) {
       return thunkAPI.rejectWithValue({error: e.data});
     }

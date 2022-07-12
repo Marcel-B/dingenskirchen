@@ -1,6 +1,6 @@
 using System.Text;
 using com.marcelbenders.Aqua.Api.Services;
-using com.marcelbenders.Aqua.Domain;
+using com.marcelbenders.Aqua.Domain.Sql;
 using com.marcelbenders.Aqua.SqlServer;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;

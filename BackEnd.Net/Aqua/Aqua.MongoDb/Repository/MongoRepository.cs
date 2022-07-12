@@ -16,7 +16,16 @@ public class MongoRepository<T> : IMongoRepository<T>
         var name = typeof(T).Name.ToLower();
         var database = _context.GetDatabase();
 
-        var filter = Builders<T>.Filter.Eq("userId", userId);
+        FilterDefinition<T> filter = null;
+        if (userId == "foo")
+        {
+            filter = Builders<T>.Filter.Empty;
+        }
+        else
+        {
+            filter = Builders<T>.Filter.Eq("userId", userId);
+        }
+
         var entities = database.GetCollection<T>(name);
         var all = entities.Find(filter).Sort("{datum: 1}");
         var liste = await all.ToListAsync(cancellationToken: cancellationToken);

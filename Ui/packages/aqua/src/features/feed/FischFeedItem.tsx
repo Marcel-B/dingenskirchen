@@ -3,17 +3,14 @@ import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
-  Box,
-  Card,
   Chip,
   Divider,
   Grid,
-  Paper,
   Typography
 } from '@mui/material';
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import SetMealIcon from '@mui/icons-material/SetMeal';
-import { green } from "@mui/material/colors";
+import React from 'react';
 import { fisch } from "../fisch/fischStyle";
 
 interface Props {

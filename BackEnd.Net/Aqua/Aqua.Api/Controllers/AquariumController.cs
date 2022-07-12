@@ -2,13 +2,15 @@ using System.ComponentModel.DataAnnotations;
 using com.marcelbenders.Aqua.Api.Extensions;
 using com.marcelbenders.Aqua.Application.Command;
 using com.marcelbenders.Aqua.Application.Query;
-using com.marcelbenders.Aqua.Domain;
+using com.marcelbenders.Aqua.Domain.Sql;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace com.marcelbenders.Aqua.Api.Controllers;
 
 [ApiController]
+[AllowAnonymous]
 [Route("api/[controller]")]
 public class AquariumController : ControllerBase
 {
@@ -26,7 +28,7 @@ public class AquariumController : ControllerBase
     public async Task<IEnumerable<Aquarium>> GetAll(
         CancellationToken cancellationToken)
     {
-        return await _mediator.Send(new GetAquarienQuery(HttpContext.GetUserIdentifier()), cancellationToken);
+        return await _mediator.Send(new GetAquarienQuery(HttpContext.GetUserIdentifier() ?? "foo"), cancellationToken);
     }
 
     [HttpPost]
@@ -57,7 +59,7 @@ public class AquariumController : ControllerBase
     [ActionName("DeleteOneAsync"), Produces("application/json")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> DeleteOneAsync(
-        [FromRoute, Required] string id,
+        [FromRoute, Required] Guid id,
         CancellationToken cancellationToken)
     {
         await _mediator.Send(new DeleteAquariumCommand {Id = id}, cancellationToken);

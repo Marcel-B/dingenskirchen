@@ -4,5 +4,5 @@ namespace com.marcelbenders.Aqua.Application.Command;
 
 public record DeleteAquariumCommand : IRequest
 {
-    public string Id { get; init; }
+    public Guid Id { get; init; }
 }

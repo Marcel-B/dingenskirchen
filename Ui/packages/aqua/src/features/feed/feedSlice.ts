@@ -7,7 +7,7 @@ export const fetchFeedAsync = createAsyncThunk<Feed>(
   'overview/fetchFeedAsync',
   async (_, thunkAPI) => {
     try {
-      return await agent.Feed.list();
+      return await agent.FeedCall.list();
     } catch (e: any) {
       return thunkAPI.rejectWithValue(e.data);
     }

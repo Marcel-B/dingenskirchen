@@ -1,20 +1,20 @@
 using com.marcelbenders.Aqua.Application.Command;
-using com.marcelbenders.Aqua.Domain;
-using com.marcelbenders.Aqua.MongoDb.Repository;
+using com.marcelbenders.Aqua.Domain.Sql;
+using com.marcelbenders.Aqua.Persistence;
 using MediatR;
 
 namespace com.marcelbenders.Aqua.Application;
 
 public class CreateNotizCommandHandler : IRequestHandler<CreateNotizCommand, Notiz>
 {
-    private readonly IMongoRepository<Notiz> _repository;
+    private readonly INotizRepository _repository;
 
     public CreateNotizCommandHandler(
-        IMongoRepository<Notiz> repository)
+        INotizRepository repository)
     {
         _repository = repository;
     }
-    
+
     public async Task<Notiz> Handle(
         CreateNotizCommand request,
         CancellationToken cancellationToken)

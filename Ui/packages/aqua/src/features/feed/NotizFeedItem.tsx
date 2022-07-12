@@ -3,6 +3,7 @@ import { Accordion, AccordionDetails, AccordionSummary, Box, Chip, Typography } 
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import StickyNote2Icon from '@mui/icons-material/StickyNote2';
 import { notiz } from "../notiz/notizStyle";
+import React from 'react';
 
 interface Props {
   notiz: Notiz;

@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
 using com.marcelbenders.Aqua.Api.Dto;
 using com.marcelbenders.Aqua.Api.Services;
-using com.marcelbenders.Aqua.Domain;
+using com.marcelbenders.Aqua.Domain.Sql;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -91,13 +91,12 @@ public class AccountController : ControllerBase
 
     private User CreateUser(AppUser user)
     {
-            return new User
-            {
-                DisplayName = user.DisplayName,
-                Image = null,
-                Token = _tokenService.CreateToken(user),
-                Username = user.UserName
-            };
-        
+        return new User
+        {
+            DisplayName = user.DisplayName,
+            Image = null,
+            Token = _tokenService.CreateToken(user),
+            Username = user.UserName
+        };
     }
 }

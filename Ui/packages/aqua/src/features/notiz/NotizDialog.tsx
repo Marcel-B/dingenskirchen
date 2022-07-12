@@ -9,7 +9,7 @@ import { NotizFormValues } from "shared-types";
 import { yupResolver } from "@hookform/resolvers/yup";
 import schema from "./notizValidationSchema";
 import { aquariumSelectors, fetchAquarienAsync } from "../aquarium/aquariumSlice";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { fetchFeedAsync } from "../feed/feedSlice";
 import StickyNote2Icon from '@mui/icons-material/StickyNote2';
 import { notiz as notizColor } from "./notizStyle";

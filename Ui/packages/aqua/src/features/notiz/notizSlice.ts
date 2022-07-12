@@ -15,7 +15,7 @@ export const fetchNotizenAsync = createAsyncThunk<Notiz[]>(
   'overview/fetchNotizenAsync',
   async (_, thunkAPI) => {
     try {
-      return await agent.Notiz.list();
+      return await agent.NotizCall.list();
     } catch (e: any) {
       return thunkAPI.rejectWithValue(e.data);
     }
@@ -26,7 +26,7 @@ export const createNotizAsync = createAsyncThunk<Notiz, NotizFormValues>(
   'form/createNotizAsync',
   async (formValues, thunkAPI) => {
     try {
-      return await agent.Notiz.create(formValues);
+      return await agent.NotizCall.create(formValues);
     } catch (e: any) {
       return thunkAPI.rejectWithValue({error: e.data});
     }
@@ -37,7 +37,7 @@ export const updateNotizAsync = createAsyncThunk<Notiz, NotizFormValues>(
   'form/updateNotizAsync',
   async (formValues, thunkAPI) => {
     try {
-      return await agent.Notiz.update(formValues);
+      return await agent.NotizCall.update(formValues);
     } catch (e: any) {
       return thunkAPI.rejectWithValue({error: e.data});
     }
@@ -48,7 +48,7 @@ export const deleteNotizAsync = createAsyncThunk<string, string>(
   'form/deleteNotizAsync',
   async (id, thunkAPI) => {
     try {
-      return await agent.Notiz.delete(id);
+      return await agent.NotizCall.delete(id);
     } catch (e: any) {
       return thunkAPI.rejectWithValue(e.data);
     }

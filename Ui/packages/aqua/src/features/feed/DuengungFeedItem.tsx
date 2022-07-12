@@ -3,6 +3,7 @@ import { Accordion, AccordionDetails, AccordionSummary, Box, Chip, Typography } 
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ScienceIcon from '@mui/icons-material/Science';
 import { duenger } from "../duengung/duengungStyle";
+import React from 'react';
 
 interface Props {
   duengung: Duengung;

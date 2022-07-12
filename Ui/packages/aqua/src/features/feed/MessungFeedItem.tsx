@@ -2,8 +2,8 @@ import { Messung } from 'shared-types';
 import { Accordion, AccordionDetails, AccordionSummary, Box, Card, Chip, Grid, Typography } from '@mui/material';
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import DeviceThermostatIcon from '@mui/icons-material/DeviceThermostat';
-import { teal } from "@mui/material/colors";
 import { messung } from "../messung/messungStyle";
+import React from 'react';
 
 interface Props {
   messung: Messung;

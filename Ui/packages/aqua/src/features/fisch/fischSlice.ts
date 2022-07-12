@@ -15,7 +15,7 @@ export const fetchFischeAsync = createAsyncThunk<Fisch[]>(
   'overview/fetchFischeAsync',
   async (_, thunkAPI) => {
     try {
-      return await agent.Fisch.list();
+      return await agent.FischCall.list();
     } catch (e: any) {
       return thunkAPI.rejectWithValue(e.data);
     }
@@ -26,7 +26,7 @@ export const createFischAsync = createAsyncThunk<Fisch, FischFormValues>(
   'form/createFischAsync',
   async (fischFormValues, thunkAPI) => {
     try {
-      return await agent.Fisch.create(fischFormValues);
+      return await agent.FischCall.create(fischFormValues);
     } catch (e: any) {
       return thunkAPI.rejectWithValue({error: e.data});
     }
@@ -37,7 +37,7 @@ export const updateFischAsync = createAsyncThunk<Fisch, FischFormValues>(
   'form/updateFischAsync',
   async (fischFormValues, thunkAPI) => {
     try {
-      return await agent.Fisch.update(fischFormValues);
+      return await agent.FischCall.update(fischFormValues);
     } catch (e: any) {
       return thunkAPI.rejectWithValue({error: e.data});
     }
@@ -48,7 +48,7 @@ export const deleteFischAsync = createAsyncThunk<string, string>(
   'form/deleteFischAsync',
   async (id, thunkAPI) => {
     try {
-      return await agent.Fisch.delete(id);
+      return await agent.FischCall.delete(id);
     } catch (e: any) {
       return thunkAPI.rejectWithValue({error: e.data});
     }

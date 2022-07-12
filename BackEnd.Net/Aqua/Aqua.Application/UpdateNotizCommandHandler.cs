@@ -1,16 +1,16 @@
 using com.marcelbenders.Aqua.Application.Command;
-using com.marcelbenders.Aqua.Domain;
-using com.marcelbenders.Aqua.MongoDb.Repository;
+using com.marcelbenders.Aqua.Domain.Sql;
+using com.marcelbenders.Aqua.Persistence;
 using MediatR;
 
 namespace com.marcelbenders.Aqua.Application;
 
 public class UpdateNotizCommandHandler : IRequestHandler<UpdateNotizCommand, Notiz>
 {
-    private readonly IMongoRepository<Notiz> _repository;
+    private readonly INotizRepository _repository;
 
     public UpdateNotizCommandHandler(
-        IMongoRepository<Notiz> repository)
+        INotizRepository repository)
     {
         _repository = repository;
     }
@@ -28,6 +28,6 @@ public class UpdateNotizCommandHandler : IRequestHandler<UpdateNotizCommand, Not
             Tag = request.Tag,
             Datum = request.Datum,
         };
-        return await _repository.UpdateByIdAsync(request.Id, notiz, cancellationToken);
+        return await _repository.UpdateAsync(notiz, cancellationToken);
     }
 }

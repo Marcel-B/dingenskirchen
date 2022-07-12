@@ -8,7 +8,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Aqua.Domain\Aqua.Domain.csproj" />
+      <ProjectReference Include="..\Aqua.Domain.Sql\Aqua.Domain.Sql.csproj" />
+      <ProjectReference Include="..\Aqua.Persistence\Aqua.Persistence.csproj" />
     </ItemGroup>
 
     <ItemGroup>

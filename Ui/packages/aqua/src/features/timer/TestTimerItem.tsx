@@ -12,7 +12,7 @@ import StopIcon from '@mui/icons-material/Stop';
 import * as Tone from 'tone'
 
 const AppTextInput = DaTextInput as TextInputComponent;
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 interface Props {

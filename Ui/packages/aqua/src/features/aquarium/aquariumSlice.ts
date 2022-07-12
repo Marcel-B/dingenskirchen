@@ -15,7 +15,7 @@ export const createAquariumAsync = createAsyncThunk<Aquarium, AquariumFormValues
   'form/createAquariumAsync',
   async (aquariumFormValues, thunkAPI) => {
     try {
-      return await agent.Aquarium.create(aquariumFormValues);
+      return await agent.AquariumCall.create(aquariumFormValues);
     } catch (e: any) {
       return thunkAPI.rejectWithValue({error: e.data});
     }
@@ -26,7 +26,7 @@ export const updateAquariumAsync = createAsyncThunk<Aquarium, AquariumFormValues
   'form/editAquariumAsync',
   async (aquariumFormValues, thunkAPI) => {
     try {
-      return await agent.Aquarium.update(aquariumFormValues);
+      return await agent.AquariumCall.update(aquariumFormValues);
     } catch (e: any) {
       return thunkAPI.rejectWithValue({error: e.data});
     }
@@ -37,7 +37,7 @@ export const fetchAquarienAsync = createAsyncThunk<Aquarium[]>(
   'overview/fetchAquarienAsync',
   async (_, thunkAPI) => {
     try {
-      return await agent.Aquarium.list();
+      return await agent.AquariumCall.list();
     } catch (e: any) {
       return thunkAPI.rejectWithValue(e.data);
     }
@@ -48,7 +48,7 @@ export const deleteAquariumAsync = createAsyncThunk<string, string>(
   'overview/deleteAquariumAsync',
   async (id, thunkAPI) => {
     try {
-      return await agent.Aquarium.delete(id);
+      return await agent.AquariumCall.delete(id);
     } catch (e: any) {
       return thunkAPI.rejectWithValue(e.data);
     }

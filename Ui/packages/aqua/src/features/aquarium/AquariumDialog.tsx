@@ -18,6 +18,7 @@ import { aquarium } from "./aquariumStyle";
 import LocalDrinkIcon from '@mui/icons-material/LocalDrink';
 import schema from "./aquariumValidationSchema";
 import Allgemein from "./Allgemein";
+import React from 'react';
 
 const style = {
   position: 'absolute' as 'absolute',

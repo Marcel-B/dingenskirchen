@@ -17,7 +17,7 @@ export const loginUserAsync = createAsyncThunk<User, UserFormValues>(
   'user/loginUserAsync',
   async (userFormValues, thunkAPI) => {
     try {
-      return await agent.Account.login(userFormValues);
+      return await agent.AccountCall.login(userFormValues);
     } catch (e: any) {
       return thunkAPI.rejectWithValue({error: e.data});
     }
@@ -28,7 +28,7 @@ export const registerUserAsync = createAsyncThunk<User, UserFormValues>(
   'user/registerUserAsync',
   async (userFormValues, thunkAPI) => {
     try {
-      return await agent.Account.register(userFormValues);
+      return await agent.AccountCall.register(userFormValues);
     } catch (e: any) {
       return thunkAPI.rejectWithValue({error: e.data});
     }
@@ -39,7 +39,7 @@ export const getCurrentUserAsync = createAsyncThunk<User>(
   'user/getCurrentUserAsync',
   async (_, thunkAPI) => {
     try {
-      return await agent.Account.current();
+      return await agent.AccountCall.current();
     } catch (e: any) {
       return thunkAPI.rejectWithValue({error: e.data});
     }

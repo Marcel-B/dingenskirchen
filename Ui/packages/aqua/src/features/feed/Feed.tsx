@@ -1,7 +1,7 @@
 import { Card, Divider, Typography } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../store/store';
 import { fetchFeedAsync } from './feedSlice';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import FeedItem from './FeedItem';
 import moment from 'moment-with-locales-es6';
 import { setStatus } from "../../common/commonSlice";

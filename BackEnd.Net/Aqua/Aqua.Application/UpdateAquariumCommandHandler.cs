@@ -1,16 +1,16 @@
 using com.marcelbenders.Aqua.Application.Command;
-using com.marcelbenders.Aqua.Domain;
-using com.marcelbenders.Aqua.MongoDb.Repository;
+using com.marcelbenders.Aqua.Domain.Sql;
+using com.marcelbenders.Aqua.Persistence;
 using MediatR;
 
 namespace com.marcelbenders.Aqua.Application;
 
 public class UpdateAquariumCommandHandler : IRequestHandler<UpdateAquariumCommand, Aquarium>
 {
-    private readonly IMongoRepository<Aquarium> _repository;
+    private readonly IAquariumRepository _repository;
 
     public UpdateAquariumCommandHandler(
-        IMongoRepository<Aquarium> repository)
+        IAquariumRepository repository)
     {
         _repository = repository;
     }
@@ -19,16 +19,15 @@ public class UpdateAquariumCommandHandler : IRequestHandler<UpdateAquariumComman
         UpdateAquariumCommand request,
         CancellationToken cancellationToken)
     {
-        
         var aquarium = new Aquarium
         {
             UserId = request.UserId,
             Id = request.Id,
             Name = request.Name,
             Liter = request.Liter,
-            Datum =  DateTimeOffset.Now,
+            Datum = DateTimeOffset.Now,
         };
-        await _repository.UpdateByIdAsync(request.Id, aquarium, cancellationToken);
+        await _repository.UpdateAsync(aquarium, cancellationToken);
         return aquarium;
     }
 }

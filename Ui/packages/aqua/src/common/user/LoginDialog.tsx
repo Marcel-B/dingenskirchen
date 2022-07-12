@@ -13,6 +13,7 @@ import RegisterForm from "./RegisterForm";
 import { yupResolver } from "@hookform/resolvers/yup/dist/yup";
 import { registerSchema, loginSchema } from "./userValidationSchema";
 import { fetchAquarienAsync } from "../../features/aquarium/aquariumSlice";
+import React from 'react';
 
 const style = {
   position: 'absolute' as 'absolute',

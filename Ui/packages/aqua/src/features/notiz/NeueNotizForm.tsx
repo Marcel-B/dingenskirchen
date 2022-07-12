@@ -9,7 +9,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { NotizFormValues } from "shared-types";
 import Allgemein from "./Allgemein";
 import schema from "./notizValidationSchema";
-import { Yard } from "@mui/icons-material";
 
 
 const NeueNotizForm = () => {
