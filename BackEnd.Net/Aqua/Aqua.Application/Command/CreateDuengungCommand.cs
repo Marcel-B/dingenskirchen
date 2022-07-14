@@ -1,4 +1,4 @@
-using com.marcelbenders.Aqua.Domain;
+using com.marcelbenders.Aqua.Domain.Sql;
 using MediatR;
 
 namespace com.marcelbenders.Aqua.Application.Command;

@@ -33,6 +33,9 @@ var configuration = builder.Configuration.GetConnectionString("SqlServer");
 builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(configuration));
 builder.Services.AddScoped<IAquariumRepository, AquariumRepository>();
 builder.Services.AddScoped<INotizRepository, NotizRepository>();
+builder.Services.AddScoped<IFischRepository, FischRepository>();
+builder.Services.AddScoped<IMessungRepository, MessungRepository>();
+builder.Services.AddScoped<IDuengungRepository, DuengungRepository>();
 
 var app = builder.Build();
 

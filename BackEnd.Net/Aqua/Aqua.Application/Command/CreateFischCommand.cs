@@ -1,4 +1,4 @@
-using com.marcelbenders.Aqua.Domain;
+using com.marcelbenders.Aqua.Domain.Sql;
 using MediatR;
 
 namespace com.marcelbenders.Aqua.Application.Command;
@@ -17,5 +17,5 @@ public record CreateFischCommand : IRequest<Fisch>
     public DateTimeOffset Datum { get; init; }
     public int Anzahl { get; init; }
     public string Geschlecht { get; init; }
-    public Aquarium Aquarium { get; init; }
+    public Guid Aquarium { get; init; }
 }

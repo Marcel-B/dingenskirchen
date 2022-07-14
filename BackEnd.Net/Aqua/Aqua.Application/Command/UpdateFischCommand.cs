@@ -1,9 +1,6 @@
-using com.marcelbenders.Aqua.Domain;
-using MediatR;
-
 namespace com.marcelbenders.Aqua.Application.Command;
 
-public record UpdateFischCommand : CreateFischCommand, IRequest<Fisch>
+public record UpdateFischCommand : CreateFischCommand
 {
-    public string Id { get; init; }
+    public Guid Id { get; init; }
 }

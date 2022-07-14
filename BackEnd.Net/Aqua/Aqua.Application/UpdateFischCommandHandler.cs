@@ -1,16 +1,16 @@
 using com.marcelbenders.Aqua.Application.Command;
-using com.marcelbenders.Aqua.Domain;
-using com.marcelbenders.Aqua.MongoDb.Repository;
+using com.marcelbenders.Aqua.Domain.Sql;
+using com.marcelbenders.Aqua.Persistence;
 using MediatR;
 
 namespace com.marcelbenders.Aqua.Application;
 
 public class UpdateFischCommandHandler : IRequestHandler<UpdateFischCommand, Fisch>
 {
-    private readonly IMongoRepository<Fisch> _repository;
+    private readonly IFischRepository _repository;
 
     public UpdateFischCommandHandler(
-        IMongoRepository<Fisch> repository)
+        IFischRepository repository)
     {
         _repository = repository;
     }
@@ -34,8 +34,8 @@ public class UpdateFischCommandHandler : IRequestHandler<UpdateFischCommand, Fis
             Datum = request.Datum,
             Anzahl = request.Anzahl,
             Geschlecht = request.Geschlecht,
-            Aquarium = request.Aquarium
+            AquariumId = request.Aquarium
         };
-        return await _repository.UpdateByIdAsync(request.Id, fisch, cancellationToken);
+        return await _repository.UpdateAsync(fisch, cancellationToken);
     }
 }

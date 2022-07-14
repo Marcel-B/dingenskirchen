@@ -1,20 +1,20 @@
 using com.marcelbenders.Aqua.Application.Command;
-using com.marcelbenders.Aqua.Domain;
-using com.marcelbenders.Aqua.MongoDb.Repository;
+using com.marcelbenders.Aqua.Domain.Sql;
+using com.marcelbenders.Aqua.Persistence;
 using MediatR;
 
 namespace com.marcelbenders.Aqua.Application;
 
 public class CreateDuengungCommandHandler : IRequestHandler<CreateDuengungCommand, Duengung>
 {
-    private readonly IMongoRepository<Duengung> _repository;
+    private readonly IDuengungRepository _repository;
 
     public CreateDuengungCommandHandler(
-        IMongoRepository<Duengung> repository)
+        IDuengungRepository repository)
     {
         _repository = repository;
     }
-    
+
     public async Task<Duengung> Handle(
         CreateDuengungCommand request,
         CancellationToken cancellationToken)

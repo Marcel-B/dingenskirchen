@@ -1,15 +1,15 @@
 using com.marcelbenders.Aqua.Application.Query;
-using com.marcelbenders.Aqua.Domain;
-using com.marcelbenders.Aqua.MongoDb.Repository;
+using com.marcelbenders.Aqua.Domain.Sql;
+using com.marcelbenders.Aqua.Persistence;
 using MediatR;
 
 namespace com.marcelbenders.Aqua.Application;
 
 public class GetDuengungenQueryHandler : IRequestHandler<GetDuengungenQuery, IEnumerable<Duengung>>
 {
-    private readonly IMongoRepository<Duengung> _repository;
+    private readonly IDuengungRepository _repository;
 
-    public GetDuengungenQueryHandler(IMongoRepository<Duengung> repository)
+    public GetDuengungenQueryHandler(IDuengungRepository repository)
     {
         _repository = repository;
     }
@@ -18,6 +18,6 @@ public class GetDuengungenQueryHandler : IRequestHandler<GetDuengungenQuery, IEn
         GetDuengungenQuery request,
         CancellationToken cancellationToken)
     {
-        return await _repository.GetAllAsync(request.UserId, cancellationToken);
+        return await _repository.GetByUserIdAsync(request.UserId, cancellationToken);
     }
 }

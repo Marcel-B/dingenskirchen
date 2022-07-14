@@ -1,16 +1,17 @@
 using com.marcelbenders.Aqua.Application.Command;
-using com.marcelbenders.Aqua.Domain;
+using com.marcelbenders.Aqua.Domain.Sql;
 using com.marcelbenders.Aqua.MongoDb.Repository;
+using com.marcelbenders.Aqua.Persistence;
 using MediatR;
 
 namespace com.marcelbenders.Aqua.Application;
 
 public class CreateFischCommandHandler : IRequestHandler<CreateFischCommand, Fisch>
 {
-    private readonly IMongoRepository<Fisch> _repository;
+    private readonly IFischRepository _repository;
 
     public CreateFischCommandHandler(
-        IMongoRepository<Fisch> repository)
+        IFischRepository repository)
     {
         _repository = repository;
     }
@@ -33,7 +34,7 @@ public class CreateFischCommandHandler : IRequestHandler<CreateFischCommand, Fis
             Datum = request.Datum,
             Anzahl = request.Anzahl,
             Geschlecht = request.Geschlecht,
-            Aquarium = request.Aquarium
+            AquariumId = request.Aquarium
         };
         await _repository.CreateAsync(fisch, cancellationToken);
         return fisch;

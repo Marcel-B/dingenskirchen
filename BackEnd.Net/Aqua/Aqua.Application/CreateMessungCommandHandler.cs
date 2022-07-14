@@ -1,16 +1,16 @@
 ﻿using com.marcelbenders.Aqua.Application.Command;
-using com.marcelbenders.Aqua.Domain;
-using com.marcelbenders.Aqua.MongoDb.Repository;
+using com.marcelbenders.Aqua.Domain.Sql;
+using com.marcelbenders.Aqua.Persistence;
 using MediatR;
 
 namespace com.marcelbenders.Aqua.Application;
 
 public class CreateMessungCommandHandler : IRequestHandler<CreateMessungCommand, Messung>
 {
-    private readonly IMongoRepository<Messung> _repository;
+    private readonly IMessungRepository _repository;
 
     public CreateMessungCommandHandler(
-        IMongoRepository<Messung> repository)
+        IMessungRepository repository)
     {
         _repository = repository;
     }

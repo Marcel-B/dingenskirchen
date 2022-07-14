@@ -1,16 +1,15 @@
 using com.marcelbenders.Aqua.Application.Command;
-using com.marcelbenders.Aqua.Domain;
-using com.marcelbenders.Aqua.MongoDb.Repository;
+using com.marcelbenders.Aqua.Persistence;
 using MediatR;
 
 namespace com.marcelbenders.Aqua.Application;
 
 public class DeleteMessungCommandHandler : IRequestHandler<DeleteMessungCommand, Unit>
 {
-    private readonly IMongoRepository<Messung> _repository;
+    private readonly IMessungRepository _repository;
 
     public DeleteMessungCommandHandler(
-        IMongoRepository<Messung> repository)
+        IMessungRepository repository)
     {
         _repository = repository;
     }

@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using com.marcelbenders.Aqua.Api.Extensions;
 using com.marcelbenders.Aqua.Application.Command;
 using com.marcelbenders.Aqua.Application.Query;
-using com.marcelbenders.Aqua.Domain;
+using com.marcelbenders.Aqua.Domain.Sql;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -32,7 +32,7 @@ public class MessungController : ControllerBase
     [ActionName("updateOneAsync"), Produces("application/json")]
     [ProducesResponseType(typeof(Messung), StatusCodes.Status201Created)]
     public async Task<Messung> UpdateOneAsync(
-        [FromRoute, Required] string id,
+        [FromRoute, Required] Guid id,
         [FromBody, Required] UpdateMessungCommand command,
         CancellationToken cancellationToken)
     {
@@ -54,7 +54,7 @@ public class MessungController : ControllerBase
     [ActionName("DeleteOneAsync"), Produces("application/json")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> DeleteOneAsync(
-        [FromRoute, Required] string id,
+        [FromRoute, Required] Guid id,
         CancellationToken cancellationToken)
     {
         await _mediator.Send(new DeleteMessungCommand {Id = id}, cancellationToken);

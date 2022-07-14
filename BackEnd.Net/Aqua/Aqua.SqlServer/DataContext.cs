@@ -12,6 +12,8 @@ public class DataContext : IdentityDbContext<AppUser>
     public DbSet<Messung> Messungen { get; set; }
     public DbSet<Notiz> Notizen { get; set; }
     public DbSet<Tag> Tags { get; set; }
+    public DbSet<Koralle> Korallen { get; set; }
+    public DbSet<Pflanze> Pflanzen { get; set; }
 
     public DataContext(DbContextOptions options) : base(options)
     {
@@ -50,6 +52,84 @@ public class DataContext : IdentityDbContext<AppUser>
                 v => Bereich.Instance(v));
 
         builder
+            .Entity<Koralle>()
+            .Property(e => e.Temperatur)
+            .HasConversion(
+                v => v.ToString(),
+                v => Bereich.Instance(v));
+
+        builder
+            .Entity<Koralle>()
+            .Property(e => e.Calcium)
+            .HasConversion(
+                v => v.ToString(),
+                v => Bereich.Instance(v));
+
+        builder
+            .Entity<Koralle>()
+            .Property(e => e.Kh)
+            .HasConversion(
+                v => v.ToString(),
+                v => Bereich.Instance(v));
+
+        builder
+            .Entity<Koralle>()
+            .Property(e => e.Magnesium)
+            .HasConversion(
+                v => v.ToString(),
+                v => Bereich.Instance(v));
+
+        builder
+            .Entity<Koralle>()
+            .Property(e => e.Nitrat)
+            .HasConversion(
+                v => v.ToString(),
+                v => Bereich.Instance(v));
+
+        builder
+            .Entity<Koralle>()
+            .Property(e => e.Phosphat)
+            .HasConversion(
+                v => v.ToString(),
+                v => Bereich.Instance(v));
+
+        builder
+            .Entity<Koralle>()
+            .Property(e => e.Salinitaet)
+            .HasConversion(
+                v => v.ToString(),
+                v => Bereich.Instance(v));
+
+
+        builder
+            .Entity<Pflanze>()
+            .Property(e => e.Temperatur)
+            .HasConversion(
+                v => v.ToString(),
+                v => Bereich.Instance(v));
+
+        builder
+            .Entity<Pflanze>()
+            .Property(e => e.Ph)
+            .HasConversion(
+                v => v.ToString(),
+                v => Bereich.Instance(v));
+
+        builder
+            .Entity<Pflanze>()
+            .Property(e => e.Kh)
+            .HasConversion(
+                v => v.ToString(),
+                v => Bereich.Instance(v));
+
+        builder
+            .Entity<Pflanze>()
+            .Property(e => e.Gh)
+            .HasConversion(
+                v => v.ToString(),
+                v => Bereich.Instance(v));
+
+        builder
             .Entity<Duengung>()
             .HasOne(e => e.AppUser)
             .WithMany(e => e.Duengungen)
@@ -77,6 +157,18 @@ public class DataContext : IdentityDbContext<AppUser>
             .Entity<Fisch>()
             .HasOne(e => e.AppUser)
             .WithMany(e => e.Fische)
+            .OnDelete(DeleteBehavior.NoAction);
+
+        builder
+            .Entity<Pflanze>()
+            .HasOne(e => e.AppUser)
+            .WithMany(e => e.Pflanzen)
+            .OnDelete(DeleteBehavior.NoAction);
+
+        builder
+            .Entity<Koralle>()
+            .HasOne(e => e.AppUser)
+            .WithMany(e => e.Korallen)
             .OnDelete(DeleteBehavior.NoAction);
     }
 }

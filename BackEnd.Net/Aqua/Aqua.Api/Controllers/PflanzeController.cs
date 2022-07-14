@@ -10,11 +10,11 @@ namespace com.marcelbenders.Aqua.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class FischController : ControllerBase
+public class PflanzeController : ControllerBase
 {
     private readonly IMediator _mediator;
 
-    public FischController(
+    public PflanzeController(
         IMediator mediator)
     {
         _mediator = mediator;

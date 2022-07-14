@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aqua.Domain.Sql", "Aqua.Dom
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aqua.Persistence", "Aqua.Persistence\Aqua.Persistence.csproj", "{36831B06-E392-470C-9E52-6E27B28910F8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aqua.Copy", "Aqua.Copy\Aqua.Copy.csproj", "{C7AB3C32-73A3-4D54-8BE7-41ED8F620F07}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -60,5 +62,9 @@ Global
 		{36831B06-E392-470C-9E52-6E27B28910F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{36831B06-E392-470C-9E52-6E27B28910F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{36831B06-E392-470C-9E52-6E27B28910F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7AB3C32-73A3-4D54-8BE7-41ED8F620F07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7AB3C32-73A3-4D54-8BE7-41ED8F620F07}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7AB3C32-73A3-4D54-8BE7-41ED8F620F07}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7AB3C32-73A3-4D54-8BE7-41ED8F620F07}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

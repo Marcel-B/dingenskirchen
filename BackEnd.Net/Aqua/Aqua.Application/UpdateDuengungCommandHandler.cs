@@ -1,16 +1,16 @@
 using com.marcelbenders.Aqua.Application.Command;
-using com.marcelbenders.Aqua.Domain;
-using com.marcelbenders.Aqua.MongoDb.Repository;
+using com.marcelbenders.Aqua.Domain.Sql;
+using com.marcelbenders.Aqua.Persistence;
 using MediatR;
 
 namespace com.marcelbenders.Aqua.Application;
 
 public class UpdateDuengungCommandHandler : IRequestHandler<UpdateDuengungCommand, Duengung>
 {
-    private readonly IMongoRepository<Duengung> _repository;
+    private readonly IDuengungRepository _repository;
 
     public UpdateDuengungCommandHandler(
-        IMongoRepository<Duengung> repository)
+        IDuengungRepository repository)
     {
         _repository = repository;
     }
@@ -28,6 +28,6 @@ public class UpdateDuengungCommandHandler : IRequestHandler<UpdateDuengungComman
             Duenger = request.Duenger,
             Aquarium = request.Aquarium,
         };
-        return await _repository.UpdateByIdAsync(request.Id, duengung, cancellationToken);
+        return await _repository.UpdateAsync(duengung, cancellationToken);
     }
 }

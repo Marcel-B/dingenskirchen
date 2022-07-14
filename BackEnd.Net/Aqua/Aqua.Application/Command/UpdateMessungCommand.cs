@@ -1,9 +1,6 @@
-using com.marcelbenders.Aqua.Domain;
-using MediatR;
-
 namespace com.marcelbenders.Aqua.Application.Command;
 
-public record UpdateMessungCommand : CreateMessungCommand, IRequest<Messung>
+public record UpdateMessungCommand : CreateMessungCommand
 {
-    public string Id { get; init; }
+    public Guid Id { get; init; }
 }

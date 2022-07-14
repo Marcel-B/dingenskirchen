@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace com.marcelbenders.Aqua.Domain.Sql;
 
-public class Fisch : IEntity
+public class Pflanze : IEntity
 {
     public Guid Id { get; set; }
     public string Name { get; set; }
@@ -12,10 +12,11 @@ public class Fisch : IEntity
     public Bereich Gh { get; set; }
     public Bereich Kh { get; set; }
     public Bereich Temperatur { get; set; }
-    public string Schwimmzone { get; set; }
+    public string Bereich { get; set; }
+    public string Wachstum { get; set; }
+    public bool Emers { get; set; }
+    public string Schwierigkeitsgrad { get; set; }
     public DateTimeOffset Datum { get; set; }
-    public int Anzahl { get; set; }
-    public string Geschlecht { get; set; }
 
     [ForeignKey(("UserId"))]
     public virtual AppUser AppUser { get; set; }

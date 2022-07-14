@@ -1,16 +1,15 @@
 using com.marcelbenders.Aqua.Application.Command;
-using com.marcelbenders.Aqua.Domain;
-using com.marcelbenders.Aqua.MongoDb.Repository;
+using com.marcelbenders.Aqua.Persistence;
 using MediatR;
 
 namespace com.marcelbenders.Aqua.Application;
 
 public class DeleteFischCommandHandler : IRequestHandler<DeleteFischCommand>
 {
-    private readonly IMongoRepository<Fisch> _repository;
+    private readonly IFischRepository _repository;
 
     public DeleteFischCommandHandler(
-        IMongoRepository<Fisch> repository)
+        IFischRepository repository)
     {
         _repository = repository;
     }
