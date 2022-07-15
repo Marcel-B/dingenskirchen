@@ -23,7 +23,7 @@ public class CreateNotizCommandHandler : IRequestHandler<CreateNotizCommand, Not
         {
             UserId = request.UserId,
             Text = request.Text,
-            Aquarium = request.Aquarium,
+            AquariumId = request.AquariumId,
             Tag = request.Tag,
             Datum = request.Datum,
         };

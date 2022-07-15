@@ -15,10 +15,11 @@ public class NotizRepository : INotizRepository
 
     public async Task<Notiz> CreateAsync(Notiz entity, CancellationToken cancellationToken)
     {
-        entity.Id = Guid.NewGuid();
+        var id = Guid.NewGuid();
+        entity.Id = id;
         _context.Notizen.Add(entity);
         await _context.SaveChangesAsync(cancellationToken);
-        return entity;
+        return await _context.Notizen.Include(p => p.Aquarium).FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
     }
 
     public async Task<Notiz?> GetByIdAsync(Guid id, CancellationToken cancellationToken)

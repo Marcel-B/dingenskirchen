@@ -77,18 +77,30 @@ public class GetGroupedFeedQueryHandler : IRequestHandler<GetGroupedFeedQuery, F
         {
             AquaType = "fisch",
             Datum = fisch.Datum,
-            Id = fisch.ToString(),
+            Id = fisch.Id.ToString(),
             Item = fisch
         });
 
-        var feed = aquarienFeedItems.Concat(fischeFeedItems).Concat(duengungenFeedItems).Concat(notizenFeedItems).Concat(messungenFeedItems); // await _repository.GetFeedAsync(request.UserId, cancellationToken);
+        var feed = aquarienFeedItems
+            .Concat(fischeFeedItems)
+            .Concat(duengungenFeedItems)
+            .Concat(notizenFeedItems)
+            .Concat(messungenFeedItems)
+            .OrderByDescending(p => p.Datum);
+
         var values = feed
             .Select(item => new FeedItem
             {
                 AquaType = item.AquaType,
                 Id = item.Id,
                 Item = item.Item,
-                Datum = new DateTimeOffset(item.Datum.Year, item.Datum.Month, item.Datum.Day, 12, 11, 42,
+                Datum = new DateTimeOffset(
+                    item.Datum.Year,
+                    item.Datum.Month,
+                    item.Datum.Day,
+                    0,
+                    0,
+                    42,
                     item.Datum.Offset)
             })
             .GroupBy(feedItem => feedItem.Datum)

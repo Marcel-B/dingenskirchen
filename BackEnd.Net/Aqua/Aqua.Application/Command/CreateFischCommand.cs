@@ -17,5 +17,5 @@ public record CreateFischCommand : IRequest<Fisch>
     public DateTimeOffset Datum { get; init; }
     public int Anzahl { get; init; }
     public string Geschlecht { get; init; }
-    public Guid Aquarium { get; init; }
+    public Guid AquariumId { get; init; }
 }

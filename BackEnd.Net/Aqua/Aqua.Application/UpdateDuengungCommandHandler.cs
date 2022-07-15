@@ -26,7 +26,7 @@ public class UpdateDuengungCommandHandler : IRequestHandler<UpdateDuengungComman
             Menge = request.Menge,
             Datum = request.Datum,
             Duenger = request.Duenger,
-            Aquarium = request.Aquarium,
+            AquariumId = request.AquariumId,
         };
         return await _repository.UpdateAsync(duengung, cancellationToken);
     }

@@ -20,7 +20,7 @@ public class CreateMessungCommandHandler : IRequestHandler<CreateMessungCommand,
         var messung = new Messung
         {
             UserId = request.UserId,
-            Aquarium = request.Aquarium,
+            AquariumId = request.AquariumId,
             Datum = request.Datum,
             Menge = request.Menge,
             Wert = request.Wert

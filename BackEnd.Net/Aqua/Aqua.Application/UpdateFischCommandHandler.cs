@@ -34,7 +34,7 @@ public class UpdateFischCommandHandler : IRequestHandler<UpdateFischCommand, Fis
             Datum = request.Datum,
             Anzahl = request.Anzahl,
             Geschlecht = request.Geschlecht,
-            AquariumId = request.Aquarium
+            AquariumId = request.AquariumId
         };
         return await _repository.UpdateAsync(fisch, cancellationToken);
     }

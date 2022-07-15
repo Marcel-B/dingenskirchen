@@ -24,7 +24,7 @@ public class UpdateNotizCommandHandler : IRequestHandler<UpdateNotizCommand, Not
             Id = request.Id,
             UserId = request.UserId,
             Text = request.Text,
-            Aquarium = request.Aquarium,
+            AquariumId = request.AquariumId,
             Tag = request.Tag,
             Datum = request.Datum,
         };

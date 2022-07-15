@@ -25,7 +25,7 @@ public class CreateDuengungCommandHandler : IRequestHandler<CreateDuengungComman
             Menge = request.Menge,
             Datum = request.Datum,
             Duenger = request.Duenger,
-            Aquarium = request.Aquarium,
+            AquariumId = request.AquariumId,
         };
         await _repository.CreateAsync(duengung, cancellationToken);
         return duengung;

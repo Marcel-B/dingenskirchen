@@ -21,7 +21,7 @@ public class UpdateMessungCommandHandler : IRequestHandler<UpdateMessungCommand,
         {
             UserId = request.UserId,
             Id = request.Id,
-            Aquarium = request.Aquarium,
+            AquariumId = request.AquariumId,
             Datum = request.Datum,
             Menge = request.Menge,
             Wert = request.Wert

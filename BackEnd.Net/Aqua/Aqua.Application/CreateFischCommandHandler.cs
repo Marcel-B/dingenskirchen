@@ -1,6 +1,5 @@
 using com.marcelbenders.Aqua.Application.Command;
 using com.marcelbenders.Aqua.Domain.Sql;
-using com.marcelbenders.Aqua.MongoDb.Repository;
 using com.marcelbenders.Aqua.Persistence;
 using MediatR;
 
@@ -34,7 +33,7 @@ public class CreateFischCommandHandler : IRequestHandler<CreateFischCommand, Fis
             Datum = request.Datum,
             Anzahl = request.Anzahl,
             Geschlecht = request.Geschlecht,
-            AquariumId = request.Aquarium
+            AquariumId = request.AquariumId
         };
         await _repository.CreateAsync(fisch, cancellationToken);
         return fisch;
